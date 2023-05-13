@@ -1,0 +1,379 @@
+﻿
+
+@{
+    <style>
+   .mt-3 {margin-top: 0rem !important;}
+   .card-headerMinePadding {
+    padding: 0.50rem 1.375rem;
+}
+ .accordion-button::after {
+ background-image: url("");
+ }
+ .top5 {
+    margin: 0.500rem  0rem  !important;
+
+}
+.accordion-button2 {
+    position: relative;
+
+    align-items: center;
+
+    padding: 0.78rem 1.1rem;
+    font-size: 0.9375rem;
+    color: #516377;
+    text-align: left;
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+
+    transition: all 0.2s ease-in-out, border-radius 0.15s ease;
+}
+.py-1 {
+    padding-top: 0.25rem !important;
+    padding-bottom: 2.25rem !important;
+}
+@*
+.row > * {
+
+    padding-right: calc(var(--bs-gutter-x) * 0.1);
+   padding-left: calc(var(--bs-gutter-x) * 0.5);
+    margin-top: var(--bs-gutter-y);
+}*@
+    </style>
+}
+
+
+
+
+
+
+
+
+<div class="card card-headerText" style="margin-bottom: 2px;">
+    <div class="card-header border-bottom  ">
+
+        <div class="row ">
+            <div class=" col-md-11">
+                <i class="menu-icon tf-icons bx bx-carousel"></i>    تقارير النظام
+            </div>
+            <div class=" col-md-1">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card  border-bottom  ">
+
+    <div class="reporthead " style="padding:0  1.375rem 0 1.375rem  ">
+        <div class="row gap-3 gap-md-0 d-flex justify-content-between align-items-center py-3">
+
+            <div class="  col-md-3">
+
+                <p>الجمهورية اليمنية</p>
+                <p>وزارة العدل</p>
+                <p>"" </p>
+            </div>
+
+            <div class="col-md-3" align="center">
+                <img src="~/upload/yemen.png" style="width:170px;" class="img-thumbnail" alt="Icons" />
+            </div>
+            <div class="col-md-3">
+                <div class="mb-2">
+                    <span>التاريخ:</span>
+                    <span class="fw-semibold">May 25, 2021</span>
+                </div>
+                <div class="mb-2">
+                    <span>رقم المرجع:</span>
+                    <span class="fw-semibold">2</span>
+                </div>
+                <div class="mb-2">
+                    <span>المرفقات:</span>
+                    <span class="fw-semibold">3</span>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="row py-2" style="background:#eccd8c">
+
+            <h5 class="ReportHeaders" align="center"> </h5>
+        </div>
+
+    </div>
+
+
+    <div class="card-header row FilterReport">
+        @*   <div class="card-header   ">
+
+            <div class="row col-md-12  ">
+
+                 <div class="col-sm-5">
+
+                                </div>
+                <div class="col-sm-5">
+                    <h3>
+
+                      تقارير النظام
+
+                    </h3>
+                </div>
+
+            </div>
+             </div>*@
+        <!-- Accordion Header Color -->
+        <div class="Rraw col-md-4">
+            @*  <small class="  fw-semibold">التقارير</small>*@
+            <div class="accordion accordion-header-primary Mainbox mt-3 row top5  " id="accordionStyle1">
+                <div class="accordion-item card col-md accordionStyle1-1 active">
+                    <h3 class="accordion-header">
+                        @*<button
+                              type="button"
+                              class="accordion-button collapsed"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#accordionStyle1-1"
+                              aria-expanded="false"
+                            >*@
+                        <i class="bx bx-bar-chart-alt-2 me-2"></i>
+                        <small class="  fw-semibold">تقارير أدارة الشكوى</small>
+                        @* </button>*@
+                    </h3>
+
+                    <div id="accordionStyle1-1" class="accordion-collapse collapse show" data-bs-parent="#accordionStyle1">
+                        <div class="accordion-body">
+
+                            <div class="table-responsive text-nowrap">
+                                <table id="example" class="table table-bordered table table-bordered" style="border-radius: 0.25rem;">
+
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                العنوان
+                                            </th>
+                                            <th>
+                                                تاريخ
+                                            </th>
+                                            <th>
+                                                المحافظة
+                                            </th>
+                                            <th>
+                                                المرحلة
+                                            </th>
+                                            <th>
+                                                الحالة
+                                            </th>
+                                            <th>الاجراءات</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                      
+                                            @foreach (var item in @ViewBag.totalUserByRoles)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @item.RoleName
+                                                    </td>
+                                                    <td>
+                                                        @item.TotalCount
+                                                    </td>
+                                                    <td>
+                                                        <span class="fw-semibold">%@(Math.Round(@item.RolsTot, 2))</span>
+                                                    </td>
+
+
+
+                                                    <td data-title="الاجراءات :">
+                                                        <a href="@Url.Action("ViewCompalintDetails", "GeneralFederation", new { id = item.Id })"
+                                                           class="btn btn-info"
+                                                           style="padding: 0px; margin: 0px 2px 0px 2px">
+                                                            <i class="material-icons" style="padding: 4px;">عرض</i>
+                                                        </a>
+                                                        <a href="@Url.Action("ViewCompalintDetails", "Beneficiarie", new { id = item.Id })"
+                                                           class="btn btn-danger"
+                                                           style="padding: 0px; margin: 0px 2px 0px 2px">
+                                                            <i class="material-icons" style="padding: 4px">حذف</i>
+                                                        </a>
+                                                    </td>
+
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!--/ Accordion Header Color -->
+        <!-- Accordion Header Color -->
+        <div class=" Rraw col-md-4">
+            @*  <small class="  fw-semibold">التقارير</small>*@
+            <div class="accordion accordion-header-primary Mainbox mt-3 row top5" id="accordionStylev">
+
+
+                <div class="accordion-item card accordionStyle1-2 col-md active">
+                    <h3 class="accordion-header">
+                        @* <button
+                              type="button"
+                              class="accordion-button collapsed"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#accordionStyle1-2"
+                              aria-expanded="false"
+                            >*@
+                        <i class="bx bx-gift me-2"></i>
+                        <small class="  fw-semibold"> تقارير أدارة التحقيق</small>
+                        @* </button>*@
+                    </h3>
+                    <div id="accordionStyle1-2" class="accordion-collapse collapse show" data-bs-parent="#accordionStylev">
+                        <div class="accordion-body">
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <!--/ Accordion Header Color -->
+        <!-- Accordion Header Color -->
+        <div class="Rraw col-md-4">
+            @*  <small class="  fw-semibold">التقارير</small>*@
+            <div class="accordion accordion-header-primary Mainbox mt-3 row top5" id="accordionStylep">
+
+                <div class="card accordion-item accordionStyle1-3 col-md active">
+                    <h3 class="accordion-header">
+
+                        <i class="bx bx-briefcase me-2"></i>
+                        <small class="  fw-semibold">  تقارير الدعاوى التأديبية</small>
+
+                        @* </button>*@
+                    </h3>
+                    <div id="accordionStyle1-3"
+                         class="accordion-collapse collapse show "
+                         data-bs-parent="#accordionStylep">
+                        <div class="accordion-body">
+
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Accordion Header Color -->
+        @*
+                   <button
+                             type="button"
+                             class="CountCallReport"
+                             id="CountCallReport"
+                           >
+                           عدد
+            </button>*@
+
+        <!-- Accordion Header Color -->
+        <div class="Rraw col-md-4">
+            @*  <small class="  fw-semibold">التقارير</small>*@
+            <div class="accordion accordion-header-primary mt-3 row Mainbox top5" id="accordionStylej">
+
+
+                <div class="card accordion-item  accordionStyle177 col-md active">
+                    <h3 class="accordion-header">
+                        @* <button
+                              type="button"
+                              class="accordion-button collapsed"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#accordionStyle177"
+                              aria-expanded="false"
+                            >*@
+                        <i class="bx bx-briefcase me-2"></i>
+                        <small class="fw-semibold">  تقارير الدعاوى القضائية</small>
+                        @*</button>*@
+                    </h3>
+                    <div id="accordionStyle177"
+                         class="accordion-collapse collapse show"
+                         data-bs-parent="#accordionStylej">
+                        <div class="accordion-body">
+
+
+                            @*القضائية*@
+                          
+                            @*نهاية القضائية*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Accordion Header Color -->
+        <!-- Accordion Header Color -->
+        <div class="Rraw col-md-4">
+
+            <div class="accordion accordion-header-primary Mainbox mt-3 row top5" id="accordionStylepv">
+
+                <div class="card accordion-item accordionStyle1-5 col-md active">
+                    <h3 class="accordion-header">
+
+                        <i class="bx bx-briefcase me-2"></i>
+                        <small class="  fw-semibold">  تقارير محاضرالتحقيق</small>
+
+                    </h3>
+                    <div id="accordionStyle1-5"
+                         class="accordion-collapse collapse show "
+                         data-bs-parent="#accordionStylep">
+                        <div class="accordion-body">
+
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Accordion Header Color -->
+        <!-- Accordion Header Color -->
+        <div class="Rraw col-md-4">
+
+            <div class="accordion accordion-header-primary Mainbox mt-3 row top5" id="accordionStyleCount">
+
+                <div class="card accordion-item accordionStyle1-7 col-md active">
+                    <h3 class="accordion-header">
+
+                        <i class="bx bx-briefcase me-2"></i>
+                        <small class="  fw-semibold">  تقارير أجمالي</small>
+
+                    </h3>
+                    <div id="accordionStyle1-7"
+                         class="accordion-collapse collapse show "
+                         data-bs-parent="#accordionStylep">
+                        <div class="accordion-body">
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Accordion Header Color -->
+
+
+    </div>  <!--/نهاية المحتوى -->
+
+
+
+    <div class="  table-responsive">
+        <table class=" table border-top">
+            <thead>
+
+            </thead>
+            <tbody id="bodydata">
+            </tbody>
+        </table>
+    </div>
+</div>

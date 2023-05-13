@@ -1,0 +1,411 @@
+﻿@model EditUserViewModel
+
+
+@if (!ViewContext.ModelState.IsValid)
+{
+    <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger"></div>
+}
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="breadcrumb-wrapper py-3 mb-4">
+            <span class="text-muted fw-light">الملف الشخصي  /</span> الحساب
+        </h4>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <h5 class="card-header">مدراء المحافظة</h5>
+                    <!-- Account -->
+                    <form enctype="multipart/form-data" asp-action="Edit" asp-controller="GeneralFederation" method="post" id="form1" class="d-flex flex-column">
+
+
+                        <div class="gap-4 d-flex align-items-start align-items-sm-center " style="margin-right:20px">
+
+                            <img class="img-fluid rounded my-4"
+                                 src="/images/@Model.ProfilePicture"
+                                 alt="خلفية المستخدم"
+                                 max-height="110"
+                                 width="110"
+                                 id="blah" />
+
+                            <div class="button-wrapper">
+
+                                <label asp-for="ProfilePicture" class="btn btn-primary me-2 mb-4" for="customFile" tabindex="0">
+                                    <span class="d-none d-sm-block">إدراج صورة</span>
+                                    <i class="bx bx-upload d-sm-none d-block"></i>
+                                    <input asp-for="ProfilePicture" type='file' id="customFile" onchange="fileChange()"
+                                           class="custom-file-input"
+                                           hidden
+                                           accept="image/png, image/jpeg" />
+                                </label>
+
+                            </div>
+
+
+
+                        </div>
+                        <hr class="my-0" />
+                        <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="FullName" class="form-label">الاسم </label>
+                                    <input asp-for="FullName" class="form-control" placeholder="ادخل اسمك كاملا" autofocus />
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="PhoneNumber">رقم الهاتف</label>
+
+                                    <input asp-for="PhoneNumber" class="form-control" placeholder="ادخل رقم الهاتف  " />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="PhoneNumber"> تاريخ الميلاد</label>
+
+                                    <input asp-for="DateOfBirth" class="form-control" type="datetime" />
+                                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="IdentityNumber">الرقم الوطني</label>
+                                    <input asp-for="IdentityNumber" class="form-control" placeholder="ادخل رقم البطاقة " />
+                                    <span asp-validation-for="IdentityNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="IsBlocked" />
+                                        <label asp-for="IsBlocked" class="form-label">الحالة (تنشيط /توقيف)</label>
+
+                                    </label>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="RoleId" class="control-label"></label>
+                                    @if (User.IsInRole("AdminGeneralFederation"))
+                                    {
+                                        <select asp-for="RoleId" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة",Value =""},
+                                          new SelectListItem { Selected = false, Text = "مدير إتحاد عام", Value = 1.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير محافظة", Value = 2.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير مديرية", Value = 3.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير عزلة", Value = 4.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+                                    }
+                                    else if (User.IsInRole("AdminGovernorate"))
+                                    {
+
+                                        <select asp-for="RoleId" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة"},
+
+                                          new SelectListItem { Selected = false, Text = " مدير مديرية", Value = 3.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير عزلة", Value = 4.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+
+
+                                    }
+                                    else if (User.IsInRole("AdminDirectorate"))
+                                    {
+
+                                        <select asp-for="RoleId" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة"},
+
+                                           new SelectListItem { Selected = false, Text = " مدير عزلة", Value = 4.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+
+                                    }
+                                    else if (User.IsInRole("AdminSubDirectorate"))
+                                    {
+                                        <select asp-for="RoleId" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة",Value =""},
+
+
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+                                    }
+                                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="col-form-label">المحافظة</label>
+                                    <select id="Governorates" class="form-control" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.ViewGover,"Id","Name"))">
+                                    </select>
+                                    <span asp-validation-for="GovernorateId" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="col-form-label ">المديرية</label>
+                                    <select id="Directorates" class="form-control " asp-for="DirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
+                                        <option value="">حدد المديرية</option>
+                                    </select>
+                                    <span asp-validation-for="DirectorateId" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="col-form-label">العزل</label>
+                                    <select id="SubDirectorate" class="form-control" asp-for="SubDirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
+                                        <option value="">حدد العزلة</option>
+                                    </select>
+                                    <span asp-validation-for="SubDirectorateId" class="text-danger"></span>
+
+                                </div>
+                                @*<div class="form-group form-password-toggle">
+                                        <label class="form-label" for="password">كلمة المرور</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="password" asp-for="Password" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                        </div>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group form-password-toggle">
+                                        <label class="form-label" for="password"> تاكيد كلمة المرور </label>
+                                        <div class="input-group input-group-merge">
+                                            <input asp-for="PasswordConfirm" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                        </div>
+                                        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                                    </div>*@
+                            </div>
+                            <div class="mt-2">
+                                <button type="submit" id="editButton" class="btn btn-success me-2">حفظ التغير</button>
+                                @*<input type="submit" id="EditButton" class="btn btn-label-success me-2"  value="حفظ" />*@
+
+                                <button type="reset" onclick="location.href='@Url.Action("ViewUsers", "GeneralFederation")'" class="btn btn-label-secondary">إلغاء</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /Account -->
+        </div>
+
+    </div>
+</div>
+
+<!-- / Content -->
+
+<div class="content-backdrop fade"></div>
+</div>
+@section Scripts {
+
+    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        'use strict';
+        (function () {
+            const editButton = document.querySelector('#editButton');
+            // Alert With Functional Confirm Cancel Button
+            if (editButton) {
+                editButton.onclick = function () {
+                    var inputData = $('form').serializeArray();
+                    $.ajax(
+                        {
+                            type: "POST", //HTTP POST Method
+                            url: "Edit", // Controller/View
+                            data: inputData,
+                            error: function () {
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: ' يرجى ادخال بيانات المستخدم بشكل كامل!',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                });
+                                // Error Alert
+
+                            },
+                        });
+                    Swal.fire({
+                        title: 'هل انت متأكد من حفظ المستخدم؟',
+                        //text: "لن تتمكن من العوده الى المستخدم !",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'نعم, حفظ !',
+                        CancelButtonText: 'إلغاء',
+                        customClass: {
+                            confirmButton: 'btn btn-primary me-3',
+                            cancelButton: 'btn btn-label-secondary'
+                        },
+                        buttonsStyling: false
+                    }).then(function (result) {
+                        if (result.value) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'تم الحفظ بنجاح !',
+                                text: 'تم الحفظ في  جدول المستخدمين.   ',
+                                customClass: {
+                                    confirmButton: 'btn btn-success',
+                                },
+
+                            });
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire({
+                                title: 'الغاء الحفظ',
+                                text: 'لا زال المستخدم قيد التعديل :)',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-success'
+                                }
+                            });
+                        }
+                    });
+                };
+            }
+        })();
+
+    </script>
+    <script>
+        'use strict';
+        (function () {
+            const createButton = document.querySelector('#createButton');
+            // Alert With Functional Confirm Cancel Button
+            if (createButton) {
+                createButton.onclick = function () {
+                    var inputData = $('form').serializeArray();
+                    $.ajax(
+                        {
+                            type: "POST", //HTTP POST Method
+                            url: "Create", // Controller/View
+                            data: inputData,
+                            error: function () {
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: ' يرجى ادخال بيانات المستخدم بشكل كامل!',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                });
+                                // Error Alert
+
+                            },
+                        });
+                    Swal.fire({
+
+                        title: 'هل انت متأكد من حفظ المستخدم؟',
+                        text: "لن تتمكن من العوده الى المستخدم !",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'نعم, حفظ !',
+                        CancelButtonText: 'إلغاء',
+                        customClass: {
+                            confirmButton: 'btn btn-primary me-3',
+                            cancelButton: 'btn btn-label-secondary'
+                        },
+                        buttonsStyling: false
+                    }).then(function (result) {
+                        if (result.value) {
+                            Swal.fire({
+                                type: "POST", //HTTP POST Method
+                                url: "GeneralFederation/ViewUsers", // Controller/View
+                                icon: 'success',
+                                title: 'تم الحفظ بنجاح !',
+                                text: 'تم الحفظ في  جدول المستخدمين.   ',
+                                customClass: {
+                                    confirmButton: 'btn btn-success',
+
+                                },
+
+
+
+                            });
+
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire({
+                                title: 'الغاء الحفظ',
+                                text: 'لا زال المستخدم قيد التعديل :)',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-success'
+                                }
+                            });
+                        }
+                    });
+                };
+            }
+        })();
+    </script>
+
+    @*<input type="submit" id="btnCreate" onclick="Validate(this, event);" value="Create" />*@
+
+
+    <script>
+        // catch select inputs
+        var govers = document.querySelector("#Governorates")
+        var directs = document.querySelector("#Directorates")
+        var subDircts = document.querySelector('#SubDirectorate')
+
+        // update functions
+        function updateSubDirects() {
+            console.log(directs.value)
+            fetch('/ManageUsers/GetSubDirectorate/' + directs.value)
+                .then(response => {
+                    return response.json()
+                })
+                .then(results => {
+                    subDircts.innerHTML = ''
+                    for (result in results) {
+                        subDircts.innerHTML += `<option value="${results[result].value}"> ${results[result].text} </option>`
+                    }
+                })
+        }
+
+        function updateDirects() {
+            fetch('/ManageUsers/GetDirectorateies/' + govers.value)
+                .then(response => {
+                    return response.json()
+                })
+                .then(results => {
+                    directs.innerHTML = ''
+                    for (result in results) {
+                        directs.innerHTML += `<option value="${results[result].value}"> ${results[result].text} </option>`
+                    }
+                    updateSubDirects()
+                })
+        }
+
+        // listen to changes
+        govers.addEventListener('change', () => {
+            updateDirects()
+        })
+
+        directs.addEventListener('change', () => {
+            updateSubDirects()
+        })
+    </script>
+
+
+    <script>
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#customFile").change(function () {
+            readURL(this);
+        });
+
+                //$("#ProfilePicture").on("change", function () {
+                //    var output = document.getElementById("ImagePreview");
+                //    output.src = $(this).val();
+                //})
+
+    </script>
+
+
+}

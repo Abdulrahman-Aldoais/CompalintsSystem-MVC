@@ -1,0 +1,11 @@
+@media (min-width:768px) {
+  .sidebar .nav-item .nav-link {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 1rem;
+    width: 14rem;
+    font-size: .85rem;
+  }
+}
+

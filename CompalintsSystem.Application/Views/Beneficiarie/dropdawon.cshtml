@@ -1,0 +1,118 @@
+﻿@*@{
+    ViewBag.Title = "Index";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <script type="text/javascript" src="~/jquery/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#CountryID").change(function () {
+                var selectedCountry = $(this).val();
+                if (selectedCountry != "") {
+                    $.ajax({
+                        url: "/Home/GetStatesByID",
+                        data: { countryID: selectedCountry },
+                        success: function (result) {
+                            if (result != undefined) {
+                                $("#StateID").empty();
+                                $("#StateID").append($("<option></option>").attr("value", "").text("-- Select State --"));
+                                $.each(result, function (index, elem) {
+                                    if (index == 0) {
+                                        $("#StateID").append($("<option></option>")
+                                            .attr("selected", "selected")
+                                            .attr("value", elem.value)
+                                            .text(elem.text));
+                                    }
+                                    else {
+                                        $("#StateID").append($("<option></option>").attr("value", elem.value).text(elem.text));
+                                    }
+                                });
+                                $("#StateID").change();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $("#StateID").change(function () {
+                var selectedState = $(this).val();
+                if (selectedState != "") {
+                    $.ajax({
+                        url: "/Home/GetCitiesByID",
+                        data: { stateID: selectedState },
+                        success: function (result) {
+                            if (result != undefined) {
+                                $("#CityID").empty();
+                                $("#CityID").append($("<option></option>").attr("value", "").text("-- Select City --"));
+                                $.each(result, function (index, elem) {
+                                    if (index == 0) {
+                                        $("#CityID").append($("<option></option>")
+                                            .attr("selected", "selected")
+                                            .attr("value", elem.value)
+                                            .text(elem.text));
+                                    }
+                                    else {
+                                        $("#CityID").append($("<option></option>").attr("value", elem.value).text(elem.text));
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+                else {
+                    $("#CityID").empty();
+                    $("#CityID").append($("<option></option>").attr("value", "").text("-- Select City --"));
+                }
+            });
+
+        });
+    </script>
+    <style type="text/css">
+        .row {
+            margin-bottom: 10px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    Country:
+                </div>
+                <div class="col-md-9">
+                    @Html.DropDownListFor(x => x.CountryList, new SelectList(Model.CountryList, "Value", "Text"),
+                                      "-- Select Country --", new { id = "CountryID", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    State:
+                </div>
+                <div class="col-md-9">
+                    @Html.DropDownList("StateID", new List<SelectListItem>(), "-- Select State --", new { id = "StateID", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    City:
+                </div>
+                <div class="col-md-9">
+                    @Html.DropDownList("CityID", new List<SelectListItem>(), "-- Select City --", new { id = "CityID", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>*@

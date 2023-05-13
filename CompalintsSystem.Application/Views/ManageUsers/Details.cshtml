@@ -1,0 +1,168 @@
+﻿@using CompalintsSystem.Core.Models;
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager;
+@inject SignInManager<ApplicationUser> signInManager;
+@model  ApplicationUser
+
+<div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="breadcrumb-wrapper py-3 mb-4">
+            <span class="text-muted fw-light"></span> الملف الشخصي
+
+
+        </h4>
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+
+            <li class="nav-item active">
+                <a class="nav-link " asp-controller="ManageUsers" asp-action="Edit" asp-route-id="@Model.Id"><i class="bx bx-user me-1"></i> تعديل الملف الشخصي</a>
+            </li>
+
+
+        </ul>
+        <div class="row">
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="row invoice-add">
+                    <!-- Invoice Add-->
+                    <div class="col-12 col-lg-9 mb-4 mb-lg-0">
+                        <div class="card invoice-preview-card">
+                            <div class="card-body">
+                                <div class="user-avatar-section">
+                                    <div class="d-flex flex-column ">
+                                        <img class="img-fluid rounded my-4" src="../../assets/img/avatars/1.png" height="110" width="110" alt="User avatar">
+                                        <div class="user-info ">
+                                            <h5 class="mb-2"> آمنة كمال </h5>
+                                            <span class="badge bg-label-secondary">مستفيد</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-container">
+                                    <h5 class="border-bottom pb-2 mb-4">التفاصيل</h5>
+                                    <div class="info-container">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">اسم المستخدم:</span>
+                                                <span>@Html.DisplayFor(model => model.FullName)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">رقم البطاقة الشخصية :</span>
+                                                <span>@Html.DisplayFor(model => model.IdentityNumber)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">الحالة:</span>
+                                                @if (Model.IsBlocked == true)
+                                                {
+                                                    <span class="badge bg-danger text-white@(Model.IsBlocked)">
+
+                                                        <i class="fa fa-circle" aria-hidden="true"> @(Model.IsBlocked ?"مقيد": "نشط")</i>
+                                                    </span>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span class="badge bg-success text-white@(Model.IsBlocked)">
+
+                                                        <i class="fa fa-circle" aria-hidden="true"> @(Model.IsBlocked ?"مقيد": "نشط")</i>
+                                                    </span>
+
+                                                }
+
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2"> تاريخ الميلاد:</span>
+                                                <span>@Html.DisplayFor(model => model.DateOfBirth)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">رقم الهاتف:</span>
+                                                <span>@Html.DisplayFor(model => model.PhoneNumber)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">تاريخ الانشاء</span>
+                                                <span>@Html.DisplayFor(model => model.CreatedDate)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">الصلاحية:</span>
+                                                <span>
+
+                                                    @if (await UserManager.IsInRoleAsync(Model, "AdminGeneralFederation"))
+                                                    {
+                                                        <span class="badge bg-label-success">مدير اتحاد</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminGovernorate"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير محافظة</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminDirectorate"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير مديرة</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminSubDirectorate"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير عزلة</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminVillages"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير قرية</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "Beneficiarie"))
+                                                    {
+                                                        <span class="badge bg-label-warning">مستخدم عادي</span>
+                                                    }
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">المحافظة:</span>
+                                                <span>@Html.DisplayFor(model => model.Governorate.Name)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">المديرية:</span>
+                                                <span>@Html.DisplayFor(model => model.Directorate.Name)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">العزلة:</span>
+                                                <span>@Html.DisplayFor(model => model.SubDirectorate.Name)</span>
+                                            </li>
+                                            <hr />
+
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">اسم منشئ هذا الحساب:</span>
+                                                <span>@Html.DisplayFor(model => model.originatorName)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">رقم منشئ هذا الحساب:</span>
+                                                <span>@Html.DisplayFor(model => model.UserId)</span>
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Invoice Add-->
+                    <!-- Invoice Actions -->
+                    <div class="invoice-actions col-12 col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <button onclick="location.href='@Url.Action("ViewUsers", "ManageUsers")'" class="btn btn-primary d-grid w-100 mb-3">
+                                    <span class="d-flex justify-content-center align-items-center text-nowrap"><i class=""></i>خروج</span>
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /Invoice Actions -->
+                </div>
+
+            </div>
+            <!-- / Content -->
+
+            <div class="content-backdrop fade"></div>
+        </div>
+
+    </div>
+</div>
+

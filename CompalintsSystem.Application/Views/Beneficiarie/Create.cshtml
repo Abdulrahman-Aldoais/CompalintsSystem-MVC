@@ -1,0 +1,110 @@
+﻿@model InputCompmallintVM
+
+
+
+
+@{
+    ViewData["Title"] = "تقديم شكوى";
+
+}
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="card mb-4">
+        <h5 class="card-header">تقديم الشكوى  </h5>
+        <!-- Account -->
+        @*<div class="card-body">
+                <div class="gap-4 d-flex align-items-start align-items-sm-center">
+                    <div class="button-wrapper">
+                    </div>
+                </div>
+            </div>*@
+        <hr class="my-0" />
+        <div class="card-body">
+            <div id="dropDownListdiv">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label asp-for="TitleComplaint" class="form-label">عنوان الشكوى</label>
+                                <input asp-for="TitleComplaint" class="form-control" type="text" id="TitleComplaint" placeholder="عنوان الشكوى" autofocus />
+                                <span asp-validation-for="TitleComplaint" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label asp-for="DescComplaint" class="form-label">محتوى الشكوى</label>
+                                <textarea asp-for="DescComplaint" class="form-control" type="text" id="DescComplaint" placeholder="وصف الشكوى"></textarea>
+                                <span asp-validation-for="DescComplaint" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PropBeneficiarie" class="form-label"> الحل المقترح</label>
+                            <input asp-for="PropBeneficiarie" class="form-control" type="text" id="PropBeneficiarie" placeholder="اكتب حلا تراه مناسبا لما تريد ان وجد " />
+                            <span asp-validation-for="PropBeneficiarie" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">نوع الشكوى</label>
+
+                            <select asp-for="TypeComplaintId" asp-items="ViewBag.TypeComplaints" class="form-control form-control-chosen" data-placeholder="Please select...">
+                            </select>
+                            <span asp-validation-for="TypeComplaintId" class="text-danger"></span>
+                        </div>
+
+
+                        @*<div class="col-md-6">
+                        <label class="col-form-label">المحافظة</label>
+                        <select class="form-control governorate" asp-for="GovernorateId" asp-items="@(new SelectList(Model.Governorates,"Id","Name"))"></select>
+                        <label class="col-form-label">المديرية</label>
+                        <select class="form-control directorate"></select>
+                        <label class="col-form-label">العزل</label>
+                        <select class="form-control subdirectorate"></select>
+                    </div>*@
+
+                        <div class="col-md-6 mb-3">
+                            <div class="custom-file">
+
+                                <input asp-for="File" onchange="fileChange()" type="file" class="custom-file-input" id="customFile">
+                                <label asp-for="File" id="custom-file-label" class="custom-file-label btn-outline-primary" for="customFile">اختر ملف ان وجد </label>
+                                <span asp-validation-for="File" class="text-danger"></span>
+                                @*<div class="form-group">
+                            </div>
+                                    <div class="custom-file">
+                                        <input asp-for="File" onchange="fileChange()" type="file" class="custom-file-input" id="customFile">
+                                        <label asp-for="File" id="custom-file-label" class="custom-file-label btn-outline-primary" for="customFile">إرفاق ملف ان وجد</label>
+                                        <span asp-validation-for="File" class="text-danger"></span>
+                                    </div>
+                                </div>*@
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4 offset-4 text-center">
+                            <img width="100%" id="AnnexPreview" />
+                        </div>
+
+                        <div class="mt-2">
+                            <button type="submit" value="Upload" class="btn btn-primary me-2">إضافة الشكوى </button>
+                            <button type="reset" class="btn btn-label-secondary">إلغاء</button>
+                        </div>
+                </form>
+
+            </div>
+        </div>
+
+            <!-- / Content -->
+
+        </div>
+    </div>
+
+
+
+
+    @section Scripts {
+
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

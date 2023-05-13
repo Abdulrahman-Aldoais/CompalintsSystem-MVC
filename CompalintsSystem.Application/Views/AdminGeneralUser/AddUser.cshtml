@@ -1,0 +1,154 @@
+﻿@model AddUserViewModel
+
+@{
+    ViewData["Title"] = "Regster";
+    
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="breadcrumb-wrapper py-3 mb-4">
+        <span class="text-muted fw-light">الحسابات   /</span> إضافة حساب موظف
+    </h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+            </ul>
+            <div class="card mb-4">
+                <h5 class="card-header">إضافة حساب موظف </h5>
+                <!-- Account -->
+                <form asp-action="AddUser" method="POST" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card-body">
+                        <div class="gap-4 d-flex align-items-start align-items-sm-center">
+                            <img src="../../assets/img/avatars/1.png"
+                                 alt="user-avatar"
+                                 class="d-block rounded"
+                                 height="100"
+                                 width="100"
+                                 id="uploadedAvatar" />
+                            <div class="button-wrapper">
+
+                                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                    @*@if (Model.ProfilePicture != null)
+                                    {*@
+                                        <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="~/images/AirBrush_٢٠٢٢٠٢٠٤٠٠٢٧٥٣.jpg">
+                                    @*}
+                                    else
+                                    {*@
+                                        @*<img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="">*@
+                                 
+                                    <input type="file"
+                                           accept=".png,.jpg,.jpeg,.gif,.tif"
+                                           asp-for="@Model.ProfilePicture"
+                                           class="form-control"
+                                           style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                                           onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+                                    <span class="d-none d-sm-block">إدراج صورة</span>
+                                    <i class="bx bx-upload d-sm-none d-block"></i>
+                                    @*<input type="file"
+                                           id="upload"
+                                           class="account-file-input"
+                                           hidden
+                                           accept="image/png, image/jpeg" />*@
+                                </label>
+                                <button type="button" class="btn btn-label-secondary account-image-reset mb-4">
+                                    <i class="bx bx-reset d-sm-none d-block"></i>
+                                    <span class="d-none d-sm-block">حذف</span>
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FullName" class="form-label">الاسم الاول</label>
+                                <input asp-for="FullName" class="form-control"
+                                       type="text" />
+                            </div>
+                        
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IdentityNumber" for="lastName" class="form-label">الرقم الوطني</label>
+                                <input asp-for="IdentityNumber" class="form-control" type="text" id="EmpNum" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="phoneNumber">رقم التلفون</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">YE (+967)</span>
+                                    <input asp-for="PhoneNumber" 
+                                           class="form-control"
+                                           type="tel"
+                          id="phone-number-mask"
+                          name="basicPhone"
+                          pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                          class="form-control dt-phone"
+                          placeholder="7777777" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="address" class="form-label">الفعالية</label>
+                                <input class="form-check-input" asp-for="IsBlocked" /> @Html.DisplayNameFor(model => model.IsBlocked)
+                            </div>
+                            <div class=" form-group form-check">
+                                <label for="state" class="form-label">تاريخ الميلاد</label>
+                                <input asp-for="DateOfBirth" class="form-control" type="date" placeholder="19/05/2022" />
+                            </div>
+                            @*<div class="col-md-6 mb-3">
+                                    <label for="zipCode" class="form-label">اسم منشئ الحساب</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="الاسم" />
+                                </div>*@
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="country">المحافظة</label>
+                                <select asp-for="GovernorateId" class="select2 form-select">
+                                    <option value="0">تحديد</option>
+                                    <option value="1">صنعاء</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="country">المديرية</label>
+                                <select asp-for="DirectorateId" class="select2 form-select">
+                                    <option value="0">تحديد</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="country">العزلة</label>
+                                <select asp-for="DirectorateId" class="select2 form-select">
+                                    <option value="0">تحديد</option>
+                                </select>
+                            </div>
+                         
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">كلمة السر</label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">تأكيد كلمة السر</label>
+                            <input asp-for="PasswordConfirm" class="form-control" />
+                            <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" value="AddUser" class="btn btn-primary me-2">حفظ </button>
+
+                            <button type="reset" class="btn btn-label-secondary">إلغاء</button>
+                        </div>
+                </form>
+            </div>
+            <!-- /Account -->
+        </div>
+
+    </div>
+</div>
+
+
+
+

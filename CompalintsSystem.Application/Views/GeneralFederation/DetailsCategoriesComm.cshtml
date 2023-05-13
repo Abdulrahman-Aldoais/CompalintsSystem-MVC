@@ -1,0 +1,98 @@
+﻿@model TypeCommunication
+
+@{
+    ViewData["Title"] = "تفاصيل الصنف";
+}
+
+<!-- Content wrapper -->
+
+
+
+<div class="card">
+    <h5 class="card-header bx-font-color"> تفاصيل الصنف</h5>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                <div class="table-responsive text-nowrap">
+
+                    <table class="table table-bordered table table-bordered">
+
+                        <thead>
+                            <tr>
+                                <th class="row-cols-md-4">
+                                    اسم الصنف
+                                </th>
+
+                                <th class="col-sm-1">
+                                    الموضف المضيف للصنف
+                                </th>
+
+                                <th class="col-sm-1">
+                                    التاريخ
+                                </th>
+                                <th class="col-sm-1">
+                                    رقم البطاقة
+                                </th>
+
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <div class="w-px-150">
+                                        <input type="text"
+                                               class="form-control text-center"
+                                               disabled value="@Model.Type"
+                                               id="DateOfArrival" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-px-300">
+                                        <input type="text"
+                                               class="form-control text-center"
+                                               disabled value="@Model.UsersNameAddType"
+                                               id="DateOfArrival" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-px-200">
+                                        <input type="text"
+                                               class="form-control text-center"
+                                               disabled value="@Model.CreatedDate"
+                                               id="DateOfArrival" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-px-200">
+                                        <input type="text"
+                                               class="form-control text-center"
+                                               disabled value="@Model.UserId"
+                                               id="DateOfArrival" />
+                                    </div>
+                                </td>
+
+
+
+
+
+
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<hr class="container-m-nx my-2" />
+<!--/ الحلول المقدمة للشكوى -->

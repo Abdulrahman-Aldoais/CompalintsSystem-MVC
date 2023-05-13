@@ -1,0 +1,55 @@
+﻿
+@model TypeCommunication
+<div>
+
+    <form id="myForm">
+        @Html.HiddenFor(m => m.Id)
+
+       @* @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+
+        @Html.TextBoxFor(model => model.Type, new { @class = "form-control", @placeholder = "Type" })
+
+
+        <a href="#" id="btnSubmit" class="btn btn-success btn-block">@if (Model.Id != null)
+        {<span>Update</span> }
+        else
+        {<span>Save</span>} </a>
+
+    </form>
+
+    <div style="text-align:center;display:none" id="loaderDiv">
+        <img src="~/Content/InternetSlowdown_Day.gif" width="150" />
+    </div>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            $("#loaderDiv").show();
+
+            var myformdata = $("#myForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/ManageContent/TypeCommuncations",
+                data: myformdata,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/ManageContent/TypeCommuncations";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>

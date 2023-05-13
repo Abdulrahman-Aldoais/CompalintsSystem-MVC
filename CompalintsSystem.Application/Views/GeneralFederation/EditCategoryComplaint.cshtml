@@ -1,0 +1,54 @@
+﻿@model TypeComplaint
+@{
+    ViewData["Title"] = " تعديل صنف الشكوى";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="breadcrumb-wrapper py-3 mb-4">
+        <span class="text-muted fw-light">ViewData.Title</span>
+    </h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+            </ul>
+            <div class="card mb-4">
+                <h5 class="card-header">تعديل صنف الشكوى </h5>
+                <!-- Account -->
+                <div class="card-body">
+                    <div class="gap-4 d-flex align-items-start align-items-sm-center">
+
+                        <div class="button-wrapper">
+
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-0" />
+                <div class="card-body">
+                    <form id="primaryWerehous" asp-action="EditCategoryComplaint" method="POST">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="mb-3">
+                                <label class="form-label"> تعديل صنف الشكوى</label>
+                                <input asp-for="Type" class="form-control" type="text" />
+                            </div>
+
+                        </div>
+
+
+                        <div class="mt-2" style="margin-right: 20px; ">
+                            <button type="submit" value="EditCategoryComplaint" class="btn btn-primary me-2"> حفظ التعديل </button>
+                            <button type="reset" asp-action="AllCategoriesComplaints" class="btn btn-label-secondary">إلغاء</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

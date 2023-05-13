@@ -1,0 +1,133 @@
+﻿
+
+
+
+<ul style="font-family: 'Cairo'; font-size:18px" class="menu-inner py-1">
+    <!-- الرئيسة -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text"> قائمة النظام</span></li>
+    <li class="menu-item">
+        <a asp-controller="SubManageComplaints" asp-action="Index" class="menu-link">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <div data-i18n="الرئيسية" style="margin-right: 14px;">الرئيسية</div>
+        </a>
+    </li>
+    <!-- الشكاوي -->
+
+
+
+    <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="الشكاوي"?"open":"")
+                            @(ViewContext.RouteData.Values["Action"].ToString()=="Index"?"open":"")
+                            @(ViewContext.RouteData.Values["Action"].ToString()=="AllRejectedComplaints"?"open":"")
+
+
+                        @(ViewContext.RouteData.Values["Action"].ToString()=="SolutionComplaints"?"open ":"")
+               @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintDetails"?"open ":"")
+               @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintRejectedDetails"?"open ":"")
+               @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintSolutionDetails"?"open ":"")
+               @(ViewContext.RouteData.Values["Action"].ToString()=="AllUpComplaints"?"open ":"")
+               @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintUpDetails"?"open ":"")
+
+">
+        <a class="menu-link menu-toggle">
+            <i class="fa fa-indent" aria-hidden="true"></i>
+            <div style="margin-right: 14px;">الشكاوي</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString()=="Index"?"active":"") @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintDetails"?"active":"") ">
+                <a href="/SubManageComplaints/Index" class="menu-link">
+                    <div>عرض كافة الشكاوي </div>
+                </a>
+            </li>
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AllRejectedComplaints"?"active":"")  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintRejectedDetails"?" active":"")">
+                <a href="/SubManageComplaints/AllRejectedComplaints" class="menu-link">
+                    <div>المرفوضة</div>
+                </a>
+            </li>
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AllUpComplaints"?"active":"")  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintRejectedDetails"?" active":"")">
+                <a href="/SubManageComplaints/AllUpComplaints" class="menu-link">
+                    <div>المرفوعه</div>
+                </a>
+            </li>
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="SolutionComplaints"?"active":"")    @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintSolutionDetails"?"active ":"")">
+                <a href="/SubManageComplaints/SolutionComplaints" class="menu-link">
+                    <div>المحلولة</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- البلاغات -->
+    <li class="menu-item    @(ViewContext.RouteData.Values["Action"].ToString()=="البلاغات"?"open":"")
+                            @(ViewContext.RouteData.Values["Action"].ToString()=="AllCommunication"?"open":"")
+                            @(ViewContext.RouteData.Values["Action"].ToString()=="AddCommunication"?"open":"")">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="fa fa-flag" aria-hidden="true"></i>
+            <div data-i18n="البلاغات" style="margin-right: 14px;">البلاغات</div>
+        </a>
+
+        <ul class="menu-sub">
+            @*<li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AllCommunication"?"active":"")">
+                <a href="/SubManageComplaints/AllCommunication" class="menu-link">
+                    <div data-i18n="البلاغات" style="margin-right: 14px;">البلاغات</div>
+                </a>
+            </li>*@
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AddCommunication"?"active":"")">
+                <a href="/SubManageComplaints/AddCommunication" class="menu-link">
+                    <div data-i18n="إضافة بلاغ على موظف"> إضافة بلاغ على موظف</div>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    <!-- التعميمات -->
+    @*<li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString()=="AllCommunication"?"active":"")">
+        <a href="/SubManageComplaints/AllCirculars" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-food-menu"></i>
+            <div>التعميمات</div>
+        </a>
+    </li>*@
+
+
+    <!-- الحسابات -->
+    <!-- الحسابات -->
+    <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="الحسابات"?"open":"")
+                         @(ViewContext.RouteData.Values["Action"].ToString()=="ViewUsers"?"open":"")
+                         @(ViewContext.RouteData.Values["Action"].ToString()=="BeneficiariesAccount"?"open":"")
+                         @(ViewContext.RouteData.Values["Action"].ToString()=="Create"?"open":"")
+                         @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
+                        @(ViewContext.RouteData.Values["Action"].ToString()=="Details"?"open":"")
+                        @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
+                        @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
+        ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-user"></i>
+            <div data-i18n="الحسابات">الحسابات</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="BeneficiariesAccount"?"active":"")">
+                <a href="/SubManageComplaints/BeneficiariesAccount" class="menu-link">
+                    <div>حسابات المستفيدين</div>
+                </a>
+            </li>
+            @*<li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewUsers"?"active":"")">
+                <a href="/SubManageComplaints/ViewUsers" class="menu-link">
+                    <div>حسابات الموضفين</div>
+                </a>
+            </li>*@
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="Create"?"active":"")">
+                <a href="/ManageUsers/Create" class="menu-link">
+                    <div>اضافة حساب مزارع </div>
+                </a>
+            </li>
+
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"active":"")">
+                <a href="/ManageUsers/AccountRestriction" class="menu-link">
+                    <div>الحسابات المقيدة </div>
+                </a>
+            </li>
+          
+        </ul>
+    </li>
+
+
+</ul>

@@ -1,0 +1,106 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title> Beautiful Gridview with Filtering Gridview with Dropdownlist </title>
+    <%--Styles to Change the appearance of Girdview --%>
+    <style type="text/css">
+        .GridviewDiv {
+            font-size: 100%;
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helevetica, sans-serif;
+            color: #303933;
+        }
+
+        Table.Gridview {
+            border: solid 1px #df5015;
+        }
+
+        .GridviewTable {
+            border: none
+        }
+
+            .GridviewTable td {
+                margin-top: 0;
+                padding: 0;
+                vertical-align: middle
+            }
+
+            .GridviewTable tr {
+                color: White;
+                background-color: #df5015;
+                height: 30px;
+                text-align: center
+            }
+
+        .Gridview th {
+            color: #FFFFFF;
+            border-right-color: #abb079;
+            border-bottom-color: #abb079;
+            padding: 0.5em 0.5em 0.5em 0.5em;
+            text-align: center
+        }
+
+        .Gridview td {
+            border-bottom-color: #f0f2da;
+            border-right-color: #f0f2da;
+            padding: 0.5em 0.5em 0.5em 0.5em;
+        }
+
+        .Gridview tr {
+            color: Black;
+            background-color: White;
+            text-align: left
+        }
+
+        :link, :visited {
+            color: #DF4F13;
+            text-decoration: none
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="GridviewDiv">
+            <table style="width: 420px" border="0" cellpadding="0" cellspacing="1" class="GridviewTable">
+                <tr>
+                    <td style="width: 40px;">
+                        UserId
+                    </td>
+                    <td style="width: 120px;">
+                        LastName
+                    </td>
+                    <td style="width: 130px;">
+                        UserName
+                    </td>
+                    <td style="width: 130px;">
+                        Location
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40px;">
+                    </td>
+                    <td style="width: 120px;">
+                    </td>
+                    <td style="width: 130px;">
+                    </td>
+                    <td style="width: 130px;">
+                        <asp:DropDownList ID="ddlLocation" runat="server" AutoPostBack="true" Width="120px"
+                                          Font-Size="11px" onselectedindexchanged="ddlLocation_SelectedIndexChanged">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <asp:GridView runat="server" ID="gvDetails" ShowHeader="false" AllowPaging="true" PageSize="10" AutoGenerateColumns="false" Width="420px" CssClass="Gridview">
+                            <Columns>
+                                <asp:BoundField DataField="UserId" HeaderText="UserId" ItemStyle-Width="40px" />
+                                <asp:BoundField DataField="Education" HeaderText="Education" ItemStyle-Width="120px" />
+                                <asp:BoundField DataField="UserName" HeaderText="UserName" ItemStyle-Width="130px" />
+                                <asp:BoundField DataField="Location" HeaderText="Location" ItemStyle-Width="130px" />
+                            </Columns>
+                        </asp:GridView>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,283 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CompalintsSystem.Core;
+@inject UserManager<ApplicationUser> UserManager;
+@inject RoleManager<IdentityRole> roleManager;
+@inject SignInManager<ApplicationUser> signInManager;
+@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "كل المستخدمين";
+    ViewData["subTitle"] = " المقيدة";
+}
+
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="breadcrumb-wrapper py-3 mb-4">
+                <span class="text-muted fw-light">الحسابات    /</span> مدراء المحافظة
+            </h4>
+
+
+            <div class="card">
+                <div class="row mx-2  ">
+                    <div class="col-md-6">
+                        <div class="t-d">
+                            <h5 class="card-header title-t"> الشكاوي</h5>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="dropdown" style="text-align-last: end;">
+
+                            @{
+
+
+                                <div class="btn-group">
+                                    <span class="badge bg-label-primary badgess " style="    padding-left: 36px;
+                        line-height: 1.99;
+                        width: 152.35px;">العدد الكلي @ViewBag.totalCompalints</span>
+                    </div>
+
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                        <div class="row mx-2 border-bottom ">
+                            <div class="row align-items-start">
+                                <label class="form-label"> عرض حسب</label>
+                                <div class="row align-items-start">
+                                    <div class="category-filter" style="width:150px">
+                                        <select id="FilterType"
+                                                class="select2 form-select select2-hidden-accessible"
+                                                tabindex="-1" aria-hidden="true" data-select2-id="10">
+                                            <option value="0" data-select2-id="12">عرض</option>
+                                            <option value="مزارع">مزارع</option>
+                                            <option value="مدير عزلة">مدير عزلة</option>
+                                            <option value="مدير مديرية">مدير مديرية</option>
+                                            <option value="مدير محافظة">مدير محافظة</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6  d-flex mb-4 justify-content-center justify-content-md-start">
+                                        <div class="me-3 table-type search-paddind">
+
+                                            <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                <label><input type="search" id="CustomSearchTextField" class="form-control" placeholder="البحث" aria-controls="DataTables_Table_0"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                          
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="table-responsive text-nowrap">
+                        <table id="example" class="datatables-users table border-top ">
+                            <thead>
+                                <tr>
+
+                                    <th> الاسم </th>
+                                    <th> المحافظة </th>
+                                    <th> الصلاحية </th>
+                                    <th>تاريخ الانشاء </th>
+                                    <th>الفعالية</th>
+                                    <th> إجراء</th>
+                                    @*<th>تغير الحالة</th>*@
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+
+                                        <td>@user.FullName </td>
+                                        <td>
+                                            @*@foreach (Governorate gov  in Model.)
+                                {*@
+                                            @user.Governorate.Name
+                                        </td>
+
+                                        <td>
+                                            @if (await UserManager.IsInRoleAsync(user, UserRoles.AdminGeneralFederation))
+                                            {
+                                                <span class="badge bg-label-success">مدير اتحاد</span>
+                                            }
+                                            else if (await UserManager.IsInRoleAsync(user, UserRoles.AdminGovernorate))
+                                            {
+                                                <span class="badge bg-label-warning"> مدير محافظة</span>
+                                            }
+                                            else if (await UserManager.IsInRoleAsync(user, UserRoles.AdminDirectorate))
+                                            {
+                                                <span class="badge bg-label-warning">مدير مديرية</span>
+                                            }
+                                            else if (await UserManager.IsInRoleAsync(user, UserRoles.AdminSubDirectorate))
+                                            {
+                                                <span class="badge bg-label-warning"> مدير عزلة</span>
+                                            }
+
+                                            else if (await UserManager.IsInRoleAsync(user, UserRoles.Beneficiarie))
+                                            {
+                                                <span class="badge bg-label-warning"> مزارع</span>
+                                            }
+                                        </td>
+
+
+
+                                        <td>@user.CreatedDate</td>
+
+
+                                        @if (user.EmailConfirmed)
+                                        {
+
+
+                                            <td>
+                                                <span class="badge bg-success text-white@(user.EmailConfirmed)">
+
+                                                    <i class="fa fa-circle" aria-hidden="true"> @(user.EmailConfirmed ? "نشط": "مقيد")</i>
+                                                </span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+
+                                                <span class="badge bg-danger text-white@(user.EmailConfirmed)">
+
+                                                    <i class="fa fa-circle" aria-hidden="true"> @(user.EmailConfirmed ? "نشط" : "مقيد")</i>
+                                                </span>
+                                            </td>
+                                        }
+
+                                        <td style="">
+                                            <div class="d-inline-block">
+                                                <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+
+                                                    <li>
+                                                        <a class="dropdown-item" asp-action="Details" asp-route-id="@user.Id">عرض</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" asp-action="DisbleOrEnableUser" asp-route-id="@user.Id">تنشيط</a>
+                                                    </li>
+
+                                                    <li>
+
+                                                        <a class="dropdown-item text-danger delete-record" asp-action="Delete" asp-route-id="@user.Id">حذف</a>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                            <a class="btn btn-sm btn-icon item-edit" asp-action="Edit" asp-route-id="@user.Id"><i class="bx bxs-edit"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+
+
+@section Scripts{
+
+
+
+    <script>
+
+
+        $('#CustomSearchTextField').keyup(function () {
+
+            oTable.search($(this).val()).draw();
+
+        });
+
+        var oTable = $('#example').DataTable({
+
+            language: {
+                "loadingRecords": "جارٍ التحميل...",
+                "lengthMenu": "أظهر _MENU_ مدخلات",
+                "zeroRecords": " لا يوجد أي حساب مقيد",
+                "info": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "search": "ابحث:",
+                "searchPlaceholder": "بحث عن مستخدم",
+                "paginate": {
+                    "first": "الأول",
+                    "previous": "السابق",
+                    "next": "التالي",
+                    "last": "الأخير"
+                }
+
+            },
+
+            "paging": true,
+            "lengthChange": false,
+            /*"searching": true,*/
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": false,
+            "searching": true,
+            //dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 4,
+            //lengthMenu: [5, 10, 25, 50, 75, 100],
+            //"columnDefs": [
+            //    target: 1,
+            //    ordering: true
+            //],
+        });   //using Capital D, which is mandatory to retrieve "api" datatables' object, latest jquery Datatable
+
+
+
+
+
+    </script>
+
+
+
+    <script>
+
+        //فلترة نوع الشاكي
+        $("#FilterUsers").change(function () {
+            var value = $(this).val().toLowerCase();
+            $(".table tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+
+    </script>
+
+
+
+
+}

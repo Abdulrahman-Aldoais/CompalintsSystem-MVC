@@ -1,0 +1,32 @@
+﻿
+@model TypeComplaint
+<!-- Offcanvas to add new user -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser"
+     aria-labelledby="offcanvasAddUserLabel" data-select2-id="offcanvasAddUser" style="visibility: hidden;"
+     aria-hidden="true">
+    <div class="offcanvas-header border-bottom">
+        <h6 id="offcanvasAddUserLabel" class="offcanvas-title">اضافة صنف بلاغ</h6>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body flex-grow-0 mx-0" data-select2-id="6">
+        <form asp-action="AddCategory" class="add-new-record row g-2 pt-0" id="primaryWerehous" onsubmit="return false">
+
+
+            <div class="mb-3">
+                <label class="form-label" for="basicFullname"> صنف البلاغ </label>
+                <input asp-for="Type" type="text" id="Btype" class="form-control dt-full-name"
+                       placeholder="صنف البلاغ " aria-label="132456" aria-describedby="basicFullname2" />
+
+            </div>
+            <div class="mb-3 fv-plugins-icon-container buttom-top-margin">
+
+                <button type="submit" class="btn btn-primary d-grid w-100 mb-2">إضافة</button>
+                <button type="button" class="btn btn-label-secondary d-grid w-100" data-bs-dismiss="offcanvas">
+                    إلغاء
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

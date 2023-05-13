@@ -1,0 +1,262 @@
+﻿@using CompalintsSystem.Core.Models;
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager;
+@inject SignInManager<ApplicationUser> signInManager;
+@model ApplicationUser
+
+<div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="breadcrumb-wrapper py-3 mb-4">
+            <span class="text-muted fw-light"></span> الملف الشخصي
+
+
+        </h4>
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+
+            <li class="nav-item active">
+                <a class="nav-link " asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Id"><i class="bx bx-user me-1"></i> تعديل الملف الشخصي</a>
+            </li>
+
+
+        </ul>
+        <div class="row">
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="row invoice-add">
+                    <!-- Invoice Add-->
+                    <div class="col-12 col-lg-9 mb-4 mb-lg-0">
+                        <div class="card invoice-preview-card">
+                            <div class="card-body">
+                                <div class="info-container">
+                                    <h5 class="border-bottom pb-2 mb-4">التفاصيل</h5>
+                                    <div class="info-container">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">اسم المستخدم:</span>
+                                                <span>@Html.DisplayFor(model => model.FullName)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">رقم البطاقة الشخصية :</span>
+                                                <span>@Html.DisplayFor(model => model.IdentityNumber)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">الحالة:</span>
+                                                @if (Model.IsBlocked == true)
+                                                {
+                                                    <span class="badge bg-danger text-white@(Model.IsBlocked)">
+
+                                                        <i class="fa fa-circle" aria-hidden="true"> @(Model.IsBlocked ?"مقيد": "نشط")</i>
+                                                    </span>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span class="badge bg-success text-white@(Model.IsBlocked)">
+
+                                                        <i class="fa fa-circle" aria-hidden="true"> @(Model.IsBlocked ?"مقيد": "نشط")</i>
+                                                    </span>
+
+                                                }
+
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2"> تاريخ الميلاد:</span>
+                                                <span>@Html.DisplayFor(model => model.DateOfBirth)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">رقم الهاتف:</span>
+                                                <span>@Html.DisplayFor(model => model.PhoneNumber)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">تاريخ الانشاء</span>
+                                                <span>@Html.DisplayFor(model => model.CreatedDate)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">الصلاحية:</span>
+                                                <span>
+
+                                                    @if (await UserManager.IsInRoleAsync(Model, "AdminGeneralFederation"))
+                                                    {
+                                                        <span class="badge bg-label-success">مدير اتحاد</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminGovernorate"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير محافظة</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminDirectorate"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير مديرة</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminSubDirectorate"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير عزلة</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "AdminVillages"))
+                                                    {
+                                                        <span class="badge bg-label-warning"> مدير قرية</span>
+                                                    }
+                                                    else if (await UserManager.IsInRoleAsync(Model, "Beneficiarie"))
+                                                    {
+                                                        <span class="badge bg-label-warning">مستخدم عادي</span>
+                                                    }
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">المحافظة:</span>
+                                                <span>@Html.DisplayFor(model => model.Governorate.Name)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">المديرية:</span>
+                                                <span>@Html.DisplayFor(model => model.Directorate.Name)</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">العزلة:</span>
+                                                <span>@Html.DisplayFor(model => model.SubDirectorate.Name)</span>
+                                            </li>
+
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <form asp-action="Delete">
+                                <input type="hidden" />
+                                <input type="button" value="حذف" class="btn btn-danger" onclick="deleteConfirm('@Model.FullName')" />
+                                <input onclick="deleteOrder('@Model.Id')" type="button" value="حذف" />
+
+                                <a class="btn btn-label-success suspend-user" asp-action="Index">عودة للقائمة👈  </a>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- /Invoice Add-->
+
+                </div>
+
+            </div>
+            <!-- / Content -->
+
+            <div class="content-backdrop fade"></div>
+        </div>
+
+        @*<div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+                <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#d9534f;color:white;">
+                            <h4 class="modal-title" id="delete-conformation">
+                                تنبيه قبل الحذف
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <span>
+                                            هل تريد بالفعل حذف هذه المستخدم?
+                                        </span>
+                                        <strong id="deletedValueName">
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="divLoading" class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">تراجع</button>
+                                <input type="submit" class="btn btn-danger" value="حذف"  id="DeleteModal-@Model.Id" onclick="deleteData()" />
+                                <a onclick="Delete(@Model.Id)"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+
+
+
+
+        @section scripts{
+
+
+            @*<script type="text/javascript">
+                    function deleteOrder(Id) {
+                        debugger;
+                        swal({
+                            title: "Are you sure?",
+                            text: "Are you sure that you want to delete this Order?",
+                            type: "warning",
+                            showCancelButton: true,
+                            closeOnConfirm: false,
+                            confirmButtonText: "Yes, delete it!",
+                            confirmButtonColor: "#ec6c62"
+                        },
+                            function () {
+                                $.ajax({
+                                    url: "/ManageUsers/Delete/",
+                                    data:
+                                    {
+                                        "Id": Id
+                                    },
+                                    type: "DELETE"
+                                })
+                                    .done(function (data) {
+                                        sweetAlert
+                                            ({
+                                                title: "Deleted!",
+                                                text: "Your file was successfully deleted!",
+                                                type: "success"
+                                            },
+                                                function () {
+                                                    window.location.href = '/ManageUsers/ViewUsers/';
+                                                });
+                                    })
+                                    .error(function (data) {
+                                        swal("Oops", "We couldn't connect to the server!", "error");
+                                    });
+                            });
+                    }
+                </script>*@
+
+            <script>
+                $(function () {
+                    $('#example1').DataTable();
+                })
+                function GetDetails(id) {
+                    $.ajax({
+                        url: "/Home/EditCustomer/" + id,
+                        typr: "GET",
+                        contentType: "application/json;charset=UTF-8",
+                        dataType: "json",
+                        success: function (response) {
+                            $('#hfId').val(response.CustomerId);
+                            $('#txtUpdateName').val(response.Name);
+                            $('#ddlCountry').val(response.Country);
+                            $('#modal-Update').modal('show');
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                    return false;
+                }
+
+                function Delete(id) {
+                    $.ajax({
+                        url: "/ManageUsers/Delete/" + id,
+                        typr: "GET",
+                        contentType: "application/json;charset=UTF-8",
+                        dataType: "json",
+                        success: function (response) {
+                            $('#hfDeleteId').val(response.CustomerId);
+                            $('#txtDeleteName').val(response.Name);
+                            $('#modal-Delete').modal('show');
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                    return false;
+                }
+            </script>
+
+        }

@@ -1,0 +1,34 @@
+﻿@model Compalints_Solution
+
+
+@{ Layout = null; }
+<script src="~/ckeditorCustom/ckeditor.js"></script>
+
+@* عرض الحل في مودل منبثق *@
+
+<div class="modal fade" id="ShowSolution-@Model.Id" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">تفاصيل الحل المقدم</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div id="FullDescription" style="white-space:pre-line;">
+                    <p style="white-space:pre-line;"> @Html.Raw(Model.ContentSolution)</p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+            
+
+            <script>
+                CKEDITOR.replace("editor");
+            </script>

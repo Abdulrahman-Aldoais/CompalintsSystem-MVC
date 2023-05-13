@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager;
+@inject SignInManager<ApplicationUser> signInManager;
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="breadcrumb-wrapper py-3 mb-4">
+        <span class="text-muted fw-light">إدارة النظام    /</span> إدارة الشكاوي
+    </h4>
+
+    <div class="card">
+
+        <div class="row mx-2  ">
+            <div class="col-6">
+                <div class="t-d">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <h5 class="card-header title-t" style="margin-left: 10px;">@User.Identity.Name</h5>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="card-datatable table-responsive">
+            <div class="row mx-2 border-bottom ">
+                <div class="row align-items-start">
+                    <label class="form-label"> عرض حسب</label>
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <select id="FilterType"
+                                    class="select2 form-select select2-hidden-accessible"
+                                    tabindex="-1" aria-hidden="true" data-select2-id="10">
+                                <option value="0" data-select2-id="12">عرض</option>
+                                <option value="جديدة">جديدة</option>
+                                <option value="محلولة">محلولة</option>
+                                <option value="غير محلولة">غير محلولة</option>
+                                <option value="مرفوعة">مرفوعة</option>
+                            </select>
+                            @*<span class="select2 select2-container select2-container--default select2-container--focus" dir="rtl" data-select2-id="11" style="width: 117.083px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-DataTables_Table_0_length-np-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-np-container" role="textbox" aria-readonly="true" title="مرفوضة">مرفوضة</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>*@
+                        </div>
+
+                        <div class="col">
+                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                    class="select2 form-select select2-hidden-accessible"
+                                    tabindex="-1" aria-hidden="true" data-select2-id="10">
+                                <option value="10" data-select2-id="12">مرفوضة</option>
+                                <option value="25">محلولة</option>
+                                <option value="50">غير محلولة</option>
+                                <option value="100">مرفوعة</option>
+                            </select>
+                        </div>
+
+
+                        <div class="col">
+                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                    class="select2 form-select select2-hidden-accessible"
+                                    tabindex="-1" aria-hidden="true" data-select2-id="10">
+                                <option value="10" data-select2-id="12">مرفوضة</option>
+                                <option value="25">محلولة</option>
+                                <option value="50">غير محلولة</option>
+                                <option value="100">مرفوعة</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row align-items-start" style="margin-top:30px">
+
+                <div class="col-md-3" style="float:right">
+                    <div class="btn-group">
+                        <span class="badge bg-label-primary badgess " style="    padding-left: 36px;
+                        line-height: 1.99;
+                        width: 152.35px;"
+                              iv class="t-d">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                <h5 class="card-header title-t" style="margin-left: 10px;">@User.Identity.Name</h5>
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-3" style="float:left">
+                    <div class="btn-group">
+                        <a asp-action="AddCompalint" class="btn btn-primary btn-sm accent-blue" role="button" aria-pressed="true"> إضافة شكوى</a>
+                        @*<a asp-action="AddCompalint">
+                                <button type="button" class="btn btn-primary btn-sm accent-blue">
+
+                                    إضافة شكوى
+
+                                </button>
+                            </a>*@
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+

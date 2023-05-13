@@ -1,0 +1,35 @@
+﻿@model Compalints_Solution
+
+
+@{ Layout = null; }
+
+
+<h5 class="modal-title" id="exampleModalLabel4">قم بــكتابة الحل المقدم</h5>
+@* asp-route-Id="@Model.AddSolution.Id" لتحديد الرقم الحل الذي نريد ان نقوم بتعديلة في المودل المنبثق *@
+<form asp-action="AddOrEditSolutions" asp-route-Id="@Model.Id"
+     
+      asp-controller="GeneralFederation"
+      onsubmit="return jQueryAjaxPost(this);">
+
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UploadsComplainteId" />
+    <input type="hidden" asp-for="DateSolution" />
+    <input type="hidden" asp-for="ContentSolution" />
+    @*<input type="hidden" asp-for="@Model.CompalintsSolution.Id" />*@
+    <div>
+        <h6>قم بكتابة الحل الذي تريد بالتنسيق الذي تريدة</h6>
+        <textarea asp-for="@Model.ContentSolution" id="editor" class="form-control" cols="3" rows="4"></textarea>
+    </div>
+
+    <span class="text-danger" asp-validation-for="@Model.ContentSolution"></span><span class="text-danger" asp-validation-for="@Model.ContentSolution"></span>
+
+
+    <div class="d-flex flex-wrap mb-3">
+        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
+        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
+    </div>
+</form>
+
+<script>
+    CKEDITOR.replace("editor");
+</script>

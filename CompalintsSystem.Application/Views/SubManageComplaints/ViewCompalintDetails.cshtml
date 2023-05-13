@@ -1,0 +1,799 @@
+﻿
+@model ProvideSolutionsVM
+
+@{
+    ViewData["Title"] = "تفاصيل الشكوى";
+
+}
+
+<!-- Invoice Edit-->
+<div class="container-xxl flex-grow-1 container-p-y">
+
+    <div class="row invoice-edit">
+        <!-- Invoice Edit-->
+        <div class="col-12 col-lg-9 mb-4 mb-lg-0">
+            <div class="card invoice-preview-card">
+                <div class="card-body">
+                    <div class="row p-0 p-sm-3">
+                        <div class="user-info text-center">
+                            <svg width="26px"
+                                 height="26px"
+                                 viewBox="0 0 26 26"
+                                 version="1.1"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>icon</title>
+                                <defs>
+                                    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+                                        <stop stop-color="#5A8DEE" offset="0%"></stop>
+                                        <stop stop-color="#699AF9" offset="100%"></stop>
+                                    </linearGradient>
+                                    <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-2">
+                                        <stop stop-color="#FDAC41" offset="0%"></stop>
+                                        <stop stop-color="#E38100" offset="100%"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <g id="Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="Login---V2" transform="translate(-667.000000, -290.000000)">
+                                        <g id="Login" transform="translate(519.000000, 244.000000)">
+                                            <g id="Logo" transform="translate(148.000000, 42.000000)">
+                                                <g id="icon" transform="translate(0.000000, 4.000000)">
+                                                    <path d="M13.8863636,4.72727273 C18.9447899,4.72727273 23.0454545,8.82793741 23.0454545,13.8863636 C23.0454545,18.9447899 18.9447899,23.0454545 13.8863636,23.0454545 C8.82793741,23.0454545 4.72727273,18.9447899 4.72727273,13.8863636 C4.72727273,13.5423509 4.74623858,13.2027679 4.78318172,12.8686032 L8.54810407,12.8689442 C8.48567157,13.19852 8.45300462,13.5386269 8.45300462,13.8863636 C8.45300462,16.887125 10.8856023,19.3197227 13.8863636,19.3197227 C16.887125,19.3197227 19.3197227,16.887125 19.3197227,13.8863636 C19.3197227,10.8856023 16.887125,8.45300462 13.8863636,8.45300462 C13.5386269,8.45300462 13.19852,8.48567157 12.8689442,8.54810407 L12.8686032,4.78318172 C13.2027679,4.74623858 13.5423509,4.72727273 13.8863636,4.72727273 Z"
+                                                          id="Combined-Shape"
+                                                          fill="#4880EA"></path>
+                                                    <path d="M13.5909091,1.77272727 C20.4442608,1.77272727 26,7.19618701 26,13.8863636 C26,20.5765403 20.4442608,26 13.5909091,26 C6.73755742,26 1.18181818,20.5765403 1.18181818,13.8863636 C1.18181818,13.540626 1.19665566,13.1982714 1.22574292,12.8598734 L6.30410592,12.859962 C6.25499466,13.1951893 6.22958398,13.5378796 6.22958398,13.8863636 C6.22958398,17.8551125 9.52536149,21.0724191 13.5909091,21.0724191 C17.6564567,21.0724191 20.9522342,17.8551125 20.9522342,13.8863636 C20.9522342,9.91761479 17.6564567,6.70030817 13.5909091,6.70030817 C13.2336969,6.70030817 12.8824272,6.72514561 12.5388136,6.77314791 L12.5392575,1.81561642 C12.8859498,1.78721495 13.2366963,1.77272727 13.5909091,1.77272727 Z"
+                                                          id="Combined-Shape2"
+                                                          fill="url(#linearGradient-1)"></path>
+                                                    <rect id="Rectangle"
+                                                          fill="url(#linearGradient-2)"
+                                                          x="0"
+                                                          y="0"
+                                                          width="7.68181818"
+                                                          height="7.68181818"></rect>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span class="app-brand-text h3 fw-bold mb-0 text-light fw-semibold" style="font-family:Cairo">بيانات الشكوى</span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="d-flex col-12 justify-content-between">
+                        <dd>
+                            <span class="form-control text-center"> رقم الشكوى :⇓⇓</span>
+                            <br />
+                            <div class="w-px-150">
+                                <input type="text"
+                                       class="form-control text-center"
+                                       disabled
+                                       value=" @Model.compalint.Id"
+                                       id="TransactionId" />
+                            </div>
+                        </dd>
+                        <dd>
+                            <span class="form-control text-center"> تاريخ الوصول :⇓⇓ </span>
+                            <br />
+                            <div class="w-px-150">
+                                <input type="text"
+                                       class="form-control text-center"
+                                       disabled value="@Model.compalint.UploadDate"
+                                       id="DateOfArrival" />
+                            </div>
+                        </dd>
+                    </div>
+                    <div class="row p-0 p-sm-3">
+                        <hr />
+                        <hr />
+                        <!-- Accordion -->
+                        <span style="color:darkseagreen; font-family:Cairo" class="h3 fw-bold mb-0">بيانات الشكوى:</span>
+                        <div class="row gy-4">
+                            <!-- Accordion Header Color -->
+                            <div class="col-md">
+                                <small class="text-light fw-semibold">(تفاصيل البيانات ) :1</small>
+                                <div class="accordion accordion-header-primary mt-3" id="accordionStyle1">
+                                    <div class="accordion-item card">
+                                        <h2 style="font-family:Cairo" class="accordion-header">
+                                            <button type="button"
+                                                    class="accordion-button collapsed"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionStyle1-1"
+                                                    aria-expanded="false">
+                                                <i class="bx bx-xs bx-wallet me-2"></i>
+                                                عنوان الشكوى :
+                                            </button>
+                                        </h2>
+
+                                        <div id="accordionStyle1-1" class="accordion-collapse collapse" data-bs-parent="#accordionStyle1">
+                                            <div class="accordion-body">
+                                                @Model.compalint.TitleComplaint
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item card ">
+                                        <h2 style="font-family:Cairo" class="accordion-header">
+                                            <button type="button"
+                                                    class="accordion-button collapsed"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionStyle1-2"
+                                                    aria-expanded="true">
+                                                <i class="bx bx-xs bx-envelope me-2"></i>
+                                                رسالة الشكوى :
+                                            </button>
+                                        </h2>
+                                        <div id="accordionStyle1-2" class="accordion-collapse collapse" data-bs-parent="#accordionStyle1">
+                                            <div class="accordion-body">
+                                                @Model.compalint.DescComplaint
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card accordion-item ">
+                                        <h2 style="font-family:Cairo" class="accordion-header">
+                                            <button type="button"
+                                                    class="accordion-button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionStyle1-3"
+                                                    aria-expanded="true">
+                                                <i class="bx bx-xs bx-detail me-2"></i>
+                                                تاريخ النشر :
+                                            </button>
+                                        </h2>
+                                        <div id="accordionStyle1-3"
+                                             class="accordion-collapse collapse "
+                                             data-bs-parent="#accordionStyle1">
+                                            <div class="accordion-body">
+                                                @Model.compalint.UploadDate
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ Accordion Header Color -->
+                            <!-- Accordion with Icon -->
+                            <div class="col-md">
+                                <small style="font-family:Cairo" class="text-light fw-semibold"> (تفاصيل البيانات ) :2</small>
+                                <div class="accordion accordion-header-primary mt-3" id="accordionWithIcon">
+                                    <div class="card accordion-item ">
+                                        <h2 style="font-family:Cairo" class="accordion-header d-flex align-items-center">
+                                            <button type="button"
+                                                    class="accordion-button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionWithIcon-1"
+                                                    aria-expanded="false">
+                                                <i class="bx bx-bar-chart-alt-2 me-2"></i>
+                                                نوع الشكوى :
+                                            </button>
+                                        </h2>
+
+                                        <div id="accordionWithIcon-1" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                @Model.compalint.TypeComplaint.Type
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item card">
+                                        <h2 style="font-family:Cairo" class="accordion-header d-flex align-items-center">
+                                            <button type="button"
+                                                    class="accordion-button collapsed"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionWithIcon-2"
+                                                    aria-expanded="false">
+                                                <i class="bx bx-briefcase me-2"></i>
+                                                حالة الشكوى :
+                                            </button>
+                                        </h2>
+                                        <div id="accordionWithIcon-2" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                @if (Model.compalint.StatusCompalint?.Name == "مرفوضة")
+                                                {
+                                                    <span class="badge bg-danger text-white"> @Model.compalint.StatusCompalint?.Name</span>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span class="badge bg-success text-white"> @Model.compalint.StatusCompalint?.Name</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item card">
+                                        <h2 style="font-family:Cairo" class="accordion-header d-flex align-items-center">
+                                            <button type="button"
+                                                    class="accordion-button collapsed"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionWithIcon-3"
+                                                    aria-expanded="false">
+                                                <i class="bx bx-gift me-2"></i>
+                                                الجهة المستلمة :
+                                            </button>
+                                        </h2>
+                                        <div id="accordionWithIcon-3" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                @Model.compalint.StagesComplaint?.Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ Accordion with Icon -->
+                        </div>
+                        <!--/ Accordion -->
+
+                    </div>
+
+
+
+
+                    <!-- الحلول المقدمة للشكوى-->
+
+
+
+                    <hr class="container-m-nx my-2" />
+                    <div class="card">
+                        <h5 class="card-header">الموظف  المحل للشكوى </h5>
+                        <div class="card-body">
+                            <div class="table-responsive text-nowrap">
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                                    <div class="table-responsive text-nowrap">
+
+                                        <table id="example" class="table table-bordered table table-bordered">
+
+                                            <thead>
+                                                <tr>
+                                                    <th class="row-cols-md-4">
+                                                        اسم صاحب الحل
+                                                    </th>
+
+                                                    <th class="col-sm-1">
+                                                        الحل المقترح
+                                                    </th>
+                                                    <th class="col-sm-2">
+                                                        الصلاحية
+                                                    </th>
+                                                    <th class="col-sm-1">
+                                                        تاريخ الحل
+                                                    </th>
+
+                                                    <th class="col-sm-1">اجراء</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                @if (Model.Compalints_SolutionList.Count() == 0)
+                                                {
+                                                    <tr>
+                                                        <td colspan="3" style="color:red">
+                                                            لا يوجد بعد حلول لهذه الشكوى
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    @foreach (var item in Model.Compalints_SolutionList)
+                                                    {
+                                                        <tr>
+                                                            <td class="width content">
+                                                                @Html.DisplayFor(modelItem => item.SolutionProvName)
+                                                            </td>
+                                                            <td>
+                                                                <div class="row demo-vertical-spacing">
+                                                                    <div class="d-inline-block">
+                                                                        <button type="button"
+                                                                                class="btn btn-secondary text-nowrap"
+                                                                                data-bs-toggle="popover"
+                                                                                data-bs-offset="0,14"
+                                                                                data-bs-placement="top"
+                                                                                data-bs-html="true"
+                                                                                data-bs-content="<p> @Html.DisplayFor(modelItem => item.ContentSolution)</p> <div class='d-flex justify-content-between'><button type='button' class='btn btn-sm btn-label-secondary'>تخطي</button><button type='button' class='btn btn-sm btn-primary'>إقراء المزيد </button></div>"
+                                                                                title="الحل المقترح">
+                                                                            انقر هنا لعرض الحل
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+
+
+
+                                                            <td>
+                                                                @if (@item.Role == "AdminGeneralFederation")
+                                                                {
+                                                                    <span class="badge bg-label-success">مدير اتحاد</span>
+                                                                }
+                                                                else if (@item.Role == "AdminGovernorate")
+                                                                {
+                                                                    <span class="badge bg-label-warning"> مدير محافظة</span>
+                                                                }
+                                                                else if (@item.Role == "AdminDirectorate")
+                                                                {
+                                                                    <span class="badge bg-label-warning"> مدير مديرة</span>
+                                                                }
+                                                                else if (@item.Role == "AdminSubDirectorate")
+                                                                {
+                                                                    <span class="badge bg-label-warning"> مدير عزلة</span>
+                                                                }
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.DateSolution)
+                                                            </td>
+
+
+
+                                                            <td data-title="الاجراءات :">
+
+
+                                                                <div class="d-inline-block">
+                                                                    <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                                        <li>
+                                                                            <a class="dropdown-item" data-bs-toggle="modal" data-ajax="true" data-bs-target="#onboardHorizontalImageModal" asp-route-id="@item.Id">
+                                                                                <i class="bi bi-eye icon-padding icon-color"></i>
+
+                                                                                عرض
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id">
+                                                                                <i class="bi bi-eye icon-padding icon-color"></i>
+
+                                                                                تعديل
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item text-danger delete-record" asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                                                                        </li>
+
+                                                                    </ul>
+
+                                                                </div>
+
+
+
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="container-m-nx my-2" />
+                    <!--/ الحلول المقدمة للشكوى -->
+
+                    <hr />
+                    <!-- Accordion -->
+                    <span style="color:darkseagreen ;font-family:Cairo" class="h5 fw-bold mb-0">   المنطقة الصادر منها الشكوى:</span>
+                    <div class="row gy-4">
+                        <!-- Accordion Header Color -->
+                        <div class="col-md">
+                            <small class="text-light fw-semibold">(تفاصيل البيانات ) :</small>
+                            <div class="accordion accordion-header-primary mt-3" id="accordionStyle1">
+                                <div class="row">
+                                    <div class="col-md-4 card accordion-item ">
+                                        <h2 style="font-family:Cairo" class="accordion-header">
+                                            <button type="button"
+                                                    class="accordion-button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionStyle1-3"
+                                                    aria-expanded="true">
+                                                <i class="bx bx-xs bx-detail me-2"></i>
+                                                المحافظة :
+                                            </button>
+                                        </h2>
+                                        <div id="accordionStyle1-3"
+                                             class="accordion-collapse collapse show"
+                                             data-bs-parent="#accordionStyle1">
+                                            <div class="accordion-body">
+                                                @Model.compalint.Governorate?.Name
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 card accordion-item ">
+                                        <h2 style="font-family:Cairo" class="accordion-header">
+                                            <button type="button"
+                                                    class="accordion-button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionStyle1-3"
+                                                    aria-expanded="true">
+                                                <i class="bx bx-xs bx-detail me-2"></i>
+                                                المديرية :
+                                            </button>
+                                        </h2>
+                                        <div id="accordionStyle1-3"
+                                             class="accordion-collapse collapse show"
+                                             data-bs-parent="#accordionStyle1">
+                                            <div class="accordion-body">
+                                                @Model.compalint.Directorate?.Name
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 card accordion-item ">
+                                        <h2 style="font-family:Cairo" class="accordion-header">
+                                            <button type="button"
+                                                    class="accordion-button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#accordionStyle1-3"
+                                                    aria-expanded="true">
+                                                <i class="bx bx-xs bx-detail me-2"></i>
+                                                العزلة :
+                                            </button>
+                                        </h2>
+                                        <div id="accordionStyle1-3"
+                                             class="accordion-collapse collapse show"
+                                             data-bs-parent="#accordionStyle1">
+                                            <div class="accordion-body">
+                                                @Model.compalint.SubDirectorate?.Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--/ Accordion Header Color -->
+                        <hr />
+                     
+                        <div class="card-body  col-lg-12 ">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
+
+                                    {
+                                        <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
+                                    }
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h5 class="card-title">
+                                                    @Model.compalint.OriginalFileName
+                                                </h5>
+                                            </div>
+                                            <div class="col-3">
+                                                <strong>Size : </strong>
+                                                @{
+                                                    var size = Model.compalint.Size / 1024; //KB
+                                                    if (size < 1024)  //2048
+                                                    {
+                                                        <span>@Math.Floor(size) Kb</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@(Math.Floor(size) / 1024) Mb</span>
+                                                    }
+                                                }
+                                            </div>
+
+                                        </div>
+                                        @*<p class="card-text"></p>*@
+                                        <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
+                                        <div class="text-right ">
+                                            <a asp-action="Download" asp-controller="SubManageComplaints" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- الحلول المقدمة للشكوى-->
+
+
+
+                        <hr class="container-m-nx my-2" />
+                        <div class="card">
+                            <h5 class="card-header bx-font-color" style="color:red; font:600"> الموضف الرافض لهذه الشكوى</h5>
+                            <div class="card-body">
+                                <div class="table-responsive text-nowrap">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                                        <div class="table-responsive text-nowrap">
+
+                                            <table id="example" class="table table-bordered table table-bordered">
+
+                                                <thead>
+                                                    <tr>
+                                                        <th class="row-cols-md-4">
+                                                            الموضف الذي قام برفضها
+                                                        </th>
+
+                                                        <th class="col-sm-1">
+                                                            سبب الرفض
+                                                        </th>
+                                                        <th class="col-sm-2">
+                                                            الصلاحية
+                                                        </th>
+                                                        <th class="col-sm-1">
+                                                            تاريخ الرفض
+                                                        </th>
+
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    @if (Model.Compalints_SolutionList.Count() == 0)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3" style="color:red">
+                                                                لم يتم رفض هذه الشكوى من قبل اي موضف
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        @foreach (var item in Model.ComplaintsRejectedList)
+                                                        {
+                                                            <tr>
+                                                                <td class="width content">
+                                                                    @Html.DisplayFor(modelItem => item.RejectedProvName)
+                                                                </td>
+                                                                <td>
+                                                                    <div class="row demo-vertical-spacing">
+                                                                        <div class="d-inline-block">
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary text-nowrap"
+                                                                                    data-bs-toggle="popover"
+                                                                                    data-bs-offset="0,14"
+                                                                                    data-bs-placement="top"
+                                                                                    data-bs-html="true"
+                                                                                    data-bs-content="<p> @Html.DisplayFor(modelItem => item.reume)</p> <div class='d-flex justify-content-between'><button type='button' class='btn btn-sm btn-label-secondary'>تخطي</button><button type='button' class='btn btn-sm btn-primary'>إقراء المزيد </button></div>"
+                                                                                    title="الحل المقترح">
+                                                                                انقر هنا لعرض الحل
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    asp-route-id="@item.Id"
+                                                                                    class="btn btn-primary"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#modalScrollable"
+                                                                                    title="الحل المقترح">
+
+                                                                                انقر هنا لعرض الحل
+                                                                            </button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+
+
+
+                                                                <td>
+                                                                    @if (@item.Role == "AdminGeneralFederation")
+                                                                    {
+                                                                        <span class="badge bg-label-success">مدير اتحاد</span>
+                                                                    }
+                                                                    else if (@item.Role == "AdminGovernorate")
+                                                                    {
+                                                                        <span class="badge bg-label-warning"> مدير محافظة</span>
+                                                                    }
+                                                                    else if (@item.Role == "AdminDirectorate")
+                                                                    {
+                                                                        <span class="badge bg-label-warning"> مدير مديرة</span>
+                                                                    }
+                                                                    else if (@item.Role == "AdminSubDirectorate")
+                                                                    {
+                                                                        <span class="badge bg-label-warning"> مدير عزلة</span>
+                                                                    }
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DateSolution)
+                                                                </td>
+
+                                                            </tr>
+                                                        }
+                                                    }
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="container-m-nx my-2" />
+                        <!--/ الحلول المقدمة للشكوى -->
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <!-- /Invoice Edit-->
+        <!-- رفع الشكوى -->
+        <div class="invoice-actions col-12 col-lg-3">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <button class="btn btn-primary mb-2 mt-1  d-grid w-100"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#sendInvoiceOffcanvas">
+                        <span class="d-flex justify-content-center align-items-center text-nowrap"><i class=""></i>رفع الشكوى</span>
+                    </button>
+
+                    <button class="btn btn-primary mb-2 mt-2  d-grid w-100"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#complaintResolution">
+                        <span class="d-flex justify-content-center align-items-center text-nowrap"><i class=""></i> حل الشكوى</span>
+                    </button>
+                    <button class="btn btn-danger mb-2 mt-2 d-grid w-100"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#rejectComplaint">
+                        <span class="d-flex justify-content-center align-items-center text-nowrap"><i>🚫</i>  رفض هذه الشكوى</span>
+                        @* <a asp-action="RejectedThisComplaint" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-danger"> رفض هذه الشكوى</a>*@
+                    </button>
+                    <div class="d-flex my-3">
+                        <a asp-action="Index" asp-controller="SubManageComplaints" class="btn btn-label-secondary w-100 me-3">خروج</a>
+                        <button type="button" class="btn btn-label-secondary w-100">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+
+
+            </div>
+        </div>
+        <!-- /Invoice Actions -->
+        <!-- رفع الشكوى -->
+        <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
+            <div class="offcanvas-header border-bottom">
+                <h6 class="offcanvas-title"> رفع الشكوى</h6>
+                <button type="button" asp-action="UpCompalint" asp-controller="SubManageComplaints"></button>
+            </div>
+            <div class="offcanvas-body flex-grow-1">
+                <form asp-action="UpCompalint" method="post">
+
+
+                    <div class="mb-3">
+                        <label for="invoice-message" class="form-label">سبب رفع الشكوى</label>
+                        <input type="hidden" asp-for="@Model.UpComplaint.UploadsComplainteId" />
+                        <textarea asp-for="@Model.UpComplaint.Cause" class="form-control" cols="3" rows="4"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.UpComplaint.Cause"></span>
+                    </div>
+
+                    <div class="d-flex flex-wrap mb-3">
+                        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /رفع الشكوى -->
+        <!-- حل الشكوى -->
+        <div class="offcanvas offcanvas-end" id="complaintResolution" aria-hidden="true">
+            <div class="offcanvas-header border-bottom">
+                <h6 class="offcanvas-title"> حل الشكوى</h6>
+                <button type="button" asp-action="AddSolutions" asp-controller="SubManageComplaints"></button>
+            </div>
+            <div class="offcanvas-body flex-grow-1">
+                <form asp-action="AddSolutions" method="post">
+
+
+                    <div class="mb-3">
+                        <label for="invoice-message" class="form-label"> الحل المقدم لهذه الشكوى</label>
+                        <input type="hidden" asp-for="@Model.AddSolution.UploadsComplainteId" />
+                        <textarea asp-for="@Model.AddSolution.ContentSolution" class="form-control" cols="3" rows="4"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span>
+                    </div>
+
+                    <div class="d-flex flex-wrap mb-3">
+                        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /حل الشكوى -->
+        <!-- رفض الشكوى -->
+
+        <div class="offcanvas offcanvas-end" id="rejectComplaint" aria-hidden="true">
+            <div class="offcanvas-header border-bottom">
+                <h6 class="offcanvas-title"> رفض الشكوى</h6>
+                <button type="button" asp-action="RejectedThisComplaint" asp-controller="SubManageComplaints"></button>
+            </div>
+            <div class="offcanvas-body flex-grow-1">
+                <form asp-action="RejectedThisComplaint" asp-controller="SubManageComplaints" method="post">
+
+
+                    <div class="mb-3">
+                        <label for="invoice-message" class="form-label">سبب رفض هذه الشكوى</label>
+                        <input type="hidden" asp-for="@Model.RejectedComplaintVM.UploadsComplainteId" />
+                        @*@Html.HiddenFor(m => m.RejectedComplaintVM.UploadsComplainteId)*@
+                        <textarea asp-for="@Model.RejectedComplaintVM.reume" class="form-control" cols="3" rows="4"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.RejectedComplaintVM.reume"></span>
+                    </div>
+
+                    <div class="d-flex flex-wrap mb-3">
+                        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- /رفض الشكوى -->
+        <!-- Form with Image horizontal Modal -->
+        <div class="modal-onboarding modal fade animate__animated" id="onboardHorizontalImageModal" tabindex="-1"
+             aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen-sm-down" role="document">
+                <div class="modal-content text-center">
+                    <div class="modal-header">
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body onboarding-horizontal p-0">
+
+
+                        <div class="table-responsive">
+                            <table class="table border-top m-0">
+
+                                <thead>
+                                    <tr>
+                                        <th>  الحل</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-nowrap">
+                                        @Model.AddSolution.ContentSolution
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+
+        <!--/ Form with Image horizontal Modal -->
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script>
+
+
+        'use strict';
+
+        (function () {
+            const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+            const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl, { html: true, sanitize: false });
+            });
+        })();
+
+    </script>
+}

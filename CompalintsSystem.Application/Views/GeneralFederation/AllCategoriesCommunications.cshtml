@@ -1,0 +1,138 @@
+﻿@model IEnumerable<TypeCommunication>
+
+
+<div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="breadcrumb-wrapper py-3 mb-4">
+                <span class="text-muted fw-light">الإنواع    /</span>  انواع البلاغات
+            </h4>
+
+
+            <div class="card">
+                <div class="row mx-2  ">
+                    <div class="col-md-6">
+                        <div class="t-d">
+                            <h5 class="card-header title-t"> الإنواع </h5>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div id="view-all">
+                    @await Html.PartialAsync("_ViewAllCatyCoryComm", Model)
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+@section Scripts {
+    <script>
+
+
+
+
+
+        function functionConfirm(event) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'هل انت متأكد من الحذف ؟',
+                text: "سيتم حذف هذا النوع بشكل نهائي  !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم  !',
+                cancelButtonText: 'الغاء ',
+                reverseButtons: true,
+                timer: 40000
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("form").submit();
+
+                    swalWithBootstrapButtons.fire({
+                        title: 'تم الحذف !',
+                        text: 'تمت عملية الحذف بنجاح .',
+                        icon: 'success',
+                        timer: '400000'
+                    }
+                    )
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        ' تم إلغاء الحذف',
+                        '',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
+    <script>
+
+
+        $('#CustomSearchTextField').keyup(function () {
+
+            oTable.search($(this).val()).draw();
+
+        });
+
+        var oTable = $('#example').DataTable({
+
+            language: {
+                "loadingRecords": "جارٍ التحميل...",
+                "lengthMenu": "أظهر _MENU_ مدخلات",
+                "zeroRecords": "لم يعثر على أي بيانات",
+                "info": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "search": "ابحث:",
+                "searchPlaceholder": "بحث عن شكوى",
+                "paginate": {
+                    "first": "الأول",
+                    "previous": "السابق",
+                    "next": "التالي",
+                    "last": "الأخير"
+                }
+
+            },
+
+            "paging": true,
+            "lengthChange": false,
+            /*"searching": true,*/
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": false,
+            "searching": true,
+            //dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 4,
+
+        });   //using Capital D, which is mandatory to retrieve "api" datatables' object, latest jquery Datatable
+
+
+
+
+
+    </script>
+}

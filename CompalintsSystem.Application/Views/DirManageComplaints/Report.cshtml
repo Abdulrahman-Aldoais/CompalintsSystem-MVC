@@ -1,0 +1,432 @@
+﻿   <!-- Content -->
+@{
+    ViewData["Title"] = "الإحصائات";
+
+}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="breadcrumb-wrapper py-3 mb-4">
+        <span class="text-muted fw-light">الاحصائات العامة /</span> للنضام
+    </h4>
+
+
+
+
+    <div class="row mb-5">
+
+        <!--user all-->
+        <div class="col-md-6 col-lg-6 col-xl-4 mb-4 mb-xl-0">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-2">إجمالي المستخدمين</h5>
+                    <h1 class="display-6 fw-normal mb-0">@ViewBag.Users </h1>
+                </div>
+                <div class="card-body">
+                    <span class="d-block mb-2">الاحصائات الحالية</span>
+                    <div class="progress progress-stacked mb-3 mb-xl-5" style="height: 8px">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <ul class="p-0 m-0">
+                        @foreach (var item in ViewBag.totalUserSubDir)
+                        {
+                            <li class="d-flex justify-content-between mb-3">
+                                <div class="lh-1 d-flex align-items-center me-3">
+                                    <span class="badge badge-dot bg-success me-2"></span> @item.Name
+                                </div>
+                                <div class="gap-3 d-flex">
+                                    <span>@item.totalUsers</span>
+                                    <span class="fw-semibold">%   @(Math.Round(@item.Users, 2))</span>
+                                </div>
+                            </li>
+
+                        }
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--user all-->
+        <!--user all-->
+        <div class="col-md-6 col-lg-6 col-xl-4 mb-4 mb-xl-0">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-2"> احصائيات انواع الشكاوى</h5>
+                    <h1 class="display-6 fw-normal mb-0">@ViewBag.Totalcomplant </h1>
+                </div>
+                <div class="card-body">
+                    <span class="d-block mb-2">الاحصائات الحالية</span>
+                    <div class="progress progress-stacked mb-3 mb-xl-5" style="height: 8px">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <ul class="p-0 m-0">
+                        @foreach (var item in ViewBag.GrapComplanrType)
+                        {
+                            <li class="d-flex justify-content-between mb-3">
+                                <div class="lh-1 d-flex align-items-center me-3">
+                                    <span class="badge badge-dot bg-success me-2"></span> @item.Name
+                                </div>
+                                <div class="gap-3 d-flex">
+                                    <span>@item.TotalCount</span>
+                                    <span class="fw-semibold">%@(Math.Round(@item.TypeComp, 2))</span>
+                                </div>
+                            </li>
+
+                        }
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--user all-->
+        <!--user all-->
+        <div class="col-md-6 col-lg-6 col-xl-4 mb-4 mb-xl-0">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-2">حالات الشكاوى</h5>
+                    <h1 class="display-6 fw-normal mb-0">@ViewBag.TotalStutusComplant</h1>
+                </div>
+                <div class="card-body">
+                    <span class="d-block mb-2">الاحصائات الحالية</span>
+                    <div class="progress progress-stacked mb-3 mb-xl-5" style="height: 8px">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <ul class="p-0 m-0">
+                        @foreach (var item in ViewBag.GrapComplanrStutus)
+                        {
+                            <li class="d-flex justify-content-between mb-3">
+                                <div class="lh-1 d-flex align-items-center me-3">
+                                    <span class="badge badge-dot bg-success me-2"></span> @item.Name
+                                </div>
+                                <div class="gap-3 d-flex">
+                                    <span>@item.TotalCountStutus</span>
+                                    <span class="fw-semibold">%@item.stutus</span>
+                                </div>
+                            </li>
+
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--user all-->
+    </div>
+    <!--/ Referral, conversion, impression & income charts -->
+    <!-- Activity -->
+   
+
+
+
+</div>
+
+    <!-- / Content -->
+    <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script>
+
+        function radialChart() {
+            let cardColor, headingColor, axisColor, borderColor, radialTrackColor;
+
+            if (isDarkStyle) {
+                cardColor = config.colors_dark.cardColor;
+                headingColor = config.colors_dark.headingColor;
+                axisColor = config.colors_dark.axisColor;
+                borderColor = config.colors_dark.borderColor;
+                radialTrackColor = '#36435C';
+            } else {
+                cardColor = config.colors.white;
+                headingColor = config.colors.headingColor;
+                axisColor = config.colors.axisColor;
+                borderColor = config.colors.borderColor;
+                radialTrackColor = config.colors_label.secondary;
+            }
+
+            // Color constant
+            const chartColors = {
+                column: {
+                    series1: '#826af9',
+                    series2: '#d2b0ff',
+                    bg: '#f8d3ff'
+                },
+                donut: {
+                    series1: '#fee802',
+                    series2: '#3fd0bd',
+                    series3: '#826bf8',
+                    series4: '#2b9bf4'
+                },
+                area: {
+                    series1: '#29dac7',
+                    series2: '#60f2ca',
+                    series3: '#a5f8cd'
+                }
+            };
+            // Radial Bar Chart
+            // --------------------------------------------------------------------
+            const radialBarChartEl = document.querySelector('#radialBarChart'),
+                radialBarChartConfig = {
+                    chart: {
+                        height: 240,
+                        fontFamily: 'IBM Plex Sans',
+                        type: 'radialBar'
+                    },
+                    colors: [chartColors.donut.series1, chartColors.donut.series2, chartColors.donut.series4, chartColors.donut.series3],
+                    plotOptions: {
+                        radialBar: {
+                            size: 185,
+                            hollow: {
+                                size: '30%'
+                            },
+                            track: {
+                                margin: 11,
+                                background: radialTrackColor
+                            },
+                            dataLabels: {
+                                name: {
+                                    fontSize: '2rem',
+                                    fontFamily: 'IBM Plex Sans'
+                                },
+                                value: {
+                                    fontSize: '1.2rem',
+                                    color: headingColor,
+                                    fontFamily: 'IBM Plex Sans'
+                                },
+                                total: {
+                                    show: true,
+                                    fontSize: '1.3rem',
+                                    color: chartColors.donut.series1,
+                                    label: 'الشكاوى',
+                                    formatter: function (w) {
+                                        return '80%';
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    grid: {
+                        borderColor: borderColor,
+                        padding: {
+                            top: -25,
+                            bottom: -20
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        position: 'bottom',
+                        labels: {
+                            colors: axisColor,
+                            useSeriesColors: false
+                        }
+                    },
+                    stroke: {
+                        lineCap: 'round'
+                    },
+                    series: [80, 50, 35, 60],
+                    labels: ['واردة', 'مقيدة', 'محالة', 'منجزة']
+                };
+            if (typeof radialBarChartEl !== undefined && radialBarChartEl !== null) {
+                const radialChart = new ApexCharts(radialBarChartEl, radialBarChartConfig);
+                radialChart.render();
+            }
+
+
+        }//نهاية الدالة
+    </script>
+    <script>
+
+        function reternAll(Mname, ChartId, typeN, LableT) {
+
+            let cardColor, headingColor, axisColor, borderColor, shadeColor;
+
+            if (isDarkStyle) {
+                cardColor = config.colors_dark.cardColor;
+                headingColor = config.colors_dark.headingColor;
+                axisColor = config.colors_dark.axisColor;
+                borderColor = config.colors_dark.borderColor;
+                shadeColor = 'dark';
+            } else {
+                cardColor = config.colors.white;
+                headingColor = config.colors.headingColor;
+                axisColor = config.colors.axisColor;
+                borderColor = config.colors.borderColor;
+                shadeColor = 'light';
+            }
+
+            // Report Chart
+            // --------------------------------------------------------------------
+
+
+
+            var a = 0;
+            var b = 0;
+            var c = 0;
+            var d = 0;
+            var Aa = 0;
+            var Bb = 0;
+            var Cc = 0;
+            var Dd = 0;
+
+            $.ajax({
+
+                type: "GET",
+
+                //url: 'Url.Action("", "Investigation")',
+                url: '/Home/' + Mname + '',
+                //url:'/Investigation/headSumitionjson',
+                data: { type: typeN },
+
+
+                contentType: "application/json; charset=utf-8",
+
+                dataType: "json",
+
+                success: function (i) {
+
+                    a = i.a;
+                    b = i.b;
+                    c = i.c;
+                    d = i.d;
+                    Aa = i.Aa;
+                    Bb = i.Bb;
+                    Cc = i.Cc;
+                    Dd = i.Dd;
+                    PrCount = i.PrCount;
+                    ReCount = i.ReCount;
+                    $(".PrCount").html(i.PrCount);
+                    $(".ReCount").html(i.ReCount);
+                    // Visits - Multi Radial Bar Chart
+                    // --------------------------------------------------------------------
+                    const visitsRadialChartEl = document.querySelector(ChartId),
+
+
+                        visitsRadialChartConfig = {
+
+
+                            chart: {
+                                height: 260,
+
+
+                                type: 'radialBar'
+                            },
+                            colors: [config.colors.primary, config.colors.danger, config.colors.warning, config.colors.success],
+                            series: [Aa, Bb, Cc, Dd],
+                            plotOptions: {
+                                radialBar: {
+                                    offsetY: -17,
+
+                                    hollow: {
+                                        size: '43%'
+                                    },
+                                    track: {
+                                        margin: 7,
+
+                                        background: cardColor
+                                    },
+                                    dataLabels: {
+                                        name: {
+
+                                            fontSize: '15px',
+                                            colors: [config.colors.secondary],
+                                            fontFamily: 'IBM Plex Sans',
+                                            offsetY: 25
+                                        },
+                                        value: {
+                                            fontSize: '2rem',
+                                            fontFamily: 'Rubik',
+                                            fontWeight: 500,
+                                            color: headingColor,
+                                            offsetY: -15
+
+                                        },
+                                        total: {
+
+                                            show: true,
+                                            label: ' أجمالي  ' + LableT,
+                                            formatter: function (data) {
+
+                                                return a + b + d + c;
+                                            },
+                                            fontSize: '15px',
+                                            fontWeight: 400,
+                                            fontFamily: 'IBM Plex Sans',
+                                            color: config.colors.secondary
+                                        }
+                                    }
+                                }
+                            },
+                            grid: {
+                                padding: {
+                                    top: -1,
+                                    bottom: -1
+                                }
+                            },
+                            stroke: {
+                                lineCap: 'round'
+                            },
+                            labels: [a + '   ' + 'واردة', b + '   ' + 'مقيدة', c + '   ' + 'محالة', d + '   ' + 'منجزة'],
+                            legend: {
+                                show: true,
+                                position: 'bottom',
+                                horizontalAlign: 'center',
+                                labels: {
+                                    colors: axisColor,
+                                    useSeriesColors: false
+                                },
+                                itemMargin: {
+                                    horizontal: 5
+                                },
+                                markers: {
+                                    width: 10,
+                                    height: 10,
+                                    offsetX: -3
+                                }
+                            }
+                        };
+
+
+
+
+                    if (typeof visitsRadialChartEl !== undefined && visitsRadialChartEl !== null) {
+                        const visitsRadialChart = new ApexCharts(visitsRadialChartEl, visitsRadialChartConfig);
+                        visitsRadialChart.render();
+                    }
+                }//نهاية نجاح الاجاكس
+
+            });//نهاية الاجاكس
+        }
+
+        'use strict';
+        (function () {
+
+
+            radialChart();
+            reternAll("headSumitionjson", "#visitsRadialChart", 1, "الشكاوى");
+            reternAll("headSumitionjson", "#visitsRadialChart2", 2, "التحقيق");
+            reternAll("headSumitionjson", "#visitsRadialChart3", 3, "الدعاوى");
+            reternAll("headSumitionjson", "#visitsRadialChart4", 4, "الدعاوى");
+
+
+        })();
+
+
+
+//
+
+
+
+
+    </script>

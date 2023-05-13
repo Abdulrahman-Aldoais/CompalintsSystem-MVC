@@ -1,0 +1,230 @@
+﻿
+@model IEnumerable<UploadsComplainte>
+
+
+@{
+    ViewData["Title"] = "إدارة الشكوى";
+}
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <!-- Users List Table -->
+
+
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="breadcrumb-wrapper py-3 mb-4">
+                <span class="text-muted fw-light">إدارة النظام    /</span> إدارة الشكاوي
+            </h4>
+
+
+                <div class="card">
+
+                    <div class="row mx-2  ">
+                        <div class="col-6">
+                            <div class="t-d">
+                                <h5 class="card-header title-t" style="margin-left: 10px;"> إدارة الشكاوي</h5>
+                            </div>
+
+                        </div>
+                        <div class="col-6" style="text-align-last: end; margin-top: 19px;">
+                            <button class="dt-button buttons-collection btn btn-label-primary  me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true" aria-expanded="false">
+                                <span>
+                                    @ViewBag.totalCompalints<i class=""></i>
+                                    <span class="d-none d-sm-inline-block">العدد الكلي</span>
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row mx-2 border-bottom ">
+                        <div class="col-sm-12 col-md-2 d-flex mb-4 justify-content-center justify-content-md-start " style="margin-top:12px ;">
+                            <label class="form-label"> عرض حسب</label>
+                            <div class="me-3 table-type">
+
+                                <div class="dataTables_length">
+                                    <label>
+                                        <select id="FilterType"
+                                                class="select2 form-select">
+                                            <option value="">عرض الكل</option>
+                                            <option value="المحلولة">المحلولة</option>
+                                            <option value="المرفوضة">المرفوضة</option>
+                                            <option value="غير محلولة">غير محلولة</option>
+
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-12 col-md-6  d-flex  mb-4 justify-content-center justify-content-md-start">
+                            <div class="me-3 table-type search-paddind">
+                                <span class="table-span">بحث</span>
+                                <div id="CustomSearchTextField">
+                                    <label><input type="search" class="form-control" placeholder=""></label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table id="example">
+                            <thead>
+                                <tr>
+                                    <th class="row-cols-md-4">
+                                        العنوان
+                                    </th>
+                                    <th class="col-sm-2">
+                                        تاريخ
+                                    </th>
+                                    <th class="col-sm-1">
+                                        المحافظة
+                                    </th>
+
+                                    <th class="col-sm-1">
+                                        الحالة
+                                    </th>
+                                    <th class="col-sm-1">
+                                        النوع
+                                    </th>
+                                    <th class="col-sm-1">اجراء</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr>
+                                        <td colspan="3" style="color:red">
+                                            لا يوجد نتائج
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="width content">
+                                                @Html.DisplayFor(modelItem => item.TitleComplaint)
+                                            </td>
+                                            <td> @Html.DisplayFor(modelItem => item.UploadDate)</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Governorate.Name)
+                                            </td>
+
+                                            <td> @Html.DisplayFor(modelItem => item.StatusCompalint.Name)</td>
+                                            <td> @Html.DisplayFor(modelItem => item.TypeComplaint.Type)</td>
+                                            <td>
+                                                <a href="@Url.Action("CompalintDetails", "ManageComplaints", new { id = item.Id })">
+                                                    <i> عرض</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="content-backdrop fade"></div>
+
+
+
+    @section Scripts{
+
+        <script>
+            var oTable = $('#example').DataTable({
+
+                language: {
+                    "loadingRecords": "جارٍ التحميل...",
+                    "lengthMenu": "أظهر _MENU_ مدخلات",
+                    "zeroRecords": "لم يعثر على أي شكوى",
+                    "info": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "search": "ابحث:",
+                    "searchPlaceholder": "بحث عن شكوى",
+                    "paginate": {
+                        "first": "الأول",
+                        "previous": "السابق",
+                        "next": "التالي",
+                        "last": "الأخير"
+                    }
+
+                },
+
+                "paging": true,
+                "lengthChange": false,
+                /*"searching": true,*/
+                "ordering": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": false,
+                "searching": true,
+                //dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                displayLength: 5,
+                //lengthMenu: [5, 10, 25, 50, 75, 100],
+                //"columnDefs": [
+                //    target: 1,
+                //    ordering: true
+                //],
+            });   //using Capital D, which is mandatory to retrieve "api" datatables' object, latest jquery Datatable
+
+            $('#CustomSearchTextField').keyup(function () {
+
+                oTable.search($(this).val()).draw();
+
+            });
+
+
+
+
+
+        </script>
+
+
+
+        <script>
+            //فلترة نوع الشاكي
+            $("#FilterType").change(function () {
+                var value = $(this).val().toLowerCase();
+                $(".table tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+            //
+        </script>
+        <script>
+
+            $(document).ready(function () {
+                $("#typeComp").change(function () {
+                    $('#tableComp').childern("tr").remove();
+                    $.get("/UploadsComplainte/ViewCompalintsByStutas", { id: $('#typeComp').val() }, function (data) {
+                        $.each(data, function (Index, row) {
+                            $('#tableComp').oppend("<tr><td>" + row.Id + "</td><td>" + row.TitleComplaint + "</td><td>"
+                                + row.CompDate + "</td><tr>");
+                        });
+                    });
+                });
+            });
+        </script>
+
+    }
+

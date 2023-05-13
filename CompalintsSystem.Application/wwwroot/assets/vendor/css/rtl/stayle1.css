@@ -1,0 +1,107 @@
+.body
+{
+    font-family: "Tajawal";
+}
+.table-type {
+    display: flex;
+    align-items: center;
+}
+.search-paddind {
+       padding-right: 284px;
+       margin-right: -304px;
+}
+.btn-add {
+    margin-right: -1px;
+    
+    
+    margin-top: 15px;
+
+}
+.table-span {
+    padding-left: 10px;
+}
+.title-t
+{
+    
+    font-weight: bold;
+    font-size: 24px;
+    margin-left: 53rem;
+
+}
+.t-d{
+    
+    display: flex;
+}
+.drop-s
+{
+   width: 140.39px;
+    margin-bottom: -57px;
+    margin-right: 65px;
+}
+
+.text-light {
+    --bs-text-opacity: 1;
+    color: #516377 !important;
+    
+   
+}
+.badge {
+    display: inline-block;
+    padding: 0.444em 0.75em;
+    font-size:  1.50em;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.1875rem;
+  }
+  .badge bg-label-primary {
+      font-size: 1.50em;
+     
+  }
+  .bg-label-primary {
+    margin-right: 132px;
+    margin-top: 27px;
+    text-transform: uppercase;
+    line-height: 0.92;
+  }
+  .btn-down
+  {
+      
+    margin-right: -32px;
+    margin-top: 16px;
+  }
+  .margin-span
+  {
+    margin-top: 25px;
+  }
+  .margin-right-span
+  {
+    margin-right: -10rem;
+  }
+  .btn-cheack
+  {
+    margin-left: -34px;
+
+  }
+
+.badgess
+{
+     margin-right: 5px;
+    line-height: 1.99;
+    width: 136px;
+}
+.card h-100{
+    margin-top: 14px;
+}
+.btn-add {
+    margin-right: -1px;
+    margin-top: 15px;
+}
+
+.data-i18n {
+
+margin-right: 14px;
+}

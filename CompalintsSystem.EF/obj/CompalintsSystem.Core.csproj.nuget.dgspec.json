@@ -1,0 +1,101 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\My_GitHub\\CompalintsSystem\\CompalintsSystem\\CompalintsSystem.Core\\CompalintsSystem.Core.csproj": {}
+  },
+  "projects": {
+    "E:\\My_GitHub\\CompalintsSystem\\CompalintsSystem\\CompalintsSystem.Core\\CompalintsSystem.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\My_GitHub\\CompalintsSystem\\CompalintsSystem\\CompalintsSystem.Core\\CompalintsSystem.Core.csproj",
+        "projectName": "CompalintsSystem.EF",
+        "projectPath": "E:\\My_GitHub\\CompalintsSystem\\CompalintsSystem\\CompalintsSystem.Core\\CompalintsSystem.Core.csproj",
+        "packagesPath": "C:\\Users\\APS\\.nuget\\packages\\",
+        "outputPath": "E:\\My_GitHub\\CompalintsSystem\\CompalintsSystem\\CompalintsSystem.EF\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\APS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "E:\\My_GitHub\\CompalintsSystem\\CompalintsSystem\\CompalintsSystem.Core\\CompalintsSystem.Core.csproj": {
+                "projectPath": "E:\\My_GitHub\\CompalintsSystem\\CompalintsSystem\\CompalintsSystem.Core\\CompalintsSystem.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Core": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

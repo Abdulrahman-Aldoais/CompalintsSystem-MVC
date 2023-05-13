@@ -1,0 +1,40 @@
+﻿@model ProvideSolutionsVM
+
+
+@{ Layout = null; }
+
+
+<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Modal title</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AddSolutions" asp-route-id="@Model.AddSolution.UploadsComplainteId" onsubmit="return jQueryAjaxPost(this);">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div id="full-editor">
+                        <h6>محتوى </h6>
+                        <input type="hidden" asp-for="@Model.AddSolution.UploadsComplainteId" />
+                        <textarea asp-for="@Model.AddSolution.ContentSolution" class="form-control" cols="3" rows="4"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+

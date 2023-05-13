@@ -1,0 +1,187 @@
+﻿
+@model IEnumerable<Proposal>
+
+@{
+    ViewData["Title"] = "الاقتراحات";
+}
+
+
+
+<div class="content-wrapper">
+  
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="breadcrumb-wrapper py-3 mb-4">
+                <span class="text-muted fw-light"> الاقتراحات/</span>  المقدمة من قبلك
+            </h4>
+
+            <div class="card">
+
+                <div class="row mx-2  ">
+                    <div class="col-md-6">
+                        <div class="t-d">
+                            <h5 class="card-header title-t"> الاقتراحات</h5>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                        <div class="table-responsive text-nowrap">
+                            <table id="example" class="datatables-users table border-top ">
+
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            عنوان الاقتراح
+                                        </th>
+                                        <th>
+                                            تاريخ التقديم
+                                        </th>
+                                        <th>
+                                            محتوى الاقتراح
+                                        </th>
+
+                                        <th>اجراء</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @if (Model.Count() == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="3" style="color:red">
+                                                لا يوجد نتائج
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                @if (item.TitileProposal.Length > 20)
+                                                {
+                                                    item.TitileProposal.Substring(0, 20);
+                                                    <td>
+                                                        @item.TitileProposal.Substring(0, 20)
+
+                                                    </td>
+                                                }
+                                                <td> @Html.DisplayFor(modelItem => item.DateSubmeted)</td>
+
+                                                <td> @Html.DisplayFor(modelItem => item.DescProposal)</td>
+
+
+
+                                                <td style="">
+                                                    <div class="d-inline-block">
+                                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <a class="dropdown-item" asp-action="DetailsProposal" asp-route-id="@item.Id">
+                                                                    <i class="bi bi-eye icon-padding icon-color"></i>
+
+                                                                    عرض
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="btn btn-sm btn-icon item-edit" asp-action="Edit" asp-route-id="@item.Id">
+                                                                    تعديل
+                                                                    <i class="bi bi-eye icon-padding icon-color"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item text-danger delete-record" asp-action="Delete" asp-controller="Beneficiarie" asp-route-id="@item.Id">
+                                                                    <i class="bi bi-eye icon-padding icon-color"></i>
+                                                                    حذف
+                                                                </a>
+                                                            </li>
+
+                                                        </ul>
+
+                                                    </div>
+
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+@section Scripts{
+
+
+
+    <script>
+
+
+        $('#CustomSearchTextField').keyup(function () {
+
+            oTable.search($(this).val()).draw();
+
+        });
+
+        var oTable = $('#example').DataTable({
+
+            language: {
+                "loadingRecords": "جارٍ التحميل...",
+                "lengthMenu": "أظهر _MENU_ مدخلات",
+                "zeroRecords": "لم يعثر على أي شكوى",
+                "info": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "search": "ابحث:",
+                "searchPlaceholder": "بحث عن شكوى",
+                "paginate": {
+                    "first": "الأول",
+                    "previous": "السابق",
+                    "next": "التالي",
+                    "last": "الأخير"
+                }
+
+            },
+
+            "paging": true,
+            "lengthChange": false,
+            /*"searching": true,*/
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": false,
+            "searching": true,
+            //dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 4,
+            //lengthMenu: [5, 10, 25, 50, 75, 100],
+            //"columnDefs": [
+            //    target: 1,
+            //    ordering: true
+            //],
+        });   //using Capital D, which is mandatory to retrieve "api" datatables' object, latest jquery Datatable
+
+
+
+
+
+    </script>
+
+
+    }

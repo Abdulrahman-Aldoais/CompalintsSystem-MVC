@@ -1,0 +1,373 @@
+﻿@{
+    ViewData["Title"] = " المستخدمين";
+}
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager;
+@inject SignInManager<ApplicationUser> signInManager;
+
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+
+    var userName = currentUser.FullName;
+    var userIdentity = currentUser.IdentityNumber;
+
+}
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="container-xxl flex-grow-1 container-p-y">
+           
+             Hoverable Table rows 
+            <div class="card p-5 mt-3">
+                <h3 class="card-header ">المستخدمين </h3>
+                <div class="row clearfix ">
+
+
+
+                    <div class="dt-buttons ">
+                        <button class="dt-button add-new btn btn-primary create-new btn-add float-end me-3" tabindex="0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser">
+                            <i class="bx bx-plus me-0 me-lg-2"></i><span class="d-none d-lg-inline-block">إضافة مستخدم</span>
+                        </button>
+                    </div>
+
+
+                </div>
+                <div class="table-responsive text-nowrap mt-3">
+                    <table class="table table-hover datatables-users">
+                        <thead>
+                            <tr>
+
+                                <th>النوع</th>
+                                <th> تاريخ الاضافة</th>
+                                <th>الموظف المضيف</th>
+                                <th>رقم الموظف</th>
+
+                                <th> الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0" id="index_table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            / Hoverable Table rows 
+             Offcanvas to add new user 
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser"
+                 aria-labelledby="offcanvasAddUserLabel">
+                <div class="offcanvas-header border-bottom">
+                    <h6 id="offcanvasAddUserLabel" class="offcanvas-title">إضافة مستخدم</h6>
+                    <button id="openpop" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body flex-grow-0 mx-0">
+                    <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
+                          onsubmit="return false" novalidate="novalidate">
+
+                        <div class="col-12 mb-3 text-start">
+                            <label class="form-label" for="ThreadTitle">النوع</label>
+                            <input type="text" id="descrabtion" name="descrabtion" for="descrabtion" class="form-control dt-threadtitle" />
+                        </div>
+                        <div class="col-12 mb-3 text-start">
+                            <label class="form-label" for="ThreadTitle">الشخص المضيف</label>
+                            <input type="text" disabled
+                                   value="@userName" id="descrabtion" name="descrabtion" for="descrabtion" class="form-control dt-threadtitle" />
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-lg-6 col-xl-6 mb-0 mb-3">
+                                <label class="form-label" for="add-user-company">تاريخ الاضافة </label>
+                                <input type="text" disabled value="@DateTime.Now"id="Emp_name" for="Emp_name" class="form-control" placeholder="اسم الموظف"
+                                       aria-label="jdoe1" name="Name">
+                            </div>
+                            <div class="col-6 col-lg-6 col-xl-6 mb-0 mb-3">
+                                <label class="form-label" for="add-user-company"> رقم المضيف</label>
+                                <input type="text" disabled value="@userIdentity" id="User_name" for="User_name" class="form-control" placeholder="اسم الدخول"
+                                       aria-label="jdoe1" name="User_name">
+                            </div>
+                        </div>
+                        <div class="mb-3" style="margin-right: 70px;">
+
+                            <button class="btn btn-primary data-submit3 me-1 me-sm-3" id="sub" tabindex="0"
+                                    aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasAddUser">
+                                <span>
+                                    <span class="d-none d-lg-inline-block">حفظ</span>
+                                </span>
+                            </button>
+
+
+                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إلغاء</button>
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+
+
+
+             Form with Image horizontal Modal 
+             تفاصيل المستخدم 
+            <div class="modal-onboarding modal fade animate__animated" id="DetailsUserModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl " role="document">
+                    <div class="modal-content ">
+                        <div class="modal-header">
+                            <h1>تفاصيل المستخدم</h1>
+                            <button id="GetEMPTY1" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body onboarding-horizontal justify-content-center align-content-center align-items-center p-2">
+
+                            <div class="row ">
+
+                                <div class="col-12 col-md p-4">
+
+                                    <div class="form-check form-check-inline mt-3">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
+                                        <label class="form-check-label" for="inlineCheckbox1">مدير النظام</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
+                                        <label class="form-check-label" for="inlineCheckbox2">مدير المستخدمون</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
+                                        <label class="form-check-label" for="inlineCheckbox2">موقوف</label>
+                                    </div>
+
+                                </div>
+                                <div class="user-avatar-section">
+                                    <div class="d-flex flex-column ">
+                                        <img class="img-fluid rounded my-0" src="../../assets/img/avatars/9.png" height="110" width="110" alt="User avatar" style="margin-right:30px ;">
+                                        <div class="user-info ">
+                                            <span class="badge bg-label-secondary my-2 " style="margin-right:30px ;">الصورة الشخصية</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive text-nowrap ">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-border-bottom-0" id="tableShow">
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer clearfix">
+                            <div class="col-sm-12 ">
+
+                                <button id="GetEMPTY" class="btn btn-secondary float-end" data-bs-dismiss="modal">إغلاق</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                     </div>
+                    </div> 
+
+                </div>
+                 / Content 
+
+
+
+                <div class="content-backdrop fade"></div>
+            </div>
+             Content wrapper 
+             / Layout page 
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        Controller = "ManageContent";
+    </script>
+
+
+    <script>
+
+        nodata = false;
+        function get_data(Controller) {
+            $.get('/' + Controller + '/GetData', function (data) {
+                if (data.length > 0) {
+                    for (i = 0; i < data.length; i++) {
+                        tmpData = data[i];
+                        $('#index_table').append(`
+                                             <tr id="row_`+ tmpData.id + `">
+
+                                              <td>`+ tmpData.type + `</td>
+                                              <td>`+ tmpData.createdDate + `</td>
+                                                <td>`+ tmpData.usersNameAddType + `</td>
+                                              <td>`+ tmpData.userId + `</td>
+
+                                             
+
+                                             <td>
+                                            <div class="dropdown">
+                                              <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                              </button>
+                                              <div class="dropdown-menu">
+                                                <a onclick="Show(`+ tmpData.id + `)"><i class="dropdown-item" data-bs-toggle="modal" data-bs-target="#DetailsUserModal"><i class="bx bx-show"></i>عرض</i></a>
+                                                <a onclick="edit(`+ tmpData.id + `)" class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>تعديل</a>
+                                                <a onclick="del(`+ tmpData.id + `)" class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>حذف</a>
+
+                                                <a class="dropdown-item" href="javascript:void(0);"><label class="switch switch-primary">
+                                                  <input type="checkbox" class="switch-input" required="">
+                                                  <span class="switch-toggle-slider">
+                                                    <span class="switch-off"></span>
+                                                    <span class="switch-on"></span>
+
+                                                  </span>
+
+                                                </label><span class="act-no"> ---- </span>  تنشيط  </a>
+
+                                              </div>
+                                            </div>
+                                          </td>
+                                            </tr>`
+                        );
+
+                    }
+                }
+            });
+        }
+        get_data(Controller);
+
+        $('#addNewUserForm #sub').on('click', function (e) {
+
+            fm = new FormData($('#addNewUserForm')[0]);
+            data = new URLSearchParams(fm).toString();
+            $.post('/ManageContent/update', data, function (r) {
+                if ($('#change_id').val() != 0) {
+                    id = $('#change_id').val();
+                    $('#row_' + id).children()[1].innerText = $('#farmer_name').val();
+                    $('#change_id').val(0);
+                }
+                else {
+                    $('#index_table').html('');
+                    get_data(Controller);
+                }
+                $('#addNewUserForm').trigger('reset');
+
+            })
+        });
+        //------------------------------------------------
+        function edit(id) {
+            $('#change_id').val(id);
+            $.get("/ManageContent/find?id=" + id, function (data) {
+                $('#Emp_name').val(data.name);
+                $('#User_name').val(data.user_Name);
+                $('#User_Pass').val(data.password);
+                $('#Job_Id').val(data.job_number);
+                $('#User_Job').val(data.job);
+                $('#FolloUP').val(data.followup);
+                $('#User_Dep').val(data.department);
+                $('#User_HomePH').val(data.phone_home);
+                $('#User_Phone').val(data.phone_number);
+                $('#manegar').val(data.manegar);
+                $('#User_Per').val(data._permission);
+                $('#descrabtion').val(data.descrabtion);
+                $('#Email').val(data.email);
+
+            });
+            $('#openpop').click();
+        }
+        //--------------------------------
+        function Show(id) {
+            $.get("/ManageContent/find?id=" + id, function (data) {
+                $('#tableShow').append(`<tr class="border-bottom " id="row1" >
+
+                                    <td> الرقم </td>
+
+                                    <td>`+ data.id + `</td>
+                                    <td> الاسم </td>
+                                    <td> `+ data.name + `</td>
+                                </tr>
+                                <tr class="border-bottom ">
+
+                                    <td> اسم المستخدم </td>
+
+                                    <td> `+ data.user_Name + `</td>
+                                    <td> كلمة السر </td>
+
+                                    <td> `+ data.password + ` </td>
+                                </tr>
+                                <tr class="border-bottom ">
+
+                                    <td> الرقم الوظيفي </td>
+
+                                    <td>`+ data.job_number + `</td>
+                                    <td> الوظيفة </td>
+
+                                    <td> `+ data.job + ` </td>
+                                </tr>
+                                <tr class="border-bottom ">
+
+                                    <td> القطاع </td>
+
+                                    <td> `+ data.followup + ` </td>
+                                    <td> الإدارة/القسم </td>
+
+                                    <td> `+ data.department + ` </td>
+                                </tr>
+                                <tr class="border-bottom ">
+
+                                    <td> هاتف منزل </td>
+
+                                    <td> `+ data.phone_home + ` </td>
+                                    <td> هاتف جوال </td>
+
+                                    <td> `+ data.phone_number + ` </td>
+                                </tr>
+                                <tr class="border-bottom ">
+
+                                    <td> مسؤول مباشر </td>
+
+                                    <td> `+ data.manegar + ` </td>
+                                    <td> صلاحيات </td>
+
+                                    <td> `+ data._permission + ` </td>
+                                </tr>
+                                <tr class="border-bottom ">
+
+                                    <td> ملاحظات </td>
+
+                                    <td> `+ data.descrabtion + ` </td>
+                                    <td> بريد الكتروني </td>
+
+                                    <td> `+ data.email + ` </td>
+                                </tr>` );
+
+}
+            );
+        }
+
+        //-----------------------------------
+
+        //-------------------------------
+        $('#GetEMPTY').on('click', function (e) {
+            $('#tableShow').html('');
+        });
+        //-------------------------------
+        //-------------------------------
+        $('#GetEMPTY1').on('click', function (e) {
+            $('#tableShow').html('');
+        });
+        //-------------------------------
+        function del(id) {
+            $.post("/Users/del", { id: id }, function (data) {
+                $('#row_' + id).remove();
+            });
+        }
+    </script>
+
+
+}

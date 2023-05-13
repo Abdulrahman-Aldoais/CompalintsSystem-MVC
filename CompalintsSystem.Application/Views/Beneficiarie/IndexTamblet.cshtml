@@ -1,0 +1,165 @@
+﻿
+@model IEnumerable<UploadsComplainte>
+
+
+<div class="card">
+    <h5 class="card-header">Ajax Sourced Server-side</h5>
+    <div class="card-datatable text-nowrap">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                        <label>
+                            Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select> entries
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end">
+                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                        <label>
+                            Search:<input type="search"
+                                          class="form-control" placeholder="" aria-controls="DataTables_Table_0">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="datatables-ajax table table-bordered dataTable no-footer" id="DataTables_Table_0"
+                       role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1033px;">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                colspan="1" style="width: 128px;" aria-label="Full name: activate to sort column descending"
+                                aria-sort="ascending">Full name</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                style="width: 160px;" aria-label="Email: activate to sort column ascending">Email</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                style="width: 188px;" aria-label="Position: activate to sort column ascending">Position</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                style="width: 88px;" aria-label="Office: activate to sort column ascending">Office</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                style="width: 82px;" aria-label="Start date: activate to sort column ascending">
+                                Start date
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                style="width: 82px;" aria-label="Salary: activate to sort column ascending">Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr class="odd">
+                            <td class="sorting_1">@item.TitleComplaint</td>
+                            <td>@item.UploadDate</td>
+                            <td>@*@item.Governorates.Go*@</td>
+                            <td>@item.StatusCompalint.Name</td>
+                            <td>2008/11/28</td>
+                            <td>$162,700</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                        Showing 1
+                        to 10 of 57 entries
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
+                                <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0"
+                                   class="page-link">Previous</a>
+                            </li>
+                            <li class="paginate_button page-item active">
+                                <a href="#" aria-controls="DataTables_Table_0"
+                                   data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                            </li>
+                            <li class="paginate_button page-item ">
+                                <a href="#" aria-controls="DataTables_Table_0"
+                                   data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                            </li>
+                            <li class="paginate_button page-item ">
+                                <a href="#" aria-controls="DataTables_Table_0"
+                                   data-dt-idx="3" tabindex="0" class="page-link">3</a>
+                            </li>
+                            <li class="paginate_button page-item ">
+                                <a href="#" aria-controls="DataTables_Table_0"
+                                   data-dt-idx="4" tabindex="0" class="page-link">4</a>
+                            </li>
+                            <li class="paginate_button page-item ">
+                                <a href="#" aria-controls="DataTables_Table_0"
+                                   data-dt-idx="5" tabindex="0" class="page-link">5</a>
+                            </li>
+                            <li class="paginate_button page-item ">
+                                <a href="#" aria-controls="DataTables_Table_0"
+                                   data-dt-idx="6" tabindex="0" class="page-link">6</a>
+                            </li>
+                            <li class="paginate_button page-item next" id="DataTables_Table_0_next">
+                                <a href="#"
+                                   aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Language and options change
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "language": {
+                "lengthMenu": 'Display'
+                    < select >
+
+                    <option value="10">10</option>'+',
+                    < option value = "20" > 20</option> '+',
+            < option value="30" > 30</option> '+',
+            < option value="40" > 40</option > '+',
+            < option value="50" > 50</option > '+',
+            < option value="-1" > All</option > '+',
+
+</select >
+                    }
+                   });
+                 } );
+</script>
+
+
+
+<script>
+    //فلترة نوع الشاكي
+    $("#FilterType").change(function () {
+        var value = $(this).val().toLowerCase();
+        $(".table tbody tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+    //
+</script>
+@*<script>
+
+        $(document).ready(function () {
+            $("#typeComp").change(function () {
+                $('#tableComp').childern("tr").remove();
+                $.get("/UploadsComplainte/ViewCompalintsByStutas", { id: $('#typeComp').val() }, function (data) {
+                    $.each(data, function (Index, row) {
+                        $('#tableComp').oppend("<tr><td>" + row.Id + "</td><td>" + row.TitleComplaint + "</td><td>"
+                            + row.CompDate + "</td><tr>");
+                    });
+                });
+            });
+        });
+    </script>*@

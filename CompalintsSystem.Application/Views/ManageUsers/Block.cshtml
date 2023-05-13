@@ -1,0 +1,233 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CompalintsSystem.Core;
+@inject UserManager<ApplicationUser> UserManager;
+@inject RoleManager<IdentityRole> roleManager;
+@inject SignInManager<ApplicationUser> signInManager;
+@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "كل المستخدمين";
+    ViewData["subTitle"] = " المقيدة";
+}
+
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <!-- Users List Table -->
+
+
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="breadcrumb-wrapper py-3 mb-4">
+                <span class="text-muted fw-light">الحسابات    /</span> مدراء المحافظة
+            </h4>
+
+
+
+
+
+            <!--    الجدول -->
+
+
+
+            <div class="card">
+
+                <div class="row mx-2  ">
+                    <div class="col-6">
+                        <div class="t-d">
+                            <h5 class="card-header title-t" style="margin-left: 0rem;"> مدراء المحافظة</h5>
+                        </div>
+
+                    </div>
+                    <div class="col-6" style="text-align-last: end; margin-top: 19px;">
+                        <button class="dt-button buttons-collection btn btn-label-primary  me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true" aria-expanded="false">
+                            <span>
+                                522<i class=""></i>
+                                <span class="d-none d-sm-inline-block">العدد الكلي</span>
+                            </span>
+                        </button>
+                    </div>
+
+
+
+
+
+                </div>
+
+
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                      
+                        <div class="table-responsive text-nowrap">
+                            <table class="table">
+
+                                <thead>
+                                    <tr>
+
+                                        <th> الاسم </th>
+                                        <th> المحافظة </th>
+                                        <th> الصلاحية </th>
+                                        <th>تاريخ الانشاء </th>
+                                        <th>الفعالية</th>
+                                        <th>تغير الحالة</th>
+                                        <th> إجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+
+                                            <td>@user.FullName </td>
+                                            <td>
+                                                @*@foreach (Governorate gov  in Model.)
+                                                    {*@
+                                                @user.Governorate.Name
+                                            </td>
+
+                                            <td>
+                                                @if (await UserManager.IsInRoleAsync(user, UserRoles.AdminGeneralFederation))
+                                                {
+                                                    <span class="badge bg-label-success">مدير اتحاد</span>
+                                                }
+                                                else if (await UserManager.IsInRoleAsync(user, UserRoles.AdminGovernorate))
+                                                {
+                                                    <span class="badge bg-label-warning"> مدير محافظة</span>
+                                                }
+                                                else if (await UserManager.IsInRoleAsync(user, UserRoles.AdminDirectorate))
+                                                {
+                                                    <span class="badge bg-label-warning"> مدير مديرة</span>
+                                                }
+                                                else if (await UserManager.IsInRoleAsync(user, UserRoles.AdminSubDirectorate))
+                                                {
+                                                    <span class="badge bg-label-warning"> مدير عزلة</span>
+                                                }
+                                               
+                                                else if (await UserManager.IsInRoleAsync(user, UserRoles.Beneficiarie))
+                                                {
+                                                    <span class="badge bg-label-warning">مستخدم عادي</span>
+                                                }
+                                            </td>
+
+
+
+                                            <td>@user.CreatedDate</td>
+
+                                            @if (user.IsBlocked == true)
+                                            {
+
+
+                                                <td>
+                                                    <span class="badge bg-danger text-white@(user.IsBlocked)">
+
+                                                        <i class="fa fa-circle" aria-hidden="true"> @(user.IsBlocked ?"مقيد": "نشط")</i>
+                                                    </span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="badge bg-success text-white@(user.IsBlocked)">
+
+                                                        <i class="fa fa-circle" aria-hidden="true"> @(user.IsBlocked ?"مقيد": "نشط")</i>
+                                                    </span>
+                                                </td>
+                                            }
+
+
+                                            <td>
+                                                <form asp-action="ChaingeStatus" id="Status-Form-@user.Id">
+                                                    <input type="hidden" name="Id" value="@user.Id" />
+                                                    <select class="form-select " onchange="document.getElementById('Status-Form-@user.Id').submit()" name="IsBlocked">
+                                                        <option value="">اختر</option>
+                                                        <option value="false">تنشيط</option>
+                                                        <option value="true">توقيف</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+
+                                            <td style="">
+                                                <div class="d-inline-block">
+                                                    <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item" asp-action="Details" asp-route-id="@user.Id">عرض</a></li>
+
+                                                        <li>
+                                                            <a class="dropdown-item text-danger delete-record" asp-action="Delete" asp-route-id="@user.Id">حذف</a>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                                <a class="btn btn-sm btn-icon item-edit" asp-action="Edit" asp-route-id="@user.Id"><i class="bx bxs-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        @*@{
+                                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                            }
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                    <nav aria-label="Page navigation" class="m-4">
+                                        <ul class="pagination pagination-sm justify-content-end ">
+                                            <li class="page-item prev mr">
+
+                                                <a asp-action="Index"
+                                                   asp-route-pageNumber="@(Model.PageIndex-1)"
+                                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                                   class="tf-icon bx bx-chevrons-left @prevDisabled">
+                                                    السابق
+
+                                                </a>
+
+
+                                            </li>
+
+                                            <li class="page-item next">
+
+                                                <a asp-action="Index"
+                                                   asp-route-pageNumber="@(Model.PageIndex+1)"
+                                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                                   class="tf-icon bx bx-chevrons-right @nextDisabled">
+
+                                                    التالي
+
+                                                </a>
+
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+</div>
+@section Scripts{
+
+
+    <script>
+        //فلترة نوع الشاكي
+        $("#FilterUsers").change(function () {
+            var value = $(this).val().toLowerCase();
+            $(".table tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,194 @@
+﻿
+
+
+
+<div class="card  border-bottom  m-4">
+    <div class="card card-headerText" style="margin-bottom: 2px;">
+        <div class="card-header border-bottom  ">
+
+            <div class="row ">
+                <div class=" col-md-11">
+                    <i class="menu-icon tf-icons bx bx-carousel"></i>    تقارير النظام
+                </div>
+
+                <div class="card-header border-bottom cardhead">
+                    <div class=" ">
+                        <input type="button" value="طباعة" class="bx bx-printer me-2"
+                               onclick="printDiv()">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="p-4 ">
+        <h3 class="card-title mb-2">  عدد المستخدمين في المحافظات</h3>
+        <div class="table-responsive text-nowrap mt-4 mb-4">
+            <table class="table table-bordered table table-bordered">
+                <thead>
+                    <tr>
+
+                        <th> المحافظة</th>
+                        <th>العدد </th>
+                        <th> النسبة </th>
+                        @*<th> المحافظة </th>
+                            <th> البلاغات </th>
+                            <th> العدد </th>
+                            <th> النسبة </th>*@
+
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in ViewBag.totalGovermentuser)
+                    {
+                        <tr>
+                            <td>@item.Name </td>
+                            <td>@item.totalUsers</td>
+
+                            <td>% @(Math.Round(@item.Users, 2))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="p-4 ">
+        <h3 class="card-title mb-2">  احصائيات انواع الموضفين</h3>
+        <div class="table-responsive text-nowrap mt-4 mb-4">
+            <table class="table table-bordered table table-bordered">
+                <thead>
+                    <tr>
+                        <th> نوع الصلاحية</th>
+                        <th>العدد </th>
+                        <th> النسبة المؤوية</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in ViewBag.totalUserByRoles)
+                    {
+                        <tr>
+                            <td>@item.RoleName </td>
+                            <td>@item.TotalCount</td>
+
+                            <td>%@(Math.Round(@item.RolsTot, 2))</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="p-4 ">
+        <h3 class="card-title mb-2">  احصائيات انواع الشكاوى</h3>
+        <div class="table-responsive text-nowrap mt-4 mb-4">
+            <table class="table table-bordered table table-bordered">
+                <thead>
+                    <tr>
+
+                        <th> نوع الشكوى</th>
+                        <th>العدد </th>
+                        <th> النسبة المؤوية</th>
+
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in ViewBag.GrapComplanrType)
+                    {
+                        <tr>
+
+                            <td>@item.Name </td>
+                            <td>@item.TotalCount</td>
+
+                            <td>%@(Math.Round(@item.TypeComp, 2))</td>
+
+
+                        </tr>
+
+                    }
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="p-4 ">
+        <h3 class="card-title mb-2">  احصائيات حالات الشكاوى</h3>
+        <div class="table-responsive text-nowrap mt-4 mb-4">
+            <table class="table table-bordered table table-bordered">
+                <thead>
+                    <tr>
+
+                        <th>  الحالة</th>
+                        <th>العدد </th>
+                        <th> النسبة المؤوية</th>
+
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in ViewBag.GrapComplanrStutus)
+                    {
+                        <tr>
+
+                            <td>@item.Name </td>
+                            <td>@item.TotalCountStutus</td>
+
+                            <td>%@(Math.Round(@item.stutus, 2))</td>
+
+
+                        </tr>
+
+                    }
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="p-4 ">
+        <h3 class="card-title mb-2">  احصائيات البلاغات</h3>
+        <div class="table-responsive text-nowrap mt-4 mb-4">
+            <table class="table table-bordered table table-bordered">
+                <thead>
+                    <tr>
+
+                        <th>  البلاغ</th>
+                        <th>العدد </th>
+                        <th> النسبة المؤوية</th>
+
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in ViewBag.totalcommunications)
+                    {
+                        <tr>
+
+                            <td>@item.Name </td>
+                            <td>@item.TotalCount</td>
+
+                            <td>%@(Math.Round(@item.TypeComp, 2))</td>
+
+
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Column Chart -->
+   
+</div>
+<!-- / Content -->

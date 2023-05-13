@@ -1,0 +1,179 @@
+/*
+* layout-example.css
+* File include layout example pages related css only.
+******************************************************************************/
+
+/* The browser window */
+.layout-example-window {
+  border: 3px solid rgba(0, 0, 0, 0.08);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* Container for columns and the top "toolbar" */
+.layout-example-toolbar {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.08);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* Three button */
+.layout-example-button {
+  margin-top: 4px;
+  height: 12px;
+  width: 12px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.layout-example-button-close {
+  background: #ed594a;
+}
+
+.layout-example-button-minimize {
+  background: #fdd800;
+}
+
+.layout-example-button-expand {
+  background: #5ac05a;
+}
+
+.layout-example-content {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 0px;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.layout-example-content .layout-example-content {
+  margin-top: 10px;
+}
+
+.layout-example-content code {
+  background: none;
+  color: #666;
+}
+
+.layout-example-content-inner {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 500px;
+}
+
+.layout-example-content-menu {
+  width: 24%;
+  background: #2a9d8f;
+}
+
+.layout-example-content-menu code {
+  color: #fff;
+}
+
+.layout-example-content-nav {
+  background: #457b9d;
+}
+
+.layout-example-content-nav code {
+  color: #fff;
+}
+
+.layout-example-content-wrapper {
+  background: #9db4c0;
+}
+
+.layout-example-content-wrapper code {
+  color: #fff;
+}
+
+.layout-example-navbar-full .layout-example-content-wrapper {
+  width: 74%;
+}
+
+.layout-example-content-navbar .layout-example-content-page {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 74%;
+}
+
+.layout-example-content-navbar > .layout-example-content {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.layout-example-content-navbar .layout-example-content-wrapper {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.layout-example-navbar-full-no-menu .layout-example-content-wrapper {
+  width: 100%;
+}
+
+.layout-example-code {
+  display: block;
+  overflow: auto;
+  margin: 0;
+  padding: 30px;
+  min-width: 0;
+  width: 100%;
+  background: #fff;
+}
+
+.layout-example-run {
+  display: inline-block;
+  margin: 3px;
+  padding: 4px 6px;
+  border: 1px solid #eee;
+  background: transparent;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.layout-example-horizontal .layout-example-content-inner {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.layout-example-horizontal .layout-example-content-inner > .layout-example-content {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.layout-example-horizontal .layout-example-content-inner .layout-example-content-page-fluid {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.layout-example-horizontal .layout-example-content-menu-horizontal {
+  background: #2a9d8f;
+}
+
+.layout-example-horizontal .layout-example-content-page-fluid {
+  background: #fff;
+}
+
+.layout-example-horizontal .layout-example-content-page-fluid code {
+  color: #666;
+}
+
+.layout-example-horizontal .layout-example-content-footer {
+  background: #e63946;
+}
+
+.layout-example-sidebar {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 0px;
+  background: rgba(0, 0, 0, 0.04);
+  height: 100%;
+}

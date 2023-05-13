@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "AccessDenied";
+    string returnUrl = ViewData["returnUrl"] as string;
+    Layout = null;
+}
+
+<div class="d-flex flex-column justify-content-center align-items-center ">
+    <h2>
+        لا يسمح لك بالدخول
+        حسابك موقف!  الرجاء تنشيط الحساب من قبل المسؤول
+        @returnUrl
+    </h2>
+    <img style="max-width:50%;max-height:25%" src="/no.jpg" alt="Alternate Text" />
+</div>

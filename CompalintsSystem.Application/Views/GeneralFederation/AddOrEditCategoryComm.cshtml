@@ -1,0 +1,92 @@
+﻿
+@model TypeCommunication
+
+
+@{ Layout = null; }
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEditCategoryComm" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">اكتب النوع</label>
+                        <input asp-for="Type" class="form-control" />
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer border-0 justify-content-start">
+                <button type="submit" class="btn btn-primary">حفظ التغير</button>
+                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                    إغلاق
+                </button>
+            </div>
+         
+        </form>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        //------------------Success with Icon and Close------------------
+        function showSuccessBootstrapWithClose() {
+            $("#successBootstrapWithClose").show();
+        }
+        function closeSuccessBootstrapWithClose() {
+            $("#successBootstrapWithClose").hide();
+        }
+        //------------------Danger with Icon and Close------------------
+        function showDangerBootstrapWithClose() {
+            $("#dangerBootstrapWithClose").show();
+        }
+        function closeDangerBootstrapWithClose() {
+            $("#dangerBootstrapWithClose").hide();
+        }
+        //------------------Warning with Icon and Close------------------
+        function showWarningBootstrapWithClose() {
+            $("#warningBootstrapWithClose").show();
+        }
+        function closeWarningBootstrapWithClose() {
+            $("#warningBootstrapWithClose").hide();
+        }
+        //------------------Info with Icon and Close------------------
+        function showInfoBootstrapWithClose() {
+            $("#infoBootstrapWithClose").show();
+        }
+        function closeInfoBootstrapWithClose() {
+            $("#infoBootstrapWithClose").hide();
+        }
+        //------------------Auto Close Success Alert------------------
+        function showAutoCloseSuccessAlert() {
+            $("#successAutoClose").show();
+            $("#successAutoClose").delay(1500).fadeOut(); //fade out after 1.5 seconds
+        }
+        //------------------Auto Close Danger Alert------------------
+        function showAutoCloseDangerAlert() {
+            $("#dangerAutoClose").show();
+            $("#dangerAutoClose").delay(1500).fadeOut(); //fade out after 1.5 seconds
+        }
+        //------------------Auto Close Warning Alert------------------
+        function showAutoCloseWarningAlert() {
+            $("#warningAutoClose").show();
+            $("#warningAutoClose").delay(1500).fadeOut(); //fade out after 1.5 seconds
+        }
+        //------------------Auto Close Info Alert------------------
+        function showAutoCloseInfoAlert() {
+            $("#infoAutoClose").show();
+            $("#infoAutoClose").delay(1500).fadeOut(); //fade out after 1.5 seconds
+        }
+    </script>
+}

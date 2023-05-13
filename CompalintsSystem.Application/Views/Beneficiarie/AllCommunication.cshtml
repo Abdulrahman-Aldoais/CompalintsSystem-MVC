@@ -1,0 +1,226 @@
+﻿@model IEnumerable<UsersCommunication>
+
+
+
+
+@{
+    ViewData["Title"] = " البلاغات ";
+}
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <!-- Users List Table -->
+
+
+
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="breadcrumb-wrapper py-3 mb-4">
+                <span class="text-muted fw-light">  </span>البلاغات المقدمة من قبلي
+            </h4>
+
+            <div class="card">
+
+                <div class="row mx-2  ">
+                    <div class="col-md-6">
+                        <div class="t-d">
+                            <h5 class="card-header title-t"> البلاغات</h5>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="dropdown" style="text-align-last: end;">
+
+                            @{
+
+
+                                <div class="btn-group">
+                                    <span class="badge bg-label-primary badgess " style="    padding-left: 36px;
+                        line-height: 1.99;
+                        width: 152.35px;">العدد الكلي @ViewBag.totalCompalints</span>
+                    </div>
+
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                        <div class="row mx-2 border-bottom ">
+                            <div class="row align-items-start">
+                                <label class="form-label"> عرض حسب</label>
+                                <div class="row align-items-start">
+                                    <div class="category-filter" style="width:150px">
+                                        <select id="FilterType"
+                                                class="select2 form-select select2-hidden-accessible"
+                                                tabindex="-1" aria-hidden="true" data-select2-id="10">
+                                            <option value="0" data-select2-id="12">عرض</option>
+                                            <option value="جديدة">جديدة</option>
+                                            <option value="محلولة">محلولة</option>
+                                            <option value="غير محلولة">غير محلولة</option>
+                                            <option value="مرفوعة">مرفوعة</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-md-6  d-flex mb-4 justify-content-center justify-content-md-start">
+                                        <div class="me-3 table-type search-paddind">
+
+                                            <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                <label><input type="search" id="CustomSearchTextField" class="form-control" placeholder="البحث" aria-controls="DataTables_Table_0"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="table-responsive text-nowrap">
+                            <table id="example" class="datatables-users table border-top ">
+
+                                <thead>
+                                    <tr>
+                                        <th>عنوان البلاغ </th>
+                                        <th>تاريخ البلاغ </th>
+                                        <th> نوع البلاغ </th>
+                                        <th>  اسم المبلغ علية</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @if (Model.Count() == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="3" style="color:red">
+                                                لا يوجد نتائج
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+
+                                                @if (item.Titile.Length > 20)
+                                                {
+                                                    item.Titile.Substring(0, 20);
+                                                    <td>
+                                                        @item.Titile.Substring(0, 20)
+
+                                                    </td>
+                                                }
+                                                <td> @item.CreateDate </td>
+                                                <td> @item.TypeCommunication.Type </td>
+                                                <td> @item.User.FullName </td>
+                                                @*<td> @item.BenfName </td>*@
+
+
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn dropdown-toggle hide-arrow p-0"
+                                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="عرض البلاغ.html">
+                                                                <i class="bx bxs-bar-chart-alt-2 icon-padding icon-color"></i>
+
+                                                                عرض
+                                                            </a>
+                                                            <a class="dropdown-item" href="javascript:void(0);" id="confirm-text">
+                                                                <i class="bx bxs-trash-alt icon-padding delet-color" aria-hidden="true"></i>
+                                                                حذف
+                                                            </a>
+
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+
+
+    <script>
+
+
+        $('#CustomSearchTextField').keyup(function () {
+
+            oTable.search($(this).val()).draw();
+
+        });
+
+        var oTable = $('#example').DataTable({
+
+            language: {
+                "loadingRecords": "جارٍ التحميل...",
+                "lengthMenu": "أظهر _MENU_ مدخلات",
+                "zeroRecords": "لم يعثر على أي شكوى",
+                "info": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "search": "ابحث:",
+                "searchPlaceholder": "بحث عن شكوى",
+                "paginate": {
+                    "first": "الأول",
+                    "previous": "السابق",
+                    "next": "التالي",
+                    "last": "الأخير"
+                }
+
+            },
+
+            "paging": true,
+            "lengthChange": false,
+            /*"searching": true,*/
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": false,
+            "searching": true,
+            //dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 4,
+            //lengthMenu: [5, 10, 25, 50, 75, 100],
+            //"columnDefs": [
+            //    target: 1,
+            //    ordering: true
+            //],
+        });   //using Capital D, which is mandatory to retrieve "api" datatables' object, latest jquery Datatable
+
+
+
+
+
+    </script>
+}
+
+

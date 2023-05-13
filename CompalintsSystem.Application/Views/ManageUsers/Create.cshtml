@@ -1,0 +1,333 @@
+﻿@model AddUserViewModel
+
+@{
+    ViewData["Title"] = "Regster";
+
+}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="breadcrumb-wrapper py-3 mb-4">
+        <span class="text-muted fw-light">الحسابات   /</span> إضافة حساب موظف
+    </h4>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+            </ul>
+            <div class="card mb-4">
+                <h5 class="card-header">إضافة حساب موظف </h5>
+                <!-- Account -->
+                <form asp-action="Create" asp-controller="ManageUsers" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <hr class="my-0" />
+                    <div class="card-body">
+
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FullName" class="form-label">الاسم كاملاً</label>
+                                <input asp-for="FullName" class="form-control" type="text" />
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IdentityNumber">الرقم الوطني</label>
+                                <input asp-for="IdentityNumber" class="form-control" type="text" />
+                                <span asp-validation-for="IdentityNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PhoneNumber">رقم التلفون</label>
+                                <input asp-for="PhoneNumber" class="form-control" type="text" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+
+
+
+
+                            <div class=" form-group form-check col-md-6 mb-3">
+                                <label for="state" class="form-label">تاريخ الميلاد</label>
+                                <input asp-for="DateOfBirth" class="form-control datepicker" />
+                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="form-group form-password-toggle">
+                                <label asp-for="userRoles" class="control-label"></label>
+                                @if (User.IsInRole("AdminGeneralFederation"))
+                                {
+                                    <select asp-for="userRoles" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة"},
+                                          new SelectListItem { Selected = false, Text = "مدير إتحاد عام", Value = 1.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير محافظة", Value = 2.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير مديرية", Value = 3.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير عزلة", Value = 4.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+                                }
+                                else if (User.IsInRole("AdminGovernorate"))
+                                {
+
+                                    <select asp-for="userRoles" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة"},
+
+                                          new SelectListItem { Selected = false, Text = " مدير مديرية", Value = 3.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مدير عزلة", Value = 4.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+
+
+                                }
+                                else if (User.IsInRole("AdminDirectorate"))
+                                {
+
+                                    <select asp-for="userRoles" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة"},
+
+                                           new SelectListItem { Selected = false, Text = " مدير عزلة", Value = 4.ToString() },
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+
+                                }
+                                else if (User.IsInRole("AdminSubDirectorate"))
+                                {
+                                    <select asp-for="userRoles" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                                      {   new SelectListItem { Selected = true, Text = "قم بإختيار الصلاحية الممنوحة"},
+
+
+                                          new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
+
+                                }
+                                <span asp-validation-for="userRoles" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label class="col-form-label">المحافظة</label>
+                                <select id="Governorates" class="form-control" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.ViewGover,"Id","Name"))">
+                                    <option value="">حدد المحافظة</option>
+
+                                </select>
+                                <span asp-validation-for="GovernorateId" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label class="col-form-label ">المديرية</label>
+                                <select id="Directorates" class="form-control " asp-for="DirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
+                                    <option value="">حدد المديرية</option>
+                                </select>
+                                <span asp-validation-for="DirectorateId" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label class="col-form-label">العزل</label>
+                                <select id="SubDirectorate" class="form-control" asp-for="SubDirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
+                                    <option value="">حدد العزلة</option>
+                                </select>
+                                <span asp-validation-for="SubDirectorateId" class="text-danger"></span>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="address" class="form-label">الفعالية</label>
+                            <input class="form-check-input" asp-for="IsBlocked" />
+                            <span asp-validation-for="IsBlocked" class="text-danger"></span>
+
+                        </div>
+                        <div class="form-group form-password-toggle ">
+                            <label class="form-label">كلمة المرور</label>
+                            <div class="input-group input-group-merge">
+                                <input id="password" asp-for="Password" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-password-toggle ">
+                            <label class="form-label" for="password"> تاكيد كلمة المرور </label>
+                            <div class="input-group input-group-merge">
+                                <input asp-for="PasswordConfirm" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                            <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                        </div>
+
+                        <div class="mt-2">
+                            <button type="submit" value="Create" id="createButton" class="btn btn-primary me-2">حفظ </button>
+                            @* <input type="submit" id="btnCreate" class="btn btn-label-success me-2" onclick="Validate(this, event);" value="حفظ" />*@
+                            <button type="reset" class="btn btn-label-primary">إلغاء</button>
+                        </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /Account -->
+</div>
+
+
+
+
+
+
+@section Scripts {
+
+    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+    <partial name="_ValidationScriptsPartial" />
+
+    @*<script>
+            'use strict';
+            (function () {
+                const createButton = document.querySelector('#createButton');
+                // Alert With Functional Confirm Cancel Button
+                if (createButton) {
+                    createButton.onclick = function () {
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                });
+            }
+        </script>*@
+
+    <script>
+        'use strict';
+        (function () {
+            const createButton = document.querySelector('#createButton');
+            // Alert With Functional Confirm Cancel Button
+            if (createButton) {
+                createButton.onclick = function () {
+                    var inputData = $('form').serializeArray();
+                    $.ajax(
+                        {
+                            type: "POST", //HTTP POST Method
+                            url: "Create", // Controller/View
+                            data: inputData,
+                            error: function () {
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: ' يرجى ادخال بيانات المستخدم بشكل كامل!',
+                                    icon: 'error',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                });
+                                // Error Alert
+
+                            },
+                        });
+                    Swal.fire({
+
+                        title: 'هل انت متأكد من حفظ المستخدم؟',
+                        text: "لن تتمكن من العوده الى المستخدم !",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'نعم, حفظ !',
+                        CancelButtonText: 'إلغاء',
+                        customClass: {
+                            confirmButton: 'btn btn-primary me-3',
+                            cancelButton: 'btn btn-label-secondary'
+                        },
+                        buttonsStyling: false
+                    }).then(function (result) {
+                        if (result.value) {
+                            Swal.fire({
+                                type: "POST", //HTTP POST Method
+                                url: "GeneralFederation/ViewUsers", // Controller/View
+                                icon: 'success',
+                                title: 'تم الحفظ بنجاح !',
+                                text: 'تم الحفظ في  جدول المستخدمين.   ',
+                                customClass: {
+                                    confirmButton: 'btn btn-success',
+
+                                },
+
+
+
+                            });
+
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire({
+                                title: 'الغاء الحفظ',
+                                text: 'لا زال المستخدم قيد التعديل :)',
+                                icon: 'error',
+                                customClass: {
+                                    confirmButton: 'btn btn-success'
+                                }
+                            });
+                        }
+                    });
+                };
+            }
+        })();
+    </script>
+
+    @*<input type="submit" id="btnCreate" onclick="Validate(this, event);" value="Create" />*@
+
+    <script>
+        // catch select inputs
+        var govers = document.querySelector("#Governorates")
+        var directs = document.querySelector("#Directorates")
+        var subDircts = document.querySelector('#SubDirectorate')
+
+        // update functions
+        function updateSubDirects() {
+            console.log(directs.value)
+            fetch('/ManageUsers/GetSubDirectorate/' + directs.value)
+                .then(response => {
+                    return response.json()
+                })
+                .then(results => {
+                    subDircts.innerHTML = ''
+                    for (result in results) {
+                        subDircts.innerHTML += `<option value="${results[result].value}"> ${results[result].text} </option>`
+                    }
+                })
+        }
+
+        function updateDirects() {
+            fetch('/ManageUsers/GetDirectorateies/' + govers.value)
+                .then(response => {
+                    return response.json()
+                })
+                .then(results => {
+                    directs.innerHTML = ''
+                    for (result in results) {
+                        directs.innerHTML += `<option value="${results[result].value}"> ${results[result].text} </option>`
+                    }
+                    updateSubDirects()
+                })
+        }
+
+        // listen to changes
+        govers.addEventListener('change', () => {
+            updateDirects()
+        })
+
+        directs.addEventListener('change', () => {
+            updateSubDirects()
+        })
+    </script>
+
+
+
+
+
+}
