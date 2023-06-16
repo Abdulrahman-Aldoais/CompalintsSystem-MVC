@@ -89,30 +89,6 @@
     </li>
 
 
-    
-    <!-- التعميمات -->
-    @*<li class="menu-item   @(ViewContext.RouteData.Values["Action"].ToString()=="البلاغات"?"open":"")
-                             @(ViewContext.RouteData.Values["Action"].ToString()=="AllCommunication"?"open":"")">
-            <a class="menu-link menu-toggle">
-                <i class="fa fa-flag" aria-hidden="true"></i>
-                <div data-i18n="التعميمات" style="margin-right: 14px;">التعميمات</div>
-
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AllCirculars"?"active":"")">
-                    <a href="/GeneralFederation/AllCirculars" class="menu-link">
-                        <div data-i18n="البلاغات" style="margin-right: 14px;">التعميمات</div>
-                    </a>
-                </li>
-                <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AddCirculars"?"active":"")">
-                    <a href="/GeneralFederation/AddCirculars" class="menu-link">
-                        <div data-i18n="إضافة بلاغ على موظف"> إضافة تعميم</div>
-                    </a>
-                </li>
-
-            </ul>
-        </li>*@
-
 
 
 
@@ -141,12 +117,12 @@
                     <div>حسابات الموظفين</div>
                 </a>
             </li>
-            <li class="menu-item 
+            @*<li class="menu-item 
                 @(ViewContext.RouteData.Values["Action"].ToString()=="Create"?"active":"")">
                 <a onclick="showInPopup('@Url.Action("Create", "GeneralFederation", null, Context.Request.Scheme)')" class="menu-link">
                     <div>اضافة حساب موظف </div>
                 </a>
-            </li>
+            </li>*@
 
             <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"active":"")">
                 <a href="/GeneralFederation/AccountRestriction" class="menu-link">

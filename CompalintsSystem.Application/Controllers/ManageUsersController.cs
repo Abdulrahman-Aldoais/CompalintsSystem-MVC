@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CompalintsSystem;
 using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.ViewModels;
@@ -8,7 +7,6 @@ using CompalintsSystem.EF.DataBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -221,21 +219,42 @@ namespace CompalintsSystem.Application.Controllers
         }
 
 
+
         [HttpGet]
-        public async Task<IActionResult> GetDirectorateies(int id)
+        public async Task<IActionResult> GetDirectoratesByGovernorateId(int governorateId)
         {
-            List<Directorate> directorate = new List<Directorate>();
-            directorate = await _context.Directorates.Where(m => m.GovernorateId == id).ToListAsync();
-            return Json(new SelectList(directorate, "Id", "Name"));
+            var directorates = await _context.Directorates.Where(d => d.GovernorateId == governorateId).ToListAsync();
+
+            var result = directorates.Select(d => new { id = d.Id, name = d.Name }).ToList();
+
+            return Json(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSubDirectorate(int id)
+        public async Task<IActionResult> GetSubDirectoratesByDirectorateId(int directorateId)
         {
-            List<SubDirectorate> subdirectorate = new List<SubDirectorate>();
-            subdirectorate = await _context.SubDirectorates.Where(m => m.DirectorateId == id).ToListAsync();
-            return Json(new SelectList(subdirectorate, "Id", "Name"));
+            var subDirectorates = await _context.SubDirectorates.Where(s => s.DirectorateId == directorateId).ToListAsync();
+
+            var result = subDirectorates.Select(s => new { id = s.Id, name = s.Name }).ToList();
+
+            return Json(result);
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetDirectorateies(int id)
+        //{
+        //    List<Directorate> directorate = new List<Directorate>();
+        //    directorate = await _context.Directorates.Where(m => m.GovernorateId == id).ToListAsync();
+        //    return Json(new SelectList(directorate, "Id", "Name"));
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetSubDirectorate(int id)
+        //{
+        //    List<SubDirectorate> subdirectorate = new List<SubDirectorate>();
+        //    subdirectorate = await _context.SubDirectorates.Where(m => m.DirectorateId == id).ToListAsync();
+        //    return Json(new SelectList(subdirectorate, "Id", "Name"));
+        //}
 
 
 

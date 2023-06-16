@@ -1,9 +1,10 @@
 ﻿using CompalintsSystem.Core;
-using CompalintsSystem.Core.Interfaces;
-using CompalintsSystem.Core.ViewModels;
+using CompalintsSystem.Core.Constants;
 using CompalintsSystem.Core.Hubs;
+using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.Statistics;
+using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.EF.DataBase;
 using ComplantSystem;
 using Microsoft.AspNetCore.Authorization;
@@ -25,13 +26,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using static CompalintsSystem.Core.HelperModal;
-using Microsoft.VisualBasic;
-using CompalintsSystem.Core.Constants;
 
 namespace CompalintsSystem.Application.Controllers
 {
 
-    [Authorize(Roles = "AdminGeneralFederation")]
+    [Authorize(Policy = "AdminPolicy")]
     public class GeneralFederationController : Controller
     {
 
@@ -125,20 +124,30 @@ namespace CompalintsSystem.Application.Controllers
 
             //-------------أحصائيات انواع الشكاوى --------------------//
 
+            // استرداد جميع شكاوى الرفع من قاعدة البيانات مع تضمين نوع الشكوى
             List<UploadsComplainte> compalints = await _context.UploadsComplaintes
                 .Include(su => su.TypeComplaint).ToListAsync();
+
+            // إنشاء قائمة للاحصائيات التي سيتم عرضها في المخطط البياني
             List<TypeCompalintStatistic> typeCompalints = new List<TypeCompalintStatistic>();
+
+            // استرداد القائمة من ViewBag
             typeCompalints = ViewBag.GrapComplanrType;
 
+            // حساب إجمالي عدد شكاوى الرفع
             int totalcomplant = compalints.Count();
+
+            // إضافة إجمالي عدد شكاوى الرفع إلى ViewBag
             ViewBag.Totalcomplant = totalcomplant;
 
-            ViewBag.GrapComplanrType = compalints.GroupBy(x => x.TypeComplaintId).Select(g => new TypeCompalintStatistic
-            {
-                Name = g.First().TypeComplaint.Type,
-                TotalCount = g.Count().ToString(),
-                TypeComp = (g.Count() * 100) / totalcomplant
-            }).ToList();
+            // تجميع الشكاوى الرفع حسب نوعها وإنشاء قائمة من الإحصائيات
+            ViewBag.GrapComplanrType = compalints.GroupBy(x => x.TypeComplaintId)
+                .Select(g => new TypeCompalintStatistic
+                {
+                    Name = g.First().TypeComplaint.Type,
+                    TotalCount = g.Count().ToString(),
+                    TypeComp = (g.Count() * 100) / totalcomplant
+                }).ToList();
 
 
 
@@ -149,22 +158,31 @@ namespace CompalintsSystem.Application.Controllers
             //-------------أحصائيات حالات الشكاوى --------------------//
 
 
+            // استرداد جميع شكاوى الرفع من قاعدة البيانات مع تضمين حالة الشكوى
             List<UploadsComplainte> stutuscompalints = await _context.UploadsComplaintes
                 .Include(su => su.StatusCompalint).ToListAsync();
+
+            // إنشاء قائمة للاحصائيات التي سيتم عرضها في المخطط البياني
             List<StutusCompalintStatistic> stutusCompalints = new List<StutusCompalintStatistic>();
+
+            // استرداد القائمة من ViewBag
             stutusCompalints = ViewBag.GrapComplanrStutus;
 
+            // حساب إجمالي عدد شكاوى الرفع
             int totalStutuscomplant = stutuscompalints.Count();
+
+            // إضافة إجمالي عدد شكاوى الرفع إلى ViewBag
             ViewBag.TotalStutusComplant = totalStutuscomplant;
 
-            ViewBag.GrapComplanrStutus = stutuscompalints.GroupBy(s => s.StatusCompalintId).Select(g => new StutusCompalintStatistic
-            {
-                //id = 
-                Name = g.First().StatusCompalint.Name,
-                TotalCountStutus = g.Count().ToString(),
-                stutus = (g.Count() * 100) / totalStutuscomplant
-            }).ToList();
-
+            // تجميع الشكاوى الرفع حسب حالتها وإنشاء قائمة من الإحصائيات
+            ViewBag.GrapComplanrStutus = stutuscompalints.GroupBy(s => s.StatusCompalintId)
+                .Select(g => new StutusCompalintStatistic
+                {
+                    //id = 
+                    Name = g.First().StatusCompalint.Name,
+                    TotalCountStutus = g.Count().ToString(),
+                    stutus = (g.Count() * 100) / totalStutuscomplant
+                }).ToList();
             //------------- نهاية أحصائيات حالات الشكاوى --------------------//
 
 
@@ -382,19 +400,25 @@ namespace CompalintsSystem.Application.Controllers
 
             //-------------  أحصائيات انواع اليلاغات    --------------------//
 
+            // استرداد جميع سجلات الاتصال الموجودة مع بيانات نوع الاتصال المرتبطة بها
             List<UsersCommunication> communcations = await _context.UsersCommunications
                 .Include(su => su.TypeCommunication).ToListAsync();
+
+            // إنشاء قائمة جديدة لتخزين نتائج الإحصائيات
             List<TypeCommunicationStatistic> TotalTypeCommuncations = new List<TypeCommunicationStatistic>();
 
+            // حساب إجمالي عدد الاتصالات
             int totalCommunication = communcations.Count();
 
+            // تعيين القيمة الإجمالية لعدد الاتصالات
             TotalTypeCommuncations = ViewBag.typeCommun;
 
+            // تحديد الإحصائيات لكل نوع اتصال وإضافتها إلى قائمة الإحصائيات
             ViewBag.TypeCommuncations = communcations.GroupBy(x => x.TypeCommunication).Select(g => new TypeCommunicationStatistic
             {
-                Name = g.First().TypeCommunication.Type,
-                TotalCount = g.Count().ToString(),
-                TypeComp = (g.Count() * 100) / totalCommunication
+                Name = g.First().TypeCommunication.Type, // اسم نوع الاتصال
+                TotalCount = g.Count().ToString(), // عدد الاتصالات المماثلة
+                TypeComp = (g.Count() * 100) / totalCommunication // نسبة الاتصالات المماثلة
             }).ToList();
 
 
@@ -478,6 +502,7 @@ namespace CompalintsSystem.Application.Controllers
 
         public async Task<IActionResult> ViewCompalintUpDetails(int id)
         {
+            // استرداد بيانات الشكوى المرتبطة بالمعرف المحدد
             var ComplantList = await _unitOfWork.Compalinte.FaindAsync(
                 i => i.Id.Equals(id),
                 g => g.Governorate,
@@ -486,17 +511,21 @@ namespace CompalintsSystem.Application.Controllers
                 d => d.Directorate,
                 su => su.SubDirectorate,
                 st => st.StagesComplaint
-                );
+            );
+
+            // إنشاء عنصر عرض لإضافة الحلول
             AddSolutionVM addsoiationView = new AddSolutionVM()
             {
                 UploadsComplainteId = id,
-
             };
+
+            // إنشاء عنصر عرض للشكاوى المرفوضة
             ComplaintsRejectedVM rejectView = new ComplaintsRejectedVM()
             {
                 UploadsComplainteId = id,
-
             };
+
+            // إنشاء عنصر عرض لبيانات الشكوى والحلول المرتبطة بها
             ProvideSolutionsVM VM = new ProvideSolutionsVM
             {
                 compalint = ComplantList,
@@ -506,6 +535,8 @@ namespace CompalintsSystem.Application.Controllers
                 RejectedComplaintVM = rejectView,
                 AddSolution = addsoiationView
             };
+
+            // عرض العنصر النموذجي في الواجهة الأمامية للمستخدم
             return View(VM);
         }
         public async Task<IActionResult> SolutionComplaints()
@@ -580,51 +611,77 @@ namespace CompalintsSystem.Application.Controllers
             return View(model);
         }
 
+        // تأكد من أن النموذج يتم الإرسال به بطريقة POST وأنه صالح
         [HttpPost]
-
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddUserViewModel model)
         {
+            // استرداد قائمة المحافظات من قاعدة البيانات
             model.GovernoratesList = await _context.Governorates.ToListAsync();
+
+            // استرداد المستخدم الحالي
             var currentUser = await _userManager.GetUserAsync(User);
+
+            // الحصول على اسم المستخدم ورقم الهوية الحاليين
             var currentName = currentUser.FullName;
             var currentId = currentUser.IdentityNumber;
+
             try
             {
+                // تحميل الصورة المرفقة مع النموذج
                 UploadImage(model);
+
+                // التحقق من أن النموذج صالح
                 if (ModelState.IsValid)
                 {
+                    // التحقق من عدم وجود مستخدم آخر بنفس البريد الإلكتروني
                     var userIdentity = await _userManager.FindByEmailAsync(model.IdentityNumber);
                     if (userIdentity != null)
                     {
+                        // إضافة رسالة خطأ إلى النموذج عند وجود بريد إلكتروني مكرر
                         ModelState.AddModelError("Email", "email aoset");
+
+                        // إعادة تحميل قائمة المحافظات وعرضها للمستخدم
                         model.GovernoratesList = await _context.Governorates.ToListAsync();
                         ViewBag.ViewGover = model.GovernoratesList.ToArray();
+
+                        // إعادة عرض النموذج مع رسالة الخطأ
                         return View(model);
                     }
+
+                    // إذا كان هناك خطأ في إعادة النوع من الدالة، فعرض رسالة الخطأ
                     if (_unitOfWork.User.returntype == 1)
                     {
                         TempData["Error"] = _unitOfWork.User.Error;
                         return View(model);
                     }
+                    // إذا كان هناك خطأ في إعادة حالة الاضافة من الدالة، فعرض رسالة الخطأ
                     else if (_unitOfWork.User.returntype == 2)
                     {
                         TempData["Error"] = _unitOfWork.User.Error;
                         return View(model);
                     }
 
+                    // إضافة المستخدم الجديد إلى قاعدة البيانات
                     await _unitOfWork.User.AddUserAsync(model, currentName, currentId);
-                    // insert new post to db
+
+                    // حفظ التغييرات في قاعدة البيانات
                     await _unitOfWork.Complete();
+
+                    // عرض رسالة النجاح
                     _toastNotification.AddSuccessToastMessage(Constant.Messages.AddUser);
+
+                    // إعادة توجيه المستخدم إلى صفحة عرض المستخدمين بعد إضافة المستخدم بنجاح
                     return RedirectToAction(nameof(ViewUsers));
                 }
             }
             catch (RetryLimitExceededException /* dex */)
             {
-                //Log the error (uncomment dex variable name and add a line here to write a log.
+                // إذا حدث خطأ في قاعدة البيانات، عرض رسالة الخطأ
                 ModelState.AddModelError("", "غير قادر على حفظ التغييرات. حاول مرة أخرى، وإذا استمرت المشكلة، فاستشر مدير نظامك.");
             }
+
+            // إعادة عرض النموذج عندما يكون غير صالح
             return View(model);
         }
         private void UploadImage(AddUserViewModel model)
@@ -899,9 +956,9 @@ namespace CompalintsSystem.Application.Controllers
             return View("AddOrEditSolutions", model);
 
         }
-    
 
-    public async Task<IActionResult> AllCategoriesCommunications()
+
+        public async Task<IActionResult> AllCategoriesCommunications()
         {
             var allCategoriesComplaints = await _service.GetAllGategoryCommAsync();
 

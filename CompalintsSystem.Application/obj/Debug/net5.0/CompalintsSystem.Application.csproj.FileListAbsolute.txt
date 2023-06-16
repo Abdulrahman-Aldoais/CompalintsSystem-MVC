@@ -1296,3 +1296,4 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\CompalintsSystem.Application.pdb
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\CompalintsSystem.Application.genruntimeconfig.cache
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\ref\CompalintsSystem.Application.dll
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Beneficiarie\ViewAllRejectedComplaints.cshtml.g.cs

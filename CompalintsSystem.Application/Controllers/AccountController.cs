@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CompalintsSystem.Core.Interfaces;
-using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.Core;
+using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
+using CompalintsSystem.Core.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -109,12 +109,6 @@ namespace CompalintsSystem.Application.Controllers
                     var user = await _userManager.FindByEmailAsync(model.Email);
                     if (user.IsBlocked == false)
                     {
-                        //if (!string.IsNullOrEmpty(returnUrl))
-                        //{
-                        //    return LocalRedirect(returnUrl);
-                        //}
-                        //else 
-
                         if (User.IsInRole("AdminGeneralFederation"))
                         {
                             return RedirectToAction("Index", "GeneralFederation");
@@ -148,8 +142,6 @@ namespace CompalintsSystem.Application.Controllers
                         return RedirectToAction("AccessDenied");
 
                     }
-
-
                 }
 
                 TempData["Error"] = " تاكد من صحة كتابة رقم البطاقة او كلمة المرور";
@@ -177,17 +169,21 @@ namespace CompalintsSystem.Application.Controllers
 
 
 
+            // استرداد المستخدم الحالي
             var currentUser = await _userManager.GetUserAsync(User);
+
+            // التحقق من أن المستخدم الحالي غير مسجل بصفته مستخدم غير معروف
             if (currentUser != null)
             {
+                // إنشاء عنصر عرض لتعديل بيانات المستخدم
                 var model = new EditUserViewModel
                 {
                     FullName = currentUser.FullName,
                     DateOfBirth = currentUser.DateOfBirth,
                     PhoneNumber = currentUser.PhoneNumber,
                     CreatedDate = System.DateTime.Now,
-
                 };
+                // عرض العنصر النموذجي في الواجهة الأمامية للمستخدم
                 return View(model);
             }
             return View("Empty");
@@ -199,20 +195,29 @@ namespace CompalintsSystem.Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
+            // التحقق من أن النموذج صالح
             if (!ModelState.IsValid)
             {
+                // استرداد المستخدم الحالي
                 var currentUser = await _userManager.GetUserAsync(User);
+
+                // التحقق من أن المستخدم الحالي غير مسجل بصفته مستخدم غير معروف
                 if (currentUser != null)
                 {
+                    // تحديث البيانات الجديدة للمستخدم
                     currentUser.FullName = model.FullName;
 
+                    // تحديث معلومات المستخدم في قاعدة البيانات
                     var result = await _userManager.UpdateAsync(currentUser);
+
+                    // التحقق من نجاح عملية التحديث
                     if (result.Succeeded)
                     {
-                        //TempData["Success"] = stringLocalizer["SuccessMessage"]?.Value;
+                        // إعادة توجيه المستخدم إلى الصفحة الشخصية بعد تحديث البيانات بنجاح
                         return RedirectToAction("Profile");
                     }
 
+                    // التحقق من وجود أخطاء في عملية التحديث
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
@@ -220,9 +225,12 @@ namespace CompalintsSystem.Application.Controllers
                 }
                 else
                 {
+                    // إعادة توجيه المستخدم إلى صفحة فارغة عندما يحاول المستخدم الوصول إلى هذه الصفحة بدون تسجيل الدخول
                     return View("Empty");
                 }
             }
+
+            // إعادة عرض النموذج عندما يكون غير صالح
             return View(model);
         }
 
@@ -231,7 +239,14 @@ namespace CompalintsSystem.Application.Controllers
 
         public IActionResult AccessDenied(string returnUrl)
         {
-            if (!_signInManager.IsSignedIn(User)) RedirectToAction("Account", "Login");
+            // التحقق من أن المستخدم غير مسجل في النظام
+            if (!_signInManager.IsSignedIn(User))
+            {
+                // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول عندما يحاول المستخدم الوصول إلى صفحة محظورة بدون تسجيل الدخول
+                return RedirectToAction("Account", "Login");
+            }
+
+            // إرجاع عرض AccessDenied مع إرجاع العنوان الخاص بالصفحة المحظورة
             ViewData["returnUrl"] = returnUrl;
             return View();
 

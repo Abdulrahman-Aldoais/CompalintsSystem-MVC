@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using CompalintsSystem.Core.Interfaces;
-using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.EF.DataBase;
-using CompalintsSystem.EF.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -50,23 +48,7 @@ namespace CompalintsSystem.EF.Repositories
             CompalinteRepo = new CompalintRepository(_context, mapper, env, userManager, signInManager);
             User = new UserService(_context, mapper, userManager, roleManager, signInManager, httpContextAccessor, hostingEnvironment);
         }
-        //private UserService UserServiceRepo;
-        //public UserService UserServices
-        //{
-        //    get
-        //    {
-        //        if (UserServiceRepo == null)
-        //        {
-        //            UserServiceRepo = new UserService(_context);
-        //        }
-        //        return UserServiceRepo;
-        //    }
-        //}
 
-        //public async Task<int> Complete()
-        //{
-        //    return await _context.SaveChangesAsync();
-        //}
         public void Dispose()
         {
             _context.Dispose();

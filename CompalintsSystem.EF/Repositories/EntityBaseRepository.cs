@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CompalintsSystem;
 using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.ViewModels;
@@ -51,6 +50,9 @@ namespace CompalintsSystem.EF.Repositories
             query = includeproperties.Aggregate(query, (current, includeproperty) => current.Include(includeproperty));
             return await query.ToListAsync();
         }
+
+
+
         public async Task<IEnumerable<T>> GetAllAsync(
             Expression<Func<T, bool>> conditional,
             params Expression<Func<T, object>>[] includeproperties)
@@ -81,36 +83,50 @@ namespace CompalintsSystem.EF.Repositories
             return await query.ToListAsync();
         }
 
+
+
+        // تعريف وظيفة Generics للبحث في قاعدة بيانات Entity Framework بناءً على شرط معين وترتيب النتائج حسب خيارات الترتيب
         public async Task<IEnumerable<T>> GetByCondationAndOrderAsync(
-        Expression<Func<T, bool>> conditional,
-        Expression<Func<T, object>> orderBy = null, string orderByDirection = OrderBy.Ascending,
-        params Expression<Func<T, object>>[] includeproperties)
+            Expression<Func<T, bool>> conditional, // شرط البحث
+            Expression<Func<T, object>> orderBy = null, // تحديد العمود الذي سيتم ترتيب النتائج بناءً عليه
+            string orderByDirection = OrderBy.Ascending, // تحديد ترتيب الترتيب (تصاعدي / تنازلي)
+            params Expression<Func<T, object>>[] includeproperties) // تحميل العلاقات الفرعية
         {
-            IQueryable<T> query = _context.Set<T>().Where(conditional);
-            query = includeproperties.Aggregate(query, (current, includeproperty) => current.Include(includeproperty));
-            if (orderBy != null)
+            IQueryable<T> query = _context.Set<T>().Where(conditional); // إنشاء كائن IQueryable وتطبيق الشرط الممرر
+            query = includeproperties.Aggregate(query, (current, includeproperty) => current.Include(includeproperty)); // تضمين العلاقات الفرعية الممررة باستخدام Aggregate و Include
+            if (orderBy != null) // إذا تم تمرير معامل orderBy
             {
-                if (orderByDirection == OrderBy.Ascending)
-                    query = query.OrderBy(orderBy);
+                if (orderByDirection == OrderBy.Ascending) // إذا كان ترتيب الترتيب تصاعدياً
+                    query = query.OrderBy(orderBy); // ترتيب النتائج باستخدام OrderBy
                 else
-                    query = query.OrderByDescending(orderBy);
+                    query = query.OrderByDescending(orderBy); // ترتيب النتائج باستخدام OrderByDescending
             }
-            return await query.ToListAsync();
+            return await query.ToListAsync(); // إرجاع النتائج كـ IEnumerable باستخدام ToListAsync
         }
+
+
+
+
         public Task<T> FaindAsync(Expression<Func<T, bool>> conditional, params Expression<Func<T, object>>[] includeproperties)
         {
-            IQueryable<T> query = _context.Set<T>().Where(conditional);
-            query = includeproperties.Aggregate(query, (current, includeproperty) => current.Include(includeproperty));
-            return query.SingleOrDefaultAsync();
+            IQueryable<T> query = _context.Set<T>().Where(conditional); // إنشاء كائن IQueryable وتطبيق الشرط الممرر
+            query = includeproperties.Aggregate(query, (current, includeproperty) => current.Include(includeproperty)); // تضمين العلاقات الفرعية الممررة باستخدام Aggregate و Include
+            return query.SingleOrDefaultAsync(); // البحث عن عنصر واحد وإرجاعه باستخدام SingleOrDefaultAsync
         }
+
+
         public int Count()
         {
             return _context.Set<T>().Count();
         }
+
+
         public int Count(Expression<Func<T, bool>> criteria)
         {
             return _context.Set<T>().Count(criteria);
         }
+
+
         public async Task<int> CountAsync()
         {
             return await _context.Set<T>().CountAsync();

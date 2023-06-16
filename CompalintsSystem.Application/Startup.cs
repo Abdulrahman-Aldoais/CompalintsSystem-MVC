@@ -1,22 +1,20 @@
-using CompalintsSystem.Core.Interfaces;
-using CompalintsSystem.EF.Configuration;
-using CompalintsSystem.EF.Repositories;
 using CompalintsSystem.Core.Hubs;
+using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
+using CompalintsSystem.EF.Configuration;
 using CompalintsSystem.EF.DataBase;
+using CompalintsSystem.EF.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Rotativa.AspNetCore;
 using System;
-using System.Net;
 
 namespace CompalintsSystem.Application
 {
@@ -37,54 +35,37 @@ namespace CompalintsSystem.Application
         {
 
 
+            //  ›⁄Ì· Œ«’Ì… HSTS (HTTP Strict Transport Security) ›Ì «· ÿ»Ìﬁ
             services.AddHsts(options =>
             {
-                options.Preload = true;
-                options.IncludeSubDomains = true;
-                options.MaxAge = TimeSpan.FromDays(60);
-                //options.ExcludedHosts.Add("example.com");
-                //options.ExcludedHosts.Add("www.example.com");
+                options.Preload = true; //  ›⁄Ì· preload ·‹ HSTS
+                options.IncludeSubDomains = true; //  ›⁄Ì· includeSubDomains ·‹ HSTS
+                options.MaxAge = TimeSpan.FromDays(60); //  ⁄ÌÌ‰ MaxAge ·‹ HSTS
             });
 
-            //services.AddHttpsRedirection(options =>
-            //{
-            //    options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
-            //    options.HttpsPort = 5001;
-            //});
+            //  ›⁄Ì· ‰Ÿ«„ «·„’«œﬁ… ›Ì «· ÿ»Ìﬁ Ê ÕœÌœ «·√œÊ«— «·„’—Õ »Â« ·ﬂ· ”Ì«”…
+            services.AddAuthorization(options =>
+            {
+                // ≈÷«›… ”Ì«”… «·„’«œﬁ… "AdminPolicy" Ê ÕœÌœ «·√œÊ«— «·„’—Õ »Â«
+                options.AddPolicy("AdminPolicy", policy =>
+                    policy.RequireRole("AdminGeneralFederation"));
+                // ≈÷«›… ”Ì«”… «·„’«œﬁ… "BeneficiariePolicy" Ê ÕœÌœ «·√œÊ«— «·„’—Õ »Â«
+                options.AddPolicy("BeneficiariePolicy", policy =>
+                    policy.RequireRole("Beneficiarie"));
+            });
 
+            //  ›⁄Ì· ‰Ÿ«„ «·„’«œﬁ… »«” Œœ«„ «·ﬂÊﬂÌ“ Ê ÕœÌœ Œ’«∆’ „·› «·ﬂÊﬂÌ“
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
-            //services.AddControllersWithViews()
-            //   .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.ConfigureApplicationCookie(config =>
             {
-
-                config.Cookie.Name = "MyCookie";
-                config.LoginPath = "/Account/Login";
-                config.AccessDeniedPath = new PathString("/Account/AccessDenied");
-
+                config.Cookie.Name = "MyCookie"; //  ÕœÌœ «”„ „·› «·ﬂÊﬂÌ“
+                config.LoginPath = "/Account/Login"; //  ÕœÌœ „”«— «·œŒÊ·
+                config.AccessDeniedPath = new PathString("/Account/AccessDenied"); //  ÕœÌœ „”«— «·Ê’Ê· «·„—›Ê÷
             });
-            services.AddDbContext<AppCompalintsContextDB>(
-        b => b.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-              //.UseLazyLoadingProxies()
-              );
 
-            //services.Configure<IdentityOptions>(opts =>
-            //{
-            //    opts.User.RequireUniqueEmail = true;
-            //    opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
-            //    opts.Password.RequiredLength = 8;
-            //    opts.Password.RequireNonAlphanumeric = true;
-            //    opts.Password.RequireLowercase = false;
-            //    opts.Password.RequireUppercase = true;
-            //    opts.Password.RequireDigit = true;
-
-            //    //opts.SignIn.RequireConfirmedEmail = true;
-
-            //    opts.Lockout.AllowedForNewUsers = true;
-            //    opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-            //    opts.Lockout.MaxFailedAccessAttempts = 3;
-            //});
+            //  ›⁄Ì· ﬁ«⁄œ… «·»Ì«‰«  ›Ì «· ÿ»Ìﬁ Ê ÕœÌœ «·”·”·… «·„ ’·… «·«› —«÷Ì…
+            services.AddDbContext<AppCompalintsContextDB>(b => b.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
             // Add services to the container.
@@ -96,9 +77,9 @@ namespace CompalintsSystem.Application
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>(
-     options => options.SignIn.RequireConfirmedAccount = true)
-     .AddEntityFrameworkStores<AppCompalintsContextDB>()
-    .AddDefaultTokenProviders();
+             options => options.SignIn.RequireConfirmedAccount = true)
+             .AddEntityFrameworkStores<AppCompalintsContextDB>()
+            .AddDefaultTokenProviders();
 
 
             //services.AddAdminServices();
@@ -116,7 +97,7 @@ namespace CompalintsSystem.Application
             //services.AddMemoryCache();
             //services.AddSession();
 
-           // add toastnotify
+            // add toastnotify
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation()
                 .AddNToastNotifyNoty(new NToastNotify.NotyOptions()
@@ -153,7 +134,7 @@ namespace CompalintsSystem.Application
             app.UseStaticFiles();
 
 
-           // app.UseSession();
+            // app.UseSession();
 
 
             //Authentication & Authorization
@@ -180,6 +161,8 @@ namespace CompalintsSystem.Application
             });
 
 
+
+            app.UseRouting();
 
             UsersConfiguration.SeedUsersAndRolesAsync(app).Wait();
 

@@ -76,9 +76,6 @@
 
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="~/assets/js/config.js"></script>
-
-
-
 </head>
 
 <body style="font-family: 'Cairo'; font-size:14px">
@@ -177,29 +174,111 @@
             <div class="layout-page">
                 <!-- Navbar -->
 
-              
+                <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="container-fluid">
+                        <div class="layout-menu-toggle navbar-nav d-xl-none align-items-xl-center me-3 me-xl-0">
+                            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                                <i class="bx bx-menu bx-sm"></i>
+                            </a>
+                        </div>
 
-            @*<div class="modal" tabindex="-1" role="dialog" id="form-modal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close">
-                        </button>
+                        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+
+                            <ul class="navbar-nav flex-row align-items-center ms-auto">
+                                <!-- Style Switcher -->
+                                <li class="nav-item me-2 me-xl-0">
+                                    <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                                        <i class="bx bx-sm"></i>
+                                    </a>
+                                </li>
+
+                                <!-- Quick links -->
+                                <!-- Notification -->
+                                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                                    <a class="nav-link dropdown-toggle hide-arrow"
+                                       href="javascript:void(0);"
+                                       data-bs-toggle="dropdown"
+                                       data-bs-auto-close="outside"
+                                       aria-expanded="false">
+                                        <i class="bx bx-bell bx-sm"></i>
+                                        <span class="badge rounded-pill badge-notifications bg-danger">5</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end py-0">
+                                        <li class="dropdown-menu-header border-bottom">
+                                            <div class="dropdown-header d-flex align-items-center py-3">
+                                                <h5 class="text-body me-auto mb-0">الاشعارات</h5>
+                                                <a href="javascript:void(0)"
+                                                   class="dropdown-notifications-all text-body"
+                                                   data-bs-toggle="tooltip"
+                                                   data-bs-placement="top"
+                                                   title="تحديد الكل كمقروء">
+                                                    <i class="bx fs-4 bx-envelope-open"></i>
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <div id="notification-list">
+                                        <li class="dropdown-notifications-list scrollable-container">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                    <div class="d-flex">
+
+
+
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">سعيد محمد صالح</h6>
+                                                            <p class="mb-0">تقديم شكوى</p>
+                                                            <small class="text-muted">منذ 3 ساعات</small>
+                                                        </div>
+                                                        <div class="dropdown-notifications-actions flex-shrink-0">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read">
+                                                                <span class="badge badge-dot"></span>
+                                                            </a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive">
+                                                                <span class="bx bx-x"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                       
+                                </ul>
+                        </div>
+                        
+                        
+                        <!--/ Notification -->
+                        <!-- User -->
+
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                                    {
+                                        <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="/Images/@(UserManager.GetUserAsync(User).Result.ProfilePicture)">
+                                    }
+
+                                </div>
+                            </a>
+
+
+                            <partial name="../Shared/_Identity.cshtml" />
+
+
+
+                        </li>
+                        <!--/ User -->
+                        </ul>
+
                     </div>
-                    <div class="modal-body">
 
-                    </div>
-                </div>
-            </div>
-        </div>*@
+                 
+          
+            </nav>
 
+                @* لعرض المودل المنبثق في صفحات الاضافة  *@
 
             <div class="modal fade animate__animated fadeIn"
-                 @*id="animationModal"*@
                  role="dialog"
                  id="form-modal"
                  tabindex="-1"
@@ -220,32 +299,11 @@
                     </div>
                 </div>
             </div>
-
-
-
-            <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            @*<h5 class="modal-title" id="exampleModalLabel5">Modal title</h5>*@
-                            <button type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            
+                @* خاصية التحميل لصفحة المنتظرة  *@
             <div class="loaderbody" id="loaderbody">
                 <div class="loader"></div>
             </div>
             <div class="content-wrapper">
-
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 @RenderBody()
@@ -255,6 +313,7 @@
             </div>
             <!-- Content wrapper -->
         </div>
+        </div>
         <!-- / Layout page -->
     </div>
 
@@ -263,7 +322,7 @@
 
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
-    </div>
+ 
 
     <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
     @* قبل jquery-ui.min.j يجب ان نستدعي   *@
@@ -300,13 +359,11 @@
     <script src="~/assets/vendor/libs/leaflet/leaflet.js"></script>
     <script src="~/assets/Sweet/sweetalert2.min.js"></script>
     <script src="~/assets/Sweet/sweetalert2.all.js"></script>
-    <!--<script src="~/assets/bootstrap-sweetalert/sweetalert.js"></script>
-    <script src="~/assets/bootstrap-sweetalert/sweetalert.min.js"></script>-->
+  
     <!-- Flat Picker -->
     <script src="~/assets/vendor/libs/moment/moment.js"></script>
     <script src="~/assets/vendor/libs/flatpickr/flatpickr.js"></script>
     <!-- Row Group JS -->
-    @*<script src="~/assets/vendor/libs/datatables-rowgroup/datatables.rowgroup.js"></script>*@
     <script src="~/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.js"></script>
     <!-- Form Validation -->
     <script src="~/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
@@ -314,8 +371,6 @@
     <script src="~/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
 
     <!-- Page JS -->
-    @*<script src="~/assets/js/form-wizard-icons.js"></script>
-    <script src="~/assets/js/maps-leaflet.js"></script>*@
     <script src="~/assets/vendor/libs/typeahead-js/typeahead.js"></script>
 
     <script src="~/assets/js/tables-datatables-advanced.js"></script>

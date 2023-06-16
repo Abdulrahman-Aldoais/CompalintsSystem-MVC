@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
+using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.EF.DataBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -15,12 +15,11 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CompalintsSystem.Core.Interfaces;
 
 namespace CompalintsSystem.Application.Controllers
 {
 
-    [Authorize(Roles = "Beneficiarie")]
+    [Authorize(Policy = "BeneficiariePolicy")]
     public class BeneficiarieController : Controller
     {
 

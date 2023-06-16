@@ -3,108 +3,95 @@
 @inject UserManager<ApplicationUser> UserManager;
 @inject SignInManager<ApplicationUser> signInManager;
 
-@if (signInManager.IsSignedIn(User))
-{
+        @if (signInManager.IsSignedIn(User))
+        {
+            var currentUser = await UserManager.GetUserAsync(User);
+
+            var userName = currentUser.FullName;
+            var image = currentUser.ProfilePicture;
 
 
-    var currentUser = await UserManager.GetUserAsync(User);
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar avatar-online">
 
-    var userName = currentUser.FullName;
-    var image = currentUser.ProfilePicture;
+                                    @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                                    {
+                                        <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/@(Convert.ToString(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+                                    }
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
 
+                                <span class="lh-1 d-block fw-semibold"> @userName</span>
 
-    <ul class="dropdown-menu dropdown-menu-end">
-        <li>
-            <a class="dropdown-item">
-                <div class="d-flex">
-                    <div class="flex-shrink-0 me-3">
-                        <div class="avatar avatar-online">
+                                @if (User.IsInRole("AdminGeneralFederation"))
+                                {
+                                    <small>
+                                        مدير اتحاد عام
+                                    </small>
+                                }
+                                else if (User.IsInRole("AdminGovernorate"))
+                                {
+                                    <small>
+                                        مدير محافظة
+                                    </small>
+                                }
+                                else if (User.IsInRole("AdminDirectorate"))
+                                {
+                                    <small>
+                                        مدير مديرية
+                                    </small>
+                                }
+                                else if (User.IsInRole("AdminSubDirectorate"))
+                                {
+                                    <small>
+                                        مدير عزلة
+                                    </small>
+                                }
+                                else if (User.IsInRole("AdminVillages"))
+                                {
+                                    <small>
+                                        مدير قرية
+                                    </small>
+                                }
+                                else if (User.IsInRole("Beneficiarie"))
+                                {
+                                    <small>
+                                        مستخدم
+                                    </small>
+                                }
 
-                            @*@if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
-                            {
-                                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="/Images/@(UserManager.GetUserAsync(User).Result.ProfilePicture)">
-                            }*@
-                            @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
-                            {
-                                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/@(Convert.ToString(UserManager.GetUserAsync(User).Result.ProfilePicture))">
-                            }
-
-
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex-grow-1">
+                    </a>
+                </li>
+                <li>
+                    <div class="dropdown-divider"></div>
+                </li>
 
-                        <span class="lh-1 d-block fw-semibold"> @userName</span>
-
-                        @if (User.IsInRole("AdminGeneralFederation"))
-                        {
-                            <small>
-                                مدير اتحاد عام
-                            </small>
-                        }
-                        else if (User.IsInRole("AdminGovernorate"))
-                        {
-                            <small>
-                                مدير محافظة
-                            </small>
-                        }
-                        else if (User.IsInRole("AdminDirectorate"))
-                        {
-                            <small>
-                                مدير مديرية
-                            </small>
-                        }
-                        else if (User.IsInRole("AdminSubDirectorate"))
-                        {
-                            <small>
-                                مدير عزلة
-                            </small>
-                        }
-                        else if (User.IsInRole("AdminVillages"))
-                        {
-                            <small>
-                                مدير قرية
-                            </small>
-                        }
-                        else if (User.IsInRole("Beneficiarie"))
-                        {
-                            <small>
-                                مستخدم
-                            </small>
-                        }
-
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li>
-            <div class="dropdown-divider"></div>
-        </li>
-
-        <li>
-            <a class="dropdown-item" asp-controller="ManageProfile" asp-action="Profile">
-                <i class="bx bx-user me-2"></i><span class="align-middle">الملف الشخصي</span>
-            </a>
-        </li>
-
-        @*<li>
-                <a class="dropdown-item"  asp-controller="ManageProfile" asp-action="EditeMyProfile">
-                    <i class="bx bx-cog me-2"></i>
-                    <span class="align-middle">الاعدادات</span>
-                </a>
-            </li>*@
-        <li>
-
-            <div class="dropdown-divider"></div>
-        </li>
-        <li>
-
-            <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="LogOut">
-                <i class="bx bx-power-off me-2"></i>
-                <span class="align-middle">تسجيل الخروج</span>
-            </a>
-        </li>
+                <li>
+                    <a class="dropdown-item" asp-controller="ManageProfile" asp-action="Profile">
+                        <i class="bx bx-user me-2"></i><span class="align-middle">الملف الشخصي</span>
+                    </a>
+                </li>
 
 
-    </ul>
-}
+                <li>
+
+                    <div class="dropdown-divider"></div>
+                </li>
+                <li>
+
+                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="LogOut">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">تسجيل الخروج</span>
+                    </a>
+                </li>
+
+
+            </ul>
+        }

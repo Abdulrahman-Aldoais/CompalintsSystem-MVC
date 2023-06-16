@@ -20,15 +20,6 @@ namespace CompalintsSystem.EF.DataBase
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            //modelBuilder.ApplyConfigurationsFromAssembly(
-
-            //    Assembly.GetExecutingAssembly(),
-            //    t => t.GetInterfaces().Any(i =>
-            //    i.IsGenericType &&
-            //    i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>) &&
-            //    typeof(IEntityBase).IsAssignableFrom(i.GenericTypeArguments[0]))
-            //    );
-
             modelBuilder.HasDefaultSchema("notdbo");
 
             modelBuilder.HasDefaultSchema("Identity");
@@ -115,36 +106,6 @@ namespace CompalintsSystem.EF.DataBase
 
             });
 
-
-
-
-            //modelBuilder.Entity<IdentityRole>(b =>
-            //{
-            //    // Each Role can have many entries in the UserRole join table
-            //    b.HasMany(e => e.UserRoles)
-            //        .WithOne(e => e.Role)
-            //        .HasForeignKey(ur => ur.RoleId)
-            //        .IsRequired();
-
-            //    // Each Role can have many associated RoleClaims
-            //    //b.HasMany(e => e.RoleClaims)
-            //    //    .WithOne(e => e.Role)
-            //    //    .HasForeignKey(rc => rc.RoleId)
-            //    //    .IsRequired();
-            //});
-
-
-
-            //modelBuilder.Entity<UploadsComplainte>().Property(i => i.Id).HasDefaultValueSql("NEWID()");
-            //modelBuilder.Entity<BenefCommunication>().Property(i => i.Id).HasDefaultValueSql("NEWID()");
-            ////modelBuilder.Entity<Beneficiarie>().Property(i => i.Id).HasDefaultValueSql("NEWID()");
-            //modelBuilder.Entity<Proposal>().Property(i => i.Id).HasDefaultValueSql("NEWID()");
-            //modelBuilder.Entity<TypeComplaint>().Property(i => i.Id).HasDefaultValueSql("NEWID()");
-            //modelBuilder.Entity<TypeComplaint>().Property(i => i.Id).HasDefaultValueSql("NEWID()");
-
-
-
-
         }
 
 
@@ -165,10 +126,6 @@ namespace CompalintsSystem.EF.DataBase
         public DbSet<StagesComplaint> StagesComplaints { get; set; }
         public DbSet<StatusCompalint> StatusCompalints { get; set; }
         public DbSet<Proposal> Proposals { get; set; }
-
-        //public DbSet<UsersInStatistic> UsersInStatistics { get; set; }
-        //public DbSet<StutusCompalintStatistic> StutusCompalintStatistics { get; set; }
-        //public DbSet<TypeCompalintStatistic> TypeCompalintStatistics { get; set; }
 
 
     }

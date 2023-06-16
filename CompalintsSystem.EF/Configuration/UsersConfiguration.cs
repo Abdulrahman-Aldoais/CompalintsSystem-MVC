@@ -70,6 +70,7 @@ namespace CompalintsSystem.EF.Configuration
                     };
                     await userManager.CreateAsync(newAppUser, "B@ww11");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.Beneficiarie);
+
                 }
             }
         }
