@@ -447,30 +447,6 @@
 
 
 
-@*<div class="col-12">
-        <div class="card">
-            <h5 class="card-header">Full Editor</h5>
-            <div class="card-body">
-                <form asp-action="AddSolutions" asp-controller="GeneralFederation" method="post">
-
-                    <div id="full-editor">
-                        <h6>محتوى </h6>
-                        <input type="hidden" asp-for="@Model.AddSolution.UploadsComplainteId" />
-                        <textarea asp-for="@Model.AddSolution.ContentSolution" class="form-control" cols="3" rows="4"></textarea>
-                        <span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="offcanvas">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>*@
-<!-- /Full Editor -->
-<!-- رفض الشكوى -->
 
 <div class="offcanvas offcanvas-end" id="rejectComplaint" aria-hidden="true">
     <div class="offcanvas-header border-bottom">

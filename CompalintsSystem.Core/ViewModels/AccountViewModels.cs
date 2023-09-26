@@ -1,7 +1,4 @@
-﻿
-
-
-using CompalintsSystem.Core.Constants;
+﻿using CompalintsSystem.Core.Constants;
 using CompalintsSystem.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -141,7 +138,7 @@ namespace CompalintsSystem.Core.ViewModels
         [Required(ErrorMessage = "ادخل الاسم ")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "ادخل رقم البطاقة الشخصية"), MaxLength(12, ErrorMessage = "يجب ان لا يكون رقم البطاقة اكثر من اثنا عشر ارقام "), MinLength(9, ErrorMessage = "يجب ان لا يكون رقم الهاتف اقل من تسعة ارقام")]
-        [Remote(action: "CheckingIdentityNumber", controller: "ManageUsers", ErrorMessage = "ksdfsdfsf")]
+        //[Remote(action: "CheckingIdentityNumber", controller: "ManageUsers", ErrorMessage = "ksdfsdfsf")]
         public string IdentityNumber { get; set; }
         [Required(ErrorMessage = "ادخل رقم الهاتف"), MaxLength(9, ErrorMessage = "يجب ان لا يكون رقم الهاتف اكثر من تسعة ارقام "), MinLength(9, ErrorMessage = "يجب ان لا يكون رقم الهاتف اقل من تسعة ارقام")]
         [Remote(action: "CheckingPhoneNumber", controller: "ManageUsers")]

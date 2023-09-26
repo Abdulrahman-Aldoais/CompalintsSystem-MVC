@@ -1183,7 +1183,6 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\Edit.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\EditCategoryComplaint.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\Index.cshtml.g.cs
-E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\Index2.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\PrintReports.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\ReportManagement.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\SolutionComplaints.cshtml.g.cs
@@ -1297,3 +1296,4 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\CompalintsSystem.Application.genruntimeconfig.cache
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\ref\CompalintsSystem.Application.dll
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Beneficiarie\ViewAllRejectedComplaints.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\Create - Copy.cshtml.g.cs

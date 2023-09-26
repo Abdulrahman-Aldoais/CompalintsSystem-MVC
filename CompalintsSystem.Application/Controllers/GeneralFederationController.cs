@@ -634,34 +634,16 @@ namespace CompalintsSystem.Application.Controllers
                 // التحقق من أن النموذج صالح
                 if (ModelState.IsValid)
                 {
-                    // التحقق من عدم وجود مستخدم آخر بنفس البريد الإلكتروني
-                    var userIdentity = await _userManager.FindByEmailAsync(model.IdentityNumber);
-                    if (userIdentity != null)
-                    {
-                        // إضافة رسالة خطأ إلى النموذج عند وجود بريد إلكتروني مكرر
-                        ModelState.AddModelError("Email", "email aoset");
-
-                        // إعادة تحميل قائمة المحافظات وعرضها للمستخدم
-                        model.GovernoratesList = await _context.Governorates.ToListAsync();
-                        ViewBag.ViewGover = model.GovernoratesList.ToArray();
-
-                        // إعادة عرض النموذج مع رسالة الخطأ
-                        return View(model);
-                    }
-
-                    // إذا كان هناك خطأ في إعادة النوع من الدالة، فعرض رسالة الخطأ
                     if (_unitOfWork.User.returntype == 1)
                     {
                         TempData["Error"] = _unitOfWork.User.Error;
                         return View(model);
                     }
-                    // إذا كان هناك خطأ في إعادة حالة الاضافة من الدالة، فعرض رسالة الخطأ
                     else if (_unitOfWork.User.returntype == 2)
                     {
                         TempData["Error"] = _unitOfWork.User.Error;
                         return View(model);
                     }
-
                     // إضافة المستخدم الجديد إلى قاعدة البيانات
                     await _unitOfWork.User.AddUserAsync(model, currentName, currentId);
 
@@ -674,6 +656,8 @@ namespace CompalintsSystem.Application.Controllers
                     // إعادة توجيه المستخدم إلى صفحة عرض المستخدمين بعد إضافة المستخدم بنجاح
                     return RedirectToAction(nameof(ViewUsers));
                 }
+
+
             }
             catch (RetryLimitExceededException /* dex */)
             {
@@ -681,9 +665,10 @@ namespace CompalintsSystem.Application.Controllers
                 ModelState.AddModelError("", "غير قادر على حفظ التغييرات. حاول مرة أخرى، وإذا استمرت المشكلة، فاستشر مدير نظامك.");
             }
 
-            // إعادة عرض النموذج عندما يكون غير صالح
             return View(model);
         }
+
+
         private void UploadImage(AddUserViewModel model)
         {
 
@@ -759,7 +744,7 @@ namespace CompalintsSystem.Application.Controllers
 
             List<Governorate> GovernorateList = new List<Governorate>();
             GovernorateList = (from d in _context.Governorates select d).ToList();
-            GovernorateList.Insert(0, new Governorate { Id = 0, Name = "حدد المحافظة" });
+            //GovernorateList.Insert(0, new Governorate { Id = 0, Name = "حدد المحافظة" });
             ViewBag.ViewGover = GovernorateList;
             var newUser = new EditUserViewModel
             {
@@ -795,6 +780,7 @@ namespace CompalintsSystem.Application.Controllers
                 {
 
                     await _unitOfWork.User.UpdateAsync(id, user);
+                    return RedirectToAction(nameof(ViewUsers));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -807,9 +793,8 @@ namespace CompalintsSystem.Application.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(ViewUsers));
             }
-            return View();
+            return View(user);
         }
 
         private bool UserExists(string id)
@@ -944,15 +929,11 @@ namespace CompalintsSystem.Application.Controllers
                     }
 
                 }
-                //href = "@Url.Action("ViewCompalintDetails", "GeneralFederation", new { id = item.Id })"
-                // return Json(new { isValid = true, html = HelperModal.A(this, "ViewCompalintDetails", new { id = model.UploadsComplainteId }, _context.UploadsComplaintes) });
+
                 return RedirectToAction(nameof(ViewCompalintDetails), new { Id = model.AddSolution.UploadsComplainteId });
-                //  return RedirectToAction(nameof(AllComplaints));
-                //return RedirectToAction("ViewCompalintDetails");
-                //return Json(new { isValid = true, html = HelperModal.RenderRazorViewToString(this, "ViewCompalintDetails", _context.Compalints_Solutions.ToList()) });
+
             }
-            //return View("AddOrEditSolutions", model);
-            //return Json(new { isValid = false, html = HelperModal.RenderRazorViewToString(this, "AddOrEditSolutions", model) });
+
             return View("AddOrEditSolutions", model);
 
         }
@@ -1263,7 +1244,8 @@ namespace CompalintsSystem.Application.Controllers
             var typeCommunicationsModel = await _context.TypeCommunications.FindAsync(id);
             _context.TypeCommunications.Remove(typeCommunicationsModel);
             await _context.SaveChangesAsync();
-            return Json(new { html = HelperModal.RenderRazorViewToString(this, "_ViewAllCatyCoryComm", _context.TypeCommunications.ToList()) });
+            return RedirectToAction(nameof(AllCategoriesCommunications));
+            //return Json(new { html = HelperModal.RenderRazorViewToString(this, "_ViewAllCatyCoryComm", _context.TypeCommunications.ToList()) });
         }
 
         public async Task<IActionResult> DeleteCategoriesComplaints(int? id)
@@ -1292,7 +1274,8 @@ namespace CompalintsSystem.Application.Controllers
             var typeComplaintsModel = await _context.TypeComplaints.FindAsync(id);
             _context.TypeComplaints.Remove(typeComplaintsModel);
             await _context.SaveChangesAsync();
-            return Json(new { html = HelperModal.RenderRazorViewToString(this, "_ViewAllCatycoryCompalints", _context.TypeComplaints.ToList()) });
+            //return Json(new { html = HelperModal.RenderRazorViewToString(this, "_ViewAllCatycoryCompalints", _context.TypeComplaints.ToList()) });
+            return RedirectToAction(nameof(AllCategoriesComplaints));
         }
 
 
@@ -1460,13 +1443,13 @@ namespace CompalintsSystem.Application.Controllers
         }
 
 
-        //public async Task<IActionResult> DisbleOrEnableUser(int id)
-        //{
-        //    await _unitOfWork.User.EnableAndDisbleUser(id);
-        //    return RedirectToAction("ViewUsers");
+        public async Task<IActionResult> DisbleOrEnableUser(string id)
+        {
+            await _unitOfWork.User.TogelBlockUserAsync(id);
+            return RedirectToAction("ViewUsers");
 
 
-        //}
+        }
         private bool TransactionModelExists(int id)
         {
             return _context.TypeCommunications.Any(e => e.Id == id);

@@ -83,14 +83,7 @@ namespace CompalintsSystem.Application.Controllers
 
             if (ModelState.IsValid)
             {
-                var userIdentity = await _userManager.FindByEmailAsync(model.IdentityNumber);
-                if (userIdentity != null)
-                {
-                    ModelState.AddModelError("Email", "email aoset");
-                    model.GovernoratesList = await _context.Governorates.ToListAsync();
-                    ViewBag.ViewGover = model.GovernoratesList.ToArray();
-                    return View(model);
-                }
+
                 if (_userService.returntype == 1)
                 {
                     TempData["Error"] = _userService.Error;
@@ -102,10 +95,11 @@ namespace CompalintsSystem.Application.Controllers
                     return View(model);
                 }
 
-
                 await _userService.AddUserAsync(model, currentName, currentId);
 
-                return RedirectToAction("ViewUsers");
+                return RedirectToAction("ViewUsers", "GeneralFederation");
+
+
             }
             return View(model);
         }
@@ -183,42 +177,50 @@ namespace CompalintsSystem.Application.Controllers
 
         [AllowAnonymous]
 
-        public async Task<IActionResult> CheckingIdentityNumber(AddUserViewModel model)
+        //public async Task<IActionResult> CheckingIdentityNumber(AddUserViewModel model)
+        //{
+        //    var user = _userManager.FindByEmailAsync(model.IdentityNumber);
+
+        //    var userr = _context.Users.Where(a => a.IdentityNumber == model.IdentityNumber).FirstOrDefault();
+        //    if (userr == null)
+        //    {
+        //        return Json(true);
+        //    }
+        //    else
+        //    {
+        //        return Json($"يوجد رقم بطاقة   {model.IdentityNumber} من قبل بهذا الرقم ");
+        //    }
+
+
+        //}
+
+        //[AllowAnonymous]
+        //public Task<IActionResult> CheckingPhoneNumber(AddUserViewModel model)
+        //{
+
+
+        //    if (model.PhoneNumber.Length == 9)
+        //    {
+        //        return Task.FromResult<IActionResult>(Json(true));
+        //    }
+
+        //    else
+        //    {
+        //        return Task.FromResult<IActionResult>(Json($"   موجود من قبل {model.PhoneNumber}رقم الهاتف هذا"));
+        //    }
+
+
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> GetGovernorates()
         {
-            var user = _userManager.FindByEmailAsync(model.IdentityNumber);
+            var governorates = await _context.Governorates.ToListAsync();
 
-            var userr = _context.Users.Where(a => a.IdentityNumber == model.IdentityNumber).FirstOrDefault();
-            if (userr == null)
-            {
-                return Json(true);
-            }
-            else
-            {
-                return Json($"يوجد رقم بطاقة   {model.IdentityNumber} من قبل بهذا الرقم ");
-            }
+            var result = governorates.Select(d => new { id = d.Id, name = d.Name }).ToList();
 
-
+            return Json(result);
         }
-
-        [AllowAnonymous]
-        public Task<IActionResult> CheckingPhoneNumber(AddUserViewModel model)
-        {
-
-
-            if (model.PhoneNumber.Length == 9)
-            {
-                return Task.FromResult<IActionResult>(Json(true));
-            }
-
-            else
-            {
-                return Task.FromResult<IActionResult>(Json($"   موجود من قبل {model.PhoneNumber}رقم الهاتف هذا"));
-            }
-
-
-        }
-
-
 
         [HttpGet]
         public async Task<IActionResult> GetDirectoratesByGovernorateId(int governorateId)
@@ -239,23 +241,6 @@ namespace CompalintsSystem.Application.Controllers
 
             return Json(result);
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> GetDirectorateies(int id)
-        //{
-        //    List<Directorate> directorate = new List<Directorate>();
-        //    directorate = await _context.Directorates.Where(m => m.GovernorateId == id).ToListAsync();
-        //    return Json(new SelectList(directorate, "Id", "Name"));
-        //}
-
-        //[HttpGet]
-        //public async Task<IActionResult> GetSubDirectorate(int id)
-        //{
-        //    List<SubDirectorate> subdirectorate = new List<SubDirectorate>();
-        //    subdirectorate = await _context.SubDirectorates.Where(m => m.DirectorateId == id).ToListAsync();
-        //    return Json(new SelectList(subdirectorate, "Id", "Name"));
-        //}
-
 
 
         // GET: Users/Delete/5

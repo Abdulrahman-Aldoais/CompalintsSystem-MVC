@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TypeCommunication>
+﻿
+@model IEnumerable<TypeCommunication>
 
 <div class="card-datatable table-responsive">
     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
@@ -6,7 +7,8 @@
         <div class="row mx-2 border-bottom ">
 
             <div class="d-flex col-12 justify-content-between">
-                <a onclick="showInPopup('@Url.Action("AddOrEditCategoryComm", "GeneralFederation", null, Context.Request.Scheme)','اضــــافة نوع')" class="btn btn-success text-white"><i class="fas fa-random"></i>  اضــــافة نوع</a>
+
+                <a onclick="showInPopup('@Url.Action("AddOrEditCategoryCompalint", "GeneralFederation", null, Context.Request.Scheme)','اضــــافة نوع')" class="btn btn-success text-white"><i class="fas fa-random"></i>  اضــــافة نوع</a>
 
             </div>
         </div>
@@ -55,19 +57,16 @@
                             </td>
                             <td> @Html.DisplayFor(modelItem => item.UsersNameAddType)</td>
                             <td>
-                                @*<a class="btn btn-sm btn-icon item-edit" asp-action="Edit" asp-route-id="@item.Id"><i class="bx bxs-edit"></i></a>*@
-                                <a class="btn btn-sm btn-icon item-edit" onclick="showInPopup('@Url.Action("AddOrEditCategoryComm", "GeneralFederation", new { id = item.Id }, Context.Request.Scheme)','تعديل')"><i class="bx bxs-edit"></i></a>
+                                <a class="btn btn-sm btn-icon item-edit" onclick="showInPopup('@Url.Action("AddOrEditCategoryCompalint", "GeneralFederation", new { id = item.Id }, Context.Request.Scheme)','تعديل')"><i class="bx bxs-edit"></i></a>
                             </td>
                             <td style="">
 
                                 <form asp-action="DeleteCategoryComm" asp-route-id="@item.Id" method="post">
-                                    <a class="btn btn-sm btn-icon item-trash" onclick="return functionConfirm(this)">
-                                    <i class="bx bxs-trash"></i>
-                                    </a>
-                                    <input type="hidden" asp-for="@item.Id" class="btn btn-danger"/>
+                                    <a class="btn btn-sm btn-icon item-trash" onclick="return functionConfirm(this)"><i class="bx bxs-trash-alt btn btn-danger"></i></a>
+                                    <input type="hidden" asp-for="@item.Id" />
+                                    @*<input type="submit" value="Delete" class="btn btn-danger" />*@
                                 </form>
                             </td>
-
 
                         </tr>
                     }
@@ -78,21 +77,3 @@
         </table>
     </div>
 </div>
-
-@section Scripts
-{
-    <script>
-        function Update() {
-            updatePartialView('/Home/Update', 2)
-        }
-        var updatePartialView = function (url, data) {
-            $.ajax({
-                url: url + "?id=" + data,
-                type: 'GET',
-                success: function (response) {
-                    $('#view_all').html(response);
-                }
-            });
-        }
-    </script>
-}

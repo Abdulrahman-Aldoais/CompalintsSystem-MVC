@@ -242,11 +242,11 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                       
-                                </ul>
+
+                                    </ul>
                         </div>
-                        
-                        
+
+
                         <!--/ Notification -->
                         <!-- User -->
 
@@ -272,47 +272,46 @@
 
                     </div>
 
-                 
-          
-            </nav>
+
+
+                </nav>
 
                 @* لعرض المودل المنبثق في صفحات الاضافة  *@
 
-            <div class="modal fade animate__animated fadeIn"
-                 role="dialog"
-                 id="form-modal"
-                 tabindex="-1"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-xl" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            @*<h5 class="modal-title" id="exampleModalLabel5">Modal title</h5>*@
-                            <button type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
+                <div class="modal fade animate__animated fadeIn"
+                     role="dialog"
+                     id="form-modal"
+                     tabindex="-1"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                            </div>
 
                         </div>
-
                     </div>
                 </div>
-            </div>
                 @* خاصية التحميل لصفحة المنتظرة  *@
-            <div class="loaderbody" id="loaderbody">
-                <div class="loader"></div>
-            </div>
-            <div class="content-wrapper">
-                <!-- / Navbar -->
-                <!-- Content wrapper -->
-                @RenderBody()
+                <div class="loaderbody" id="loaderbody">
+                    <div class="loader"></div>
+                </div>
+                <div class="content-wrapper">
+                    <!-- / Navbar -->
+                    <!-- Content wrapper -->
+                    @RenderBody()
 
+                    <!-- Content wrapper -->
+                    <div class="content-backdrop fade"></div>
+                </div>
                 <!-- Content wrapper -->
-                <div class="content-backdrop fade"></div>
             </div>
-            <!-- Content wrapper -->
-        </div>
         </div>
         <!-- / Layout page -->
     </div>
@@ -322,13 +321,17 @@
 
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
- 
+
 
     <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
     @* قبل jquery-ui.min.j يجب ان نستدعي   *@
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    <script src="~/js/code.jquery.com_ui_1.12.1_jquery-ui.min.js"
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
+
+    @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>*@
     <script src="~/loaderbody/js/site.js" asp-append-version="true"></script>
 
 
@@ -341,25 +344,25 @@
     <script src="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
     <script src="~/assets/vendor/libs/datatables-buttons/datatables-buttons.js"></script>
     <script src="~/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.js"></script>
-    <script src="~/assets/vendor/libs/jszip/jszip.js"></script>
-    <script src="~/assets/vendor/libs/pdfmake/pdfmake.js"></script>
-    <script src="~/assets/vendor/libs/datatables-buttons/buttons.html5.js"></script>
-    <script src="~/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
-    <script src="~/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
-    <script src="~/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="~/assets/vendor/libs/select2/select2.js"></script>
+    @*<script src="~/assets/vendor/libs/jszip/jszip.js"></script>
+        <script src="~/assets/vendor/libs/pdfmake/pdfmake.js"></script>
+        <script src="~/assets/vendor/libs/datatables-buttons/buttons.html5.js"></script>
+        <script src="~/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
+        <script src="~/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+        <script src="~/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+        <script src="~/assets/vendor/libs/select2/select2.js"></script>*@
 
     @*Notification*@
     <script src="~/App/notifications.js"></script>
-    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    @*<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+        <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>*@
 
     @*Notification*@
 
-    <script src="~/assets/vendor/libs/leaflet/leaflet.js"></script>
+    @*<script src="~/assets/vendor/libs/leaflet/leaflet.js"></script>*@
     <script src="~/assets/Sweet/sweetalert2.min.js"></script>
     <script src="~/assets/Sweet/sweetalert2.all.js"></script>
-  
+
     <!-- Flat Picker -->
     <script src="~/assets/vendor/libs/moment/moment.js"></script>
     <script src="~/assets/vendor/libs/flatpickr/flatpickr.js"></script>
@@ -389,8 +392,7 @@
     @* quill katexخاص بالمحرر النصي  *@
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
-    @*<script src="~/assets/js/forms-editors.js"></script>*@
-    @*<script src="~/assets/js/ui-modals.js"></script>*@
+    <script src="~/assets/js/ui-modals.js"></script>
     @RenderSection("scripts", required: false)
 
 

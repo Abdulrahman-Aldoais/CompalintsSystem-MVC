@@ -2,10 +2,10 @@
 
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.Core;
 using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
+using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.Core.ViewModels.Data;
 using CompalintsSystem.EF.DataBase;
 using Microsoft.AspNetCore.Hosting;
@@ -19,7 +19,6 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using CompalintsSystem.Core.Interfaces;
 
 namespace CompalintsSystem.EF.Repositories
 {
@@ -168,11 +167,11 @@ namespace CompalintsSystem.EF.Repositories
 
             };
 
-            var user = await _userManager.FindByEmailAsync(newUser.IdentityNumber.ToString());
-            if (user != null)
+            var userIdentity1 = await _context.Users.FirstOrDefaultAsync(u => u.IdentityNumber == newUser.IdentityNumber);
+            if (userIdentity1 != null)
             {
                 returntype = 1;
-                Error = "المستخدم موجود مسبقا بهذا الايميل";
+                Error = "رقم الهوية  موجود مسبقًا";
                 return;
             }
 
@@ -206,8 +205,6 @@ namespace CompalintsSystem.EF.Repositories
                     await _userManager.AddToRoleAsync(newUser, UserRoles.Beneficiarie);
                 }
                 await _userManager.AddPasswordAsync(newUser, userVM.Password);
-
-
 
             }
 

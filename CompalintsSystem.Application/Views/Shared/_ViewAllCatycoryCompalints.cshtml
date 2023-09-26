@@ -62,9 +62,9 @@
                             <td style="">
                                
                                 <form asp-action="Delete" asp-route-id="@item.Id" method="post">
-                                    <a class="btn btn-sm btn-icon item-trash" onclick="return functionConfirm(this)"><i class="bx bxs-trash-alt"></i></a>
+                                    <a class="btn btn-sm btn-icon item-trash" onclick="return functionConfirm(this)"><i class="bx bxs-trash-alt btn btn-danger" ></i></a>
                                     <input type="hidden" asp-for="@item.Id" />
-                                    <input type="submit" value="Delete" class="btn btn-danger" />
+                                    @*<input type="submit" value="Delete" class="btn btn-danger" />*@
                                 </form>
                             </td>
 
