@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <label class="col-form-label">المحافظة</label>
-                                    <select id="Governorates" class="form-control" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.ViewGover,"Id","Name"))">
+                                    <select id="governorateId" class="form-control" asp-for="GovernorateId" asp-items="@(new SelectList(ViewBag.ViewGover,"Id","Name"))">
                                         <option value="">حدد المحافظة</option>
 
                                     </select>
@@ -139,23 +139,25 @@
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <label class="col-form-label ">المديرية</label>
-                                    <select id="Directorates" class="form-control " asp-for="DirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
-                                        <option value="">حدد المديرية</option>
+                                    <select id="directorateId" class="form-control " asp-for="DirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
+
+                                        <option value="">@Model.DirectorateName </option>
                                     </select>
                                     <span asp-validation-for="DirectorateId" class="text-danger"></span>
 
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <label class="col-form-label">العزل</label>
-                                    <select id="SubDirectorate" class="form-control" asp-for="SubDirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
-                                        <option value="">حدد العزلة</option>
+                                    <select id="subDirectorate" class="form-control" asp-for="SubDirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
+                                        <option value=""> @Model.SubDirectorateName</option>
                                     </select>
                                     <span asp-validation-for="SubDirectorateId" class="text-danger"></span>
 
                                 </div>
+
                             </div>
                             <div class="mt-2">
-                                <button type="submit"  id="EditButton" class="btn btn-success me-2">حفظ التغير</button>
+                                <button type="submit" id="EditButton" class="btn btn-success me-2">حفظ التغير</button>
                                 @*<input type="submit" id="EditButton" class="btn btn-label-success me-2"  value="حفظ" />*@
 
                                 <button type="reset" onclick="location.href='@Url.Action("ViewUsers", "ManageUsers")'" class="btn btn-label-secondary">إلغاء</button>
@@ -242,71 +244,75 @@
         })();
     </script>
 
+
     <script>
-        function upateDirectoratesList() {
-            var selectedGovernorates = document.getElementById("Governorates").value;
-            $list = $('#Directorates');
+
+
+
+  $(document).ready(function () {
+    // إزالة خاصية disabled من العنصر الأول في القائمة المنسدلة
+    $("#governorateId option:first").prop("disabled", false);
+
+    $("#governorateId").change(function () {
+        var selectedGovernorate = $(this).val();
+        if (selectedGovernorate === "") {
+            $("#directorateId").prop("disabled", true).val("");
+            $("#subDirectorate").prop("disabled", true).val("");
+        } else {
+            $("#directorateId").prop("disabled", false);
             $.ajax({
-                url: '/ManageUsers/GetDirectorateies/' + selectedGovernorates,
-                teyp: 'GET',
-                dataType: 'text',
-                success: function (data) {
-                    results = JSON.parse(data);
-                    $list.html('');
-                    var items = '';
-                    for (i in results) {
-                        items += '<option value = "' + results[i].value + '">' + results[i].text + '</option>';
+                url: "/ManageUsers/GetDirectoratesByGovernorateId",
+                method: "GET",
+                data: { governorateId: selectedGovernorate },
+                success: function (response) {
+                    $("#directorateId").empty();
+                    $("#directorateId").append('<option value="">اختر المديرية</option>');
+                    response.forEach(function (director) {
+                        $("#directorateId").append('<option value="' + director.id + '">' + director.name + '</option>');
+                    });
+                    // تحميل القيمة المحددة في حالة التعديل
+                    var directorateIdModel = '@Model.DirectorateId';
+                    if (directorateIdModel !== '') {
+                        $('#directorateId').val(directorateIdModel);
+                        $('#directorateId').trigger('change');
                     }
-                    $list.html(items);
-
+                },
+                error: function () {
+                    console.log("فشل في استرداد المديريات.");
                 }
-
-
-            }
-            );
-
+            });
         }
-        $(document).ready(function () {
-            upateDirectoratesList();
-        });
-        $("#Governorates").on("change", function () {
-            upateDirectoratesList();
-        });
+    });
 
-    </script>
-    <script>
-        function upateSubDirectorat() {
-            var selectedSubDirectorat = document.getElementById("Directorates").value;
-            $list = $('#SubDirectorate');
+    $("#directorateId").change(function () {
+        var selectedDirectorate = $(this).val();
+        if (selectedDirectorate === "") {
+            $("#subDirectorate").prop("disabled", true).val("");
+        } else {
+            $("#subDirectorate").prop("disabled", false);
             $.ajax({
-                url: '/ManageUsers/GetSubDirectorate/' + selectedSubDirectorat,
-                teyp: 'GET',
-                dataType: 'text',
-                success: function (data) {
-                    results = JSON.parse(data);
-                    $list.html('');
-                    var items = '';
-                    for (i in results) {
-                        items += '<option value = "' + results[i].value + '">' + results[i].text + '</option>';
+                url: "/ManageUsers/GetSubDirectoratesByDirectorateId",
+                method: "GET",
+                data: { directorateId: selectedDirectorate },
+                success: function (response) {
+                    $("#subDirectorate").empty();
+                    $("#subDirectorate").append('<option value="">اختر العزلة</option>');
+                    response.forEach(function (subDirectorate) {
+                        $("#subDirectorate").append('<option value="' + subDirectorate.id + '">' + subDirectorate.name + '</option>');
+                    });
+                    // تحميل القيمة المحددة في حالة التعديل
+                    var subDirectorateIdModel = '@Model.SubDirectorateId';
+                    if (subDirectorateIdModel !== '') {
+                        $('#subDirectorate').val(subDirectorateIdModel);
                     }
-                    $list.html(items);
-
+                },
+                error: function () {
+                    console.log("فشل في استرداد العزلات.");
                 }
-
-
-            }
-            );
-
+            });
         }
-        $(document).ready(function () {
-            upateSubDirectorat();
-        });
-        $("#Directorates").on("change", function () {
-            upateSubDirectorat();
-        });
-
-
-
+    });
+});
 
 
     </script>

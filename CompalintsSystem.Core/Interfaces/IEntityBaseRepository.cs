@@ -1,5 +1,4 @@
-﻿using CompalintsSystem;
-using CompalintsSystem.Core.ViewModels;
+﻿using CompalintsSystem.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -38,7 +37,8 @@ namespace CompalintsSystem.Core.Interfaces
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<T, bool>> criteria);
         Task<T> GetByIdAsync(int Id);
-        Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues(int SubDirctoty);
+        Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues(int subDirctoty, int directoryId, int governorateId, string role, string roleId);
+        Task<SelectDataCommuncationDropdownsVM> GetAndAddCommunicationDropdownsValuesForBeneficaie(int subDirctoty, int directoryId, int governorateId, string role, string roleId);
 
         Task AddNewSolutionCompalintAsync(string Id, T entity);
         Task AddUser(T entity);

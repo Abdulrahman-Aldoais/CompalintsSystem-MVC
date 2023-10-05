@@ -76,7 +76,7 @@ namespace CompalintsSystem.Application.Controllers
         }
 
 
-
+        [HttpGet]
         public async Task<IActionResult> EditMyProfile()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -91,7 +91,7 @@ namespace CompalintsSystem.Application.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> EditMyProfile(UserProfileEditVM model)
         {
             if (ModelState.IsValid)

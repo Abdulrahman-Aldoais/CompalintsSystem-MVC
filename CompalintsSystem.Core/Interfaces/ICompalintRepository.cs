@@ -21,8 +21,7 @@ namespace CompalintsSystem.Core.Interfaces
         Task CreateAsync(InputCompmallintVM model);
         Task CreateCommuncationAsync(AddCommunicationVM model);
         Task GetAllGategoryCompAsync();
-
-
+        Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues(int subDirctoty, int directoryId, int governorateId, string role, string roleId);
     }
 }
 

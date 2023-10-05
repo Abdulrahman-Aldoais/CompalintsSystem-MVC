@@ -1,10 +1,9 @@
 ﻿@model EditUserViewModel
 
-
 @*@if (!ViewContext.ModelState.IsValid)
-{
-    <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger"></div>
-}*@
+    {
+        <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger"></div>
+    }*@
 <div class="content-wrapper">
     <!-- Content -->
 
@@ -18,7 +17,7 @@
                 <div class="card mb-4">
                     <h5 class="card-header">مدراء المحافظة</h5>
                     <!-- Account -->
-                    <form  asp-action="Edit" asp-controller="GeneralFederation" enctype="multipart/form-data" method="post">
+                    <form asp-action="Edit" asp-controller="GeneralFederation" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger"></div>
                         <input type="hidden" asp-for="Id" />
                         <div class="gap-4 d-flex align-items-start align-items-sm-center " style="margin-right:20px">
@@ -28,23 +27,18 @@
                                  alt="خلفية المستخدم"
                                  max-height="110"
                                  width="110"
-                                 id="blah" />
+                                 id="imgPreview" />
 
                             <div class="button-wrapper">
 
                                 <label asp-for="ProfilePicture" class="btn btn-primary me-2 mb-4" for="customFile" tabindex="0">
                                     <span class="d-none d-sm-block">إدراج صورة</span>
                                     <i class="bx bx-upload d-sm-none d-block"></i>
-                                    <input asp-for="ProfilePicture" type='file' id="customFile" onchange="fileChange()"
-                                           class="custom-file-input"
-                                           hidden
-                                           accept="image/png, image/jpeg, image/jpg" />
+                                   
+                                <input type="file" asp-for="ProfilePicture" onchange="previewImg(event)" class="custom-file-input"
+                                       accept="image/png, image/jpeg, image/jpg" />
                                 </label>
-
                             </div>
-
-
-
                         </div>
                         <hr class="my-0" />
                         <div class="card-body">
@@ -142,7 +136,8 @@
                                 <div class="col-md-4 mb-4">
                                     <label class="col-form-label ">المديرية</label>
                                     <select id="directorateId" class="form-control " asp-for="DirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
-                                        <option value="">حدد المديرية</option>
+
+                                        <option value="@Model.DirectorateId">@Model.DirectorateName </option>
                                     </select>
                                     <span asp-validation-for="DirectorateId" class="text-danger"></span>
 
@@ -150,7 +145,7 @@
                                 <div class="col-md-4 mb-4">
                                     <label class="col-form-label">العزل</label>
                                     <select id="subDirectorate" class="form-control" asp-for="SubDirectorateId" asp-items="@(new SelectList(String.Empty,"Id","Name"))">
-                                        <option value="">حدد العزلة</option>
+                                        <option value="@Model.SubDirectorateId"> @Model.SubDirectorateName</option>
                                     </select>
                                     <span asp-validation-for="SubDirectorateId" class="text-danger"></span>
 
@@ -251,71 +246,88 @@
             }
         })();
     </script>
+
     <script>
 
 
 
-        $(document).ready(function () {
-            $("#governorateId").change(function () {
-                var selectedGovernorate = $(this).val();
-                if (selectedGovernorate === "") {
-                    $("#directorateId").prop("disabled", true).val("");
-                    $("#subDirectorate").prop("disabled", true).val("");
-                } else {
-                    $("#directorateId").prop("disabled", false);
-                    $.ajax({
-                        url: "/ManageUsers/GetDirectoratesByGovernorateId",
-                        method: "GET",
-                        data: { governorateId: selectedGovernorate },
-                        success: function (response) {
-                            // Clear the previous options
-                            $("#directorateId").empty();
-                            $("#directorateId").append('<option value="">اختر المديرية</option>');
-                            // Add the fetched directorates as options
-                            response.forEach(function (director) {
-                                $("#directorateId").append('<option value="' + director.id + '">' + director.name + '</option>');
-                            });
-                        },
-                        error: function () {
-                            console.log("فشل في استرداد المديريات.");
-                        }
-                    });
-                }
-            });
+  $(document).ready(function () {
+    // إزالة خاصية disabled من العنصر الأول في القائمة المنسدلة
+    $("#governorateId option:first").prop("disabled", false);
 
-            $("#directorateId").change(function () {
-                var selectedDirectorate = $(this).val();
-                if (selectedDirectorate === "") {
-                    $("#subDirectorate").prop("disabled", true).val("");
-                } else {
-                    $("#subDirectorate").prop("disabled", false);
-                    $.ajax({
-                        url: "/ManageUsers/GetSubDirectoratesByDirectorateId",
-                        method: "GET",
-                        data: { directorateId: selectedDirectorate },
-                        success: function (response) {
-                            // Clear the previous options
-                            $("#subDirectorate").empty();
-                            $("#subDirectorate").append('<option value="">اختر العزلة</option>');
-                            // Add the fetched sub-directorates as options
-                            response.forEach(function (subDirectorate) {
-                                $("#subDirectorate").append('<option value="' + subDirectorate.id + '">' + subDirectorate.name + '</option>');
-                            });
-                        },
-                        error: function () {
-                            console.log("فشل في استرداد العزلات.");
-                        }
+    $("#governorateId").change(function () {
+        var selectedGovernorate = $(this).val();
+        if (selectedGovernorate === "") {
+            $("#directorateId").prop("disabled", true).val("");
+            $("#subDirectorate").prop("disabled", true).val("");
+        } else {
+            $("#directorateId").prop("disabled", false);
+            $.ajax({
+                url: "/ManageUsers/GetDirectoratesByGovernorateId",
+                method: "GET",
+                data: { governorateId: selectedGovernorate },
+                success: function (response) {
+                    $("#directorateId").empty();
+                    $("#directorateId").append('<option value="">اختر المديرية</option>');
+                    response.forEach(function (director) {
+                        $("#directorateId").append('<option value="' + director.id + '">' + director.name + '</option>');
                     });
+                    // تحميل القيمة المحددة في حالة التعديل
+                    var directorateIdModel = '@Model.DirectorateId';
+                    if (directorateIdModel !== '') {
+                        $('#directorateId').val(directorateIdModel);
+                        $('#directorateId').trigger('change');
+                    }
+                },
+                error: function () {
+                    console.log("فشل في استرداد المديريات.");
                 }
             });
-        });
+        }
+    });
+
+    $("#directorateId").change(function () {
+        var selectedDirectorate = $(this).val();
+        if (selectedDirectorate === "") {
+            $("#subDirectorate").prop("disabled", true).val("");
+        } else {
+            $("#subDirectorate").prop("disabled", false);
+            $.ajax({
+                url: "/ManageUsers/GetSubDirectoratesByDirectorateId",
+                method: "GET",
+                data: { directorateId: selectedDirectorate },
+                success: function (response) {
+                    $("#subDirectorate").empty();
+                    $("#subDirectorate").append('<option value="">اختر العزلة</option>');
+                    response.forEach(function (subDirectorate) {
+                        $("#subDirectorate").append('<option value="' + subDirectorate.id + '">' + subDirectorate.name + '</option>');
+                    });
+                    // تحميل القيمة المحددة في حالة التعديل
+                    var subDirectorateIdModel = '@Model.SubDirectorateId';
+                    if (subDirectorateIdModel !== '') {
+                        $('#subDirectorate').val(subDirectorateIdModel);
+                    }
+                },
+                error: function () {
+                    console.log("فشل في استرداد العزلات.");
+                }
+            });
+        }
+    });
+});
 
 
     </script>
 
 
-
     <script>
+        var previewImg = function (event) {
+            var result = document.getElementById("imgPreview");
+            result.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+
+    @*<script>
 
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -333,12 +345,12 @@
             readURL(this);
         });
 
-                                //$("#ProfilePicture").on("change", function () {
-                                //    var output = document.getElementById("ImagePreview");
-                                //    output.src = $(this).val();
-                                //})
+            //$("#ProfilePicture").on("change", function () {
+            //    var output = document.getElementById("ImagePreview");
+            //    output.src = $(this).val();
+            //})
 
-    </script>
+    </script>*@
 
 
 }

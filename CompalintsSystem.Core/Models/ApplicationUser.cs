@@ -35,7 +35,7 @@ namespace CompalintsSystem.Core.Models
         //public byte[] ProfilePicture { get; set; }
         //[Display(Name = "Image User")]
         [Column(TypeName = "varchar(250)")]
-        public string? ProfilePicture { get; set; }
+        public string ProfilePicture { get; set; }
         public bool IsBlocked { get; set; }
         public string UserId { get; set; }
         public string originatorName { get; set; }

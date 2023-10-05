@@ -83,71 +83,138 @@ namespace CompalintsSystem.Application.Controllers
 
 
 
+        //[HttpGet]
+        //public IActionResult Login()
+        //{
+        //    if (_signInManager.IsSignedIn(User))
+        //        return RedirectToAction("");
+
+
+        //    return View();
+        //}
+
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> Login(LoginViewModel model)
+        //{
+        //    TempData["Error"] = null;
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, true);
+        //        if (result.Succeeded)
+        //        {
+        //            _ = model.Email;
+        //            var user = await _userManager.FindByEmailAsync(model.Email);
+        //            if (user.IsBlocked == false)
+        //            {
+        //                if (User.IsInRole("AdminGeneralFederation"))
+        //                {
+        //                    return RedirectToAction("Index", "GeneralFederation");
+
+        //                }
+        //                else if (User.IsInRole(UserRoles.Beneficiarie))
+        //                {
+        //                    return RedirectToAction("Index", "Beneficiarie");
+
+        //                }
+        //                else if (User.IsInRole(UserRoles.AdminGovernorate))
+        //                {
+        //                    return RedirectToAction("Index", "GovManageComplaints");
+
+        //                }
+        //                else if (User.IsInRole(UserRoles.AdminDirectorate))
+        //                {
+        //                    return RedirectToAction("Report", "DirManageComplaints");
+
+        //                }
+        //                else if (User.IsInRole(UserRoles.AdminSubDirectorate))
+        //                {
+        //                    return RedirectToAction("Index", "SubManageComplaints");
+
+        //                }
+        //                return RedirectToAction("AccessDenied");
+        //            }
+        //            else
+        //            {
+        //                // TempData["Error"] = " حسابك موقف!  الرجاء تنشيط الحساب من قبل المسؤول";
+        //                return RedirectToAction("AccessDenied");
+
+        //            }
+        //        }
+
+        //        TempData["Error"] = " تاكد من صحة كتابة رقم البطاقة او كلمة المرور";
+        //        return View(model);
+        //    }
+        //    return View(model);
+        //}
+
+
         [HttpGet]
         public IActionResult Login()
         {
             if (_signInManager.IsSignedIn(User))
+            {
                 return RedirectToAction("");
-
+            }
 
             return View();
         }
-
-
-
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             TempData["Error"] = null;
+
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, true);
                 if (result.Succeeded)
                 {
-                    _ = model.Email;
                     var user = await _userManager.FindByEmailAsync(model.Email);
-                    if (user.IsBlocked == false)
+
+                    if (!user.IsBlocked)
                     {
-                        if (User.IsInRole("AdminGeneralFederation"))
-                        {
-                            return RedirectToAction("Index", "GeneralFederation");
-
-                        }
-                        else if (User.IsInRole(UserRoles.Beneficiarie))
-                        {
-                            return RedirectToAction("Index", "Beneficiarie");
-
-                        }
-                        else if (User.IsInRole(UserRoles.AdminGovernorate))
-                        {
-                            return RedirectToAction("Index", "GovManageComplaints");
-
-                        }
-                        else if (User.IsInRole(UserRoles.AdminDirectorate))
-                        {
-                            return RedirectToAction("Report", "DirManageComplaints");
-
-                        }
-                        else if (User.IsInRole(UserRoles.AdminSubDirectorate))
-                        {
-                            return RedirectToAction("Index", "SubManageComplaints");
-
-                        }
-                        return RedirectToAction("AccessDenied");
+                        return await GetRedirectActionResultForUserRole(user);
                     }
                     else
                     {
-                        // TempData["Error"] = " حسابك موقف!  الرجاء تنشيط الحساب من قبل المسؤول";
                         return RedirectToAction("AccessDenied");
-
                     }
                 }
 
-                TempData["Error"] = " تاكد من صحة كتابة رقم البطاقة او كلمة المرور";
-                return View(model);
+                TempData["Error"] = "تاكد من صحة كتابة رقم البطاقة او كلمة المرور";
             }
+
             return View(model);
+        }
+        private async Task<IActionResult> GetRedirectActionResultForUserRole(ApplicationUser user)
+        {
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            if (userRoles.Contains("AdminGeneralFederation"))
+            {
+                return Redirect(Url.Action("Index", "GeneralFederation"));
+            }
+            else if (userRoles.Contains(UserRoles.Beneficiarie))
+            {
+                return Redirect(Url.Action("Index", "Beneficiarie"));
+            }
+            else if (userRoles.Contains(UserRoles.AdminGovernorate))
+            {
+                return Redirect(Url.Action("Index", "GovManageComplaints"));
+            }
+            else if (userRoles.Contains(UserRoles.AdminDirectorate))
+            {
+                return Redirect(Url.Action("Report", "DirManageComplaints"));
+            }
+            else if (userRoles.Contains(UserRoles.AdminSubDirectorate))
+            {
+                return Redirect(Url.Action("Index", "SubManageComplaints"));
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
 

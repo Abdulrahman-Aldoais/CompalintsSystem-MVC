@@ -7258,8 +7258,6 @@
     <_ContentIncludedByDefault Remove="Views\ManageComplaints\ViewCompalintSolutionDetails.cshtml" />
     <_ContentIncludedByDefault Remove="Views\ManageProfile\ChangePassword.cshtml" />
     <_ContentIncludedByDefault Remove="Views\ManageProfile\Edit.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\ManageProfile\EditeMyProfile.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\ManageProfile\EditeMyProfile2.cshtml" />
     <_ContentIncludedByDefault Remove="Views\ManageProfile\EditMyProfile.cshtml" />
     <_ContentIncludedByDefault Remove="Views\ManageProfile\Profile.cshtml" />
     <_ContentIncludedByDefault Remove="Views\ManageUsers\AccountRestriction.cshtml" />
@@ -7689,14 +7687,6 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\ManageProfile\Edit.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\ManageProfile\EditeMyProfile.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\ManageProfile\EditeMyProfile2.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

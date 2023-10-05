@@ -90,14 +90,14 @@
 
     <!-- الحسابات -->
     <!-- الحسابات -->
-    <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="الحسابات"?"open":"")
+    <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString()=="الحسابات"?"open":"")
                          @(ViewContext.RouteData.Values["Action"].ToString()=="ViewUsers"?"open":"")
                          @(ViewContext.RouteData.Values["Action"].ToString()=="BeneficiariesAccount"?"open":"")
                          @(ViewContext.RouteData.Values["Action"].ToString()=="Create"?"open":"")
                          @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
-                        @(ViewContext.RouteData.Values["Action"].ToString()=="Details"?"open":"")
-                        @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
-                        @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
+                         @(ViewContext.RouteData.Values["Action"].ToString()=="Details"?"open":"")
+                         @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
+                         @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"open":"")
         ">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-user"></i>
@@ -109,19 +109,8 @@
                     <div>حسابات المستفيدين</div>
                 </a>
             </li>
-            @*<li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewUsers"?"active":"")">
-                <a href="/SubManageComplaints/ViewUsers" class="menu-link">
-                    <div>حسابات الموضفين</div>
-                </a>
-            </li>*@
-            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="Create"?"active":"")">
-                <a href="/ManageUsers/Create" class="menu-link">
-                    <div>اضافة حساب مزارع </div>
-                </a>
-            </li>
-
             <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AccountRestriction"?"active":"")">
-                <a href="/ManageUsers/AccountRestriction" class="menu-link">
+                <a href="/SubManageComplaints/AccountRestriction" class="menu-link">
                     <div>الحسابات المقيدة </div>
                 </a>
             </li>

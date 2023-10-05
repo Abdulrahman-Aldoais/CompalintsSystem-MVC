@@ -61,8 +61,10 @@ namespace CompalintsSystem.Core.ViewModels
         public int GovernorateId { get; set; }
         [Required(ErrorMessage = "اختر المديرية")]
         public int DirectorateId { get; set; }
+        public string DirectorateName { get; set; }
         [Required(ErrorMessage = "اختر العزلة")]
         public int SubDirectorateId { get; set; }
+        public string SubDirectorateName { get; set; }
 
         //[DataType(DataType.Password)]
         //[Required(ErrorMessage = "يرجى ادخال كلمة المرور"), RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "صيغة يجب ان تكون كلمة السر ارقام و حروف و رموز")]

@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CompalintsSystem.Core.Interfaces;
 
 namespace CompalintsSystem.Application.Controllers
 {
@@ -444,35 +444,102 @@ namespace CompalintsSystem.Application.Controllers
 
         }
 
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> AddCommunication()
+        //{
+
+        //    var currentUser = await _userManager.GetUserAsync(User);
+        //    var userId = currentUser.Id.ToString();
+        //    var user = await _userManager.FindByIdAsync(userId);
+        //    var roles = await _userManager.GetRolesAsync(user);
+        //    int governorateId = currentUser.GovernorateId;
+        //    int dirctoty = currentUser.DirectorateId;
+        //    int subDirctoty = currentUser.SubDirectorateId;
+
+        //    // تحويل قائمة الأدوار إلى سلسلة واحدة
+        //    string rolesString = string.Join(",", roles);
+
+        //    var communicationDropdownsData = await _compReop.GetAddCommunicationDropdownsValues(subDirctoty, dirctoty, governorateId, rolesString , roleId);
+
+        //    ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
+        //    ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
+
+        //    return View();
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> AddCommunication(AddCommunicationVM communication)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var currentUser = await _userManager.GetUserAsync(User);
+        //        var userId = currentUser.Id.ToString();
+        //        var user = await _userManager.FindByIdAsync(userId);
+        //        var roles = await _userManager.GetRolesAsync(user);
+        //        int governorateId = currentUser.GovernorateId;
+        //        int dirctoty = currentUser.DirectorateId;
+        //        int subDirctoty = currentUser.SubDirectorateId;
+
+        //        // تحويل قائمة الأدوار إلى سلسلة واحدة
+        //        string rolesString = string.Join(",", roles);
+
+        //        var communicationDropdownsData = await _compReop.GetAddCommunicationDropdownsValues(subDirctoty, dirctoty, governorateId, rolesString , roleId);
+        //        ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
+        //        ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "Name");
+
+        //        var currentName = currentUser.FullName;//مقدم البلاغ
+        //        var currentPhone = currentUser.PhoneNumber;
+        //        var currentGov = currentUser.GovernorateId;
+        //        var currentDir = currentUser.DirectorateId;
+        //        var currentSub = currentUser.SubDirectorateId;
+
+        //        await _compReop.CreateCommuncationAsync(new AddCommunicationVM
+        //        {
+        //            Titile = communication.Titile,
+        //            NameUserId = communication.NameUserId,
+        //            reason = communication.reason,
+        //            CreateDate = communication.CreateDate,
+        //            TypeCommuncationId = communication.TypeCommuncationId,
+        //            UserId = currentUser.Id,
+        //            BenfName = currentName,
+        //            BenfPhoneNumber = currentPhone,
+        //            GovernorateId = currentGov,
+        //            DirectorateId = currentDir,
+        //            SubDirectorateId = currentSub,
+
+        //        });
+
+        //        return RedirectToAction("AllCommunication");
+        //    }
+        //    return View(communication);
+        //}
+
+
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AddCommunication()
         {
+            var currentUser = await GetCurrentUser();
+            var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
 
-            var currentUser = await _userManager.GetUserAsync(User);
-            var currentName = currentUser.FullName;
-            int SubDirctoty = currentUser.SubDirectorateId;
-            var communicationDropdownsData = await _compReop.GetAddCommunicationDropdownsValues(SubDirctoty);
             ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
             ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
 
-
-
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> AddCommunication(AddCommunicationVM communication)
         {
             if (ModelState.IsValid)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                int SubDirctoty = currentUser.SubDirectorateId;
-                var communicationDropdownsData = await _compReop.GetAddCommunicationDropdownsValues(SubDirctoty);
+                var currentUser = await GetCurrentUser();
+                var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
                 ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
                 ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "Name");
 
-
-                var currentName = currentUser.FullName;
+                var currentName = currentUser.FullName; //مقدم البلاغ
                 var currentPhone = currentUser.PhoneNumber;
                 var currentGov = currentUser.GovernorateId;
                 var currentDir = currentUser.DirectorateId;
@@ -491,13 +558,38 @@ namespace CompalintsSystem.Application.Controllers
                     GovernorateId = currentGov,
                     DirectorateId = currentDir,
                     SubDirectorateId = currentSub,
-
                 });
 
                 return RedirectToAction("AllCommunication");
             }
             return View(communication);
         }
+
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser.Id.ToString();
+            var user = await _userManager.FindByIdAsync(userId);
+            return user;
+        }
+
+        private async Task<SelectDataCommuncationDropdownsVM> GetCommunicationDropdownsData(ApplicationUser currentUser)
+        {
+            var governorateId = currentUser.GovernorateId;
+            var directoryId = currentUser.DirectorateId;
+            var subDirectoryId = currentUser.SubDirectorateId;
+            //var roles = await _userManager.GetRolesAsync(currentUser);
+
+            var roles = await _userManager.GetRolesAsync(currentUser);
+            var rolesString = string.Join(",", roles);
+            var roleId = _context.Roles.FirstOrDefault(role => role.Name == roles.FirstOrDefault())?.Id;
+
+            return await _compReop.GetAddCommunicationDropdownsValues(subDirectoryId, directoryId, governorateId, rolesString, roleId);
+        }
+
+
+
+
 
         public IActionResult AllCirculars()
         {

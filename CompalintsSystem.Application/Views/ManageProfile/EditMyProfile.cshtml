@@ -47,7 +47,8 @@
                                     <h5 style="font-family:Cairo;font-size:18px" class="border-bottom pb-2 mb-4">البيانات</h5>
                                     <div class="info-container">
                                         <div class="info-container">
-                                            <form asp-action="EditMyProfile" id="EditForm" method="post">
+                                            @*<form asp-action="EditMyProfile" id="EditForm" method="post">*@
+                                            <form asp-action="EditMyProfile" asp-controller="ManageProfile" method="post">
                                                 <ul class="list-unstyled">
                                                     <li class="mb-3">
                                                         <span class="fw-bold me-2">اسم المستخدم:</span>
@@ -112,7 +113,8 @@
 
         </div>
     </div>
-    @section Scripts{
+</div>
+    @*@section Scripts{
 
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
@@ -133,4 +135,4 @@
 
 
         </script>
-    }
+    }*@

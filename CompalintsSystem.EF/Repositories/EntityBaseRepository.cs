@@ -156,19 +156,93 @@ namespace CompalintsSystem.EF.Repositories
 
 
 
-        public async Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues(int SubDirctoty)
-        {
-            var response = new SelectDataCommuncationDropdownsVM()
-            {
-                ApplicationUsers = await _context.Users.OrderBy(n => n.FullName).Where(r => r.RoleId != 5 && r.RoleId != 1).ToListAsync(),
-                TypeCommunications = await _context.TypeCommunications.OrderBy(n => n.Type).ToListAsync(),
 
+        public async Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues(int subDirctoty, int directoryId, int governorateId, string role, string roleId)
+        {
+            if (role == "AdminGovernorate")
+            {
+
+                var responseGov = new SelectDataCommuncationDropdownsVM
+                {
+
+                    ApplicationUsers = await _context.Users
+                 .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                 .Where(x => x.UserRole.RoleId == roleId
+                     && x.User.GovernorateId == governorateId
+                     && x.User.DirectorateId == directoryId)
+                 .OrderBy(x => x.User.FullName)
+                 .Select(x => x.User)
+                 .ToListAsync(),
+
+                    TypeCommunications = await _context.TypeCommunications
+                .OrderBy(tc => tc.Type)
+                .ToListAsync()
+                };
+
+
+
+                return responseGov;
+            }
+            else if (role == "AdminDirectorate")
+            {
+                var responseDir = new SelectDataCommuncationDropdownsVM
+                {
+
+                    ApplicationUsers = await _context.Users
+                  .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                  .Where(x => x.UserRole.RoleId == roleId
+                      && x.User.GovernorateId == governorateId
+                      && x.User.DirectorateId == directoryId)
+                  .OrderBy(x => x.User.FullName)
+                  .Select(x => x.User)
+                  .ToListAsync(),
+
+                    TypeCommunications = await _context.TypeCommunications
+                 .OrderBy(tc => tc.Type)
+                 .ToListAsync()
+                };
+
+
+
+                return responseDir;
+            }
+            else if (role == "AdminSubDirectorate")
+            {
+                var responseSub = new SelectDataCommuncationDropdownsVM
+                {
+
+                    ApplicationUsers = await _context.Users
+                    .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                    .Where(x => x.UserRole.RoleId == roleId
+                        && x.User.GovernorateId == governorateId
+                        && x.User.DirectorateId == directoryId)
+                    .OrderBy(x => x.User.FullName)
+                    .Select(x => x.User)
+                    .ToListAsync(),
+
+                    TypeCommunications = await _context.TypeCommunications
+                   .OrderBy(tc => tc.Type)
+                   .ToListAsync()
+                };
+
+                return responseSub;
+            }
+            var responseAdmin = new SelectDataCommuncationDropdownsVM
+            {
+                ApplicationUsers = await _context.Users
+                  .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                  .Where(x => x.UserRole.RoleId != roleId)
+                  .OrderBy(x => x.User.FullName)
+                  .Select(x => x.User)
+                  .ToListAsync(),
+
+                TypeCommunications = await _context.TypeCommunications
+                 .OrderBy(tc => tc.Type)
+                 .ToListAsync()
             };
 
-            return response;
+            return responseAdmin;
         }
-
-
 
 
 
@@ -204,6 +278,25 @@ namespace CompalintsSystem.EF.Repositories
             return _context.Set<T>().ToList();
         }
 
+        public async Task<SelectDataCommuncationDropdownsVM> GetAndAddCommunicationDropdownsValuesForBeneficaie(int subDirctoty, int directoryId, int governorateId, string role, string roleId)
+        {
+            var responseSub = new SelectDataCommuncationDropdownsVM
+            {
 
+                ApplicationUsers = await _context.Users
+                   .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                   .Where(x => x.UserRole.RoleId == "2031d8ec-c362-4f84-8e3e-97a28b8db091"//  عرض جميع المستخدمين في العزلة التابعة 
+                       && x.User.SubDirectorateId == subDirctoty)
+                   .OrderBy(x => x.User.FullName)
+                   .Select(x => x.User)
+                   .ToListAsync(),
+
+                TypeCommunications = await _context.TypeCommunications
+                  .OrderBy(tc => tc.Type)
+                  .ToListAsync()
+            };
+
+            return responseSub;
+        }
     }
 }

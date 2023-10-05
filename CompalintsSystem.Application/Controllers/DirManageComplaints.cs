@@ -1,5 +1,6 @@
 ﻿
 using CompalintsSystem.Core.Interfaces;
+using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.Statistics;
 using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.EF.DataBase;
@@ -11,11 +12,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CompalintsSystem.Core.Interfaces;
-using CompalintsSystem.Core.Models;
 
 namespace CompalintsSystem.Application.Controllers
 {
@@ -609,10 +609,8 @@ namespace CompalintsSystem.Application.Controllers
         public async Task<IActionResult> AddCommunication()
         {
 
-            var currentUser = await _userManager.GetUserAsync(User);
-            var currentName = currentUser.FullName;
-            int SubDirctoty = currentUser.SubDirectorateId;
-            var communicationDropdownsData = await _compReop.GetAddCommunicationDropdownsValues(SubDirctoty);
+            var currentUser = await GetCurrentUser();
+            var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
             ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
             ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
 
@@ -625,9 +623,8 @@ namespace CompalintsSystem.Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                int SubDirctoty = currentUser.SubDirectorateId;
-                var communicationDropdownsData = await _compReop.GetAddCommunicationDropdownsValues(SubDirctoty);
+                var currentUser = await GetCurrentUser();
+                var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
                 ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
                 ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "Name");
 
@@ -658,12 +655,31 @@ namespace CompalintsSystem.Application.Controllers
             }
             return View(communication);
         }
-        public async Task<IActionResult> AllCommunication()
+        private async Task<ApplicationUser> GetCurrentUser()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var UserId = currentUser.Id;
-            int SubDirctoty = currentUser.SubDirectorateId;
-            var communicationDropdownsData = await _compReop.GetAddCommunicationDropdownsValues(SubDirctoty);
+            var userId = currentUser.Id.ToString();
+            var user = await _userManager.FindByIdAsync(userId);
+            return user;
+        }
+
+        private async Task<SelectDataCommuncationDropdownsVM> GetCommunicationDropdownsData(ApplicationUser currentUser)
+        {
+            var governorateId = currentUser.GovernorateId;
+            var directoryId = currentUser.DirectorateId;
+            var subDirectoryId = currentUser.SubDirectorateId;
+            //var roles = await _userManager.GetRolesAsync(currentUser);
+
+            var roles = await _userManager.GetRolesAsync(currentUser);
+            var rolesString = string.Join(",", roles);
+            var roleId = _context.Roles.FirstOrDefault(role => role.Name == roles.FirstOrDefault())?.Id;
+
+            return await _compReop.GetAddCommunicationDropdownsValues(subDirectoryId, directoryId, governorateId, rolesString, roleId);
+        }
+        public async Task<IActionResult> AllCommunication()
+        {
+            var currentUser = await GetCurrentUser();
+            var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
 
             ViewBag.TypeCommunication = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Name");
 
@@ -677,9 +693,6 @@ namespace CompalintsSystem.Application.Controllers
 
 
             //List<ApplicationUser> meeting = _context.Users.Where(m => m.Id == ).ToList<ApplicationUser>();
-
-
-
 
             int totalCompalints = result.Count();
 

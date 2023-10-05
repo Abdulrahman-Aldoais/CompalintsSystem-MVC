@@ -103,6 +103,9 @@ namespace CompalintsSystem.Application.Controllers
             }
             return View(model);
         }
+
+
+
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -130,15 +133,17 @@ namespace CompalintsSystem.Application.Controllers
 
             var newUser = new EditUserViewModel
             {
-                GovernoratesList = await _context.Governorates.ToListAsync(),
                 FullName = user.FullName,
                 PhoneNumber = user.PhoneNumber,
+                ProfilePicture = user.ProfilePicture,
                 IdentityNumber = user.IdentityNumber,
                 IsBlocked = user.IsBlocked,
                 DateOfBirth = user.DateOfBirth,
-                GovernorateId = user.Governorate.Id,
-                DirectorateId = user.Directorate.Id,
-                SubDirectorateId = user.SubDirectorate.Id,
+                GovernorateId = user.GovernorateId,
+                DirectorateId = user.DirectorateId,
+                DirectorateName = user.Directorate.Name,
+                SubDirectorateId = user.SubDirectorateId,
+                SubDirectorateName = user.SubDirectorate.Name,
                 RoleId = user.RoleId,
 
             };

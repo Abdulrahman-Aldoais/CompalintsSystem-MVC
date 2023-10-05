@@ -1225,8 +1225,6 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageContent\TypeCommuncations.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageProfile\ChangePassword.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageProfile\Edit.cshtml.g.cs
-E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageProfile\EditeMyProfile.cshtml.g.cs
-E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageProfile\EditeMyProfile2.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageProfile\EditMyProfile.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageProfile\Profile.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\ManageUsers\AccountRestriction.cshtml.g.cs

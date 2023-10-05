@@ -228,7 +228,81 @@ namespace CompalintsSystem.EF.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues(int subDirctoty, int directoryId, int governorateId, string role, string roleId)
+        {
+            if (role == "AdminGovernorate")
+            {
+                var responseGov = new SelectDataCommuncationDropdownsVM
+                {
+                    ApplicationUsers = await _context.Users
+                   .Where(u => u.UserRoles.Any(r => r.Name == "AdminGovernorate" || r.Name == "AdminGeneralFederation"))
+                   .OrderBy(u => u.FullName)
+                   .ToListAsync(),
 
+                    TypeCommunications = await _context.TypeCommunications
+                   .OrderBy(tc => tc.Type)
+                   .ToListAsync()
+                };
+
+                return responseGov;
+            }
+            else if (role == "AdminDirectorate")
+            {
+                var responseDir = new SelectDataCommuncationDropdownsVM
+                {
+                    ApplicationUsers = await _context.Users
+                   //.Where(u => u.UserRoles.Any(r => r.Name == role)
+                   .Where(u => u.UserRoles.Select(r => r.Name).Contains("AdminGovernorate")
+                    && u.GovernorateId == governorateId)
+                   .OrderBy(u => u.FullName)
+                   .ToListAsync(),
+
+                    TypeCommunications = await _context.TypeCommunications
+                   .OrderBy(tc => tc.Type)
+                   .ToListAsync()
+                };
+
+                return responseDir;
+            }
+            else if (role == "AdminSubDirectorate")
+            {
+                var responseSub = new SelectDataCommuncationDropdownsVM
+                {
+                    // ApplicationUsers = await _context.Users
+                    //.Where(u => u.UserRoles.Select(r => r.Name).Contains("AdminDirectorate")
+                    // && u.GovernorateId == governorateId && u.DirectorateId == directoryId)
+                    //.OrderBy(u => u.FullName)
+                    //.ToListAsync(),
+
+                    ApplicationUsers = await _context.Users
+                    .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                    .Where(x => x.UserRole.RoleId == roleId
+                        && x.User.GovernorateId == governorateId
+                        && x.User.DirectorateId == directoryId)
+                    .OrderBy(x => x.User.FullName)
+                    .Select(x => x.User)
+                    .ToListAsync(),
+
+                    TypeCommunications = await _context.TypeCommunications
+                   .OrderBy(tc => tc.Type)
+                   .ToListAsync()
+                };
+
+                return responseSub;
+            }
+            var responseAdmin = new SelectDataCommuncationDropdownsVM
+            {
+                ApplicationUsers = await _context.Users
+                  .OrderBy(u => u.FullName)
+                  .ToListAsync(),
+
+                TypeCommunications = await _context.TypeCommunications
+                  .OrderBy(tc => tc.Type)
+                  .ToListAsync()
+            };
+
+            return responseAdmin;
+        }
 
 
     }

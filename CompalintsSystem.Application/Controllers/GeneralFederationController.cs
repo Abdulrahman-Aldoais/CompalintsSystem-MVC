@@ -758,7 +758,9 @@ namespace CompalintsSystem.Application.Controllers
                 DateOfBirth = user.DateOfBirth,
                 GovernorateId = user.GovernorateId,
                 DirectorateId = user.DirectorateId,
+                DirectorateName = user.Directorate.Name,
                 SubDirectorateId = user.SubDirectorateId,
+                SubDirectorateName = user.SubDirectorate.Name,
                 RoleId = user.RoleId,
 
             };
@@ -1183,14 +1185,30 @@ namespace CompalintsSystem.Application.Controllers
 
 
 
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser.Id.ToString();
+            var user = await _userManager.FindByIdAsync(userId);
+            return user;
+        }
+
+        private async Task<SelectDataCommuncationDropdownsVM> GetCommunicationDropdownsData(ApplicationUser currentUser)
+        {
+            var governorateId = currentUser.GovernorateId;
+            var directoryId = currentUser.DirectorateId;
+            var subDirectoryId = currentUser.SubDirectorateId;
+            var roles = await _userManager.GetRolesAsync(currentUser);
+            var rolesString = string.Join(",", roles);
+
+            return await _unitOfWork.CompalinteRepo.GetAddCommunicationDropdownsValues(subDirectoryId, directoryId, governorateId, rolesString, rolesString);
+        }
 
 
         public async Task<IActionResult> AllCommunication()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            var UserId = currentUser.Id;
-            int SubDirctoty = currentUser.SubDirectorateId;
-            var communicationDropdownsData = await _unitOfWork.CompalinteRepo.GetAddCommunicationDropdownsValues(SubDirctoty);
+            var currentUser = await GetCurrentUser();
+            var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
 
             ViewBag.TypeCommunication = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Name");
 

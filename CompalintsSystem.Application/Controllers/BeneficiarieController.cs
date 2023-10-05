@@ -215,11 +215,8 @@ namespace CompalintsSystem.Application.Controllers
         // كل البلاغات المقدمة
         public async Task<IActionResult> AllCommunication()
         {
-            var currentUser = await userManager.GetUserAsync(User);
-            var UserId = currentUser.Id;
-            int SubDirctoty = currentUser.SubDirectorateId;
-            var communicationDropdownsData = await _service.GetAddCommunicationDropdownsValues(SubDirctoty);
-
+            var currentUser = await GetCurrentUser();
+            var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
             ViewBag.TypeCommunication = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Name");
 
             var result = _service.GetCommunicationBy(UserId);
@@ -235,10 +232,9 @@ namespace CompalintsSystem.Application.Controllers
         public async Task<IActionResult> AddCommunication()
         {
 
-            var currentUser = await userManager.GetUserAsync(User);
-            var currentName = currentUser.FullName;
-            int SubDirctoty = currentUser.SubDirectorateId;
-            var communicationDropdownsData = await _service.GetAddCommunicationDropdownsValues(SubDirctoty);
+            var currentUser = await GetCurrentUser();
+            var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
+
             ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
             ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
 
@@ -251,10 +247,8 @@ namespace CompalintsSystem.Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentUser = await userManager.GetUserAsync(User);
-                int SubDirctoty = currentUser.SubDirectorateId;
-
-                var communicationDropdownsData = await _service.GetAddCommunicationDropdownsValues(SubDirctoty);
+                var currentUser = await GetCurrentUser();
+                var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
                 ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
                 ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
 
@@ -285,6 +279,28 @@ namespace CompalintsSystem.Application.Controllers
                 return RedirectToAction(nameof(AllCommunication));
             }
             return View(communication);
+        }
+
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            var currentUser = await userManager.GetUserAsync(User);
+            var userId = currentUser.Id.ToString();
+            var user = await userManager.FindByIdAsync(userId);
+            return user;
+        }
+
+        private async Task<SelectDataCommuncationDropdownsVM> GetCommunicationDropdownsData(ApplicationUser currentUser)
+        {
+            var governorateId = currentUser.GovernorateId;
+            var directoryId = currentUser.DirectorateId;
+            var subDirectoryId = currentUser.SubDirectorateId;
+            //var roles = await _userManager.GetRolesAsync(currentUser);
+
+            var roles = await userManager.GetRolesAsync(currentUser);
+            var rolesString = string.Join(",", roles);
+            var roleId = _context.Roles.FirstOrDefault(role => role.Name == roles.FirstOrDefault())?.Id;
+
+            return await _service.GetAndAddCommunicationDropdownsValuesForBeneficaie(subDirectoryId, directoryId, governorateId, rolesString, roleId);
         }
 
 
