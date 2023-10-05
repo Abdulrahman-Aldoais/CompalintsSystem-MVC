@@ -178,34 +178,6 @@
     @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
     <partial name="_ValidationScriptsPartial" />
 
-    @*<script>
-            'use strict';
-            (function () {
-                const createButton = document.querySelector('#createButton');
-                // Alert With Functional Confirm Cancel Button
-                if (createButton) {
-                    createButton.onclick = function () {
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel plx!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                    } else {
-                        swal("Cancelled", "Your imaginary file is safe :)", "error");
-                    }
-                });
-            }
-        </script>*@
-
     <script>
         'use strict';
         (function () {
