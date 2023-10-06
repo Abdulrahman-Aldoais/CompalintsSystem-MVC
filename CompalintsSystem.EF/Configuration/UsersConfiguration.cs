@@ -1,4 +1,5 @@
 ﻿using CompalintsSystem.Core;
+using CompalintsSystem.Core.Helpers.Constants;
 using CompalintsSystem.Core.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +39,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                UserRoleName =UserRolesArbic.AdminGeneralFederation,
+                RoleId = 1,
             }, UserRoles.AdminGeneralFederation),
             (new ApplicationUser
             {
@@ -50,8 +53,10 @@ namespace CompalintsSystem.EF.Configuration
                 DirectorateId = 1,
                 SubDirectorateId = 2,
                 EmailConfirmed = true,
+                 UserRoleName =UserRolesArbic.AdminGovernorate,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 RoleId = 2,
             }, UserRoles.AdminGovernorate),
             (new ApplicationUser
             {
@@ -66,6 +71,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminDirectorate,
+                  RoleId = 3,
             }, UserRoles.AdminDirectorate),
             (new ApplicationUser
             {
@@ -80,6 +87,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminSubDirectorate,
+                  RoleId = 4,
             }, UserRoles.AdminSubDirectorate),
             (new ApplicationUser
             {
@@ -94,7 +103,9 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
-            }, UserRoles.AdminDirectorate),
+                UserRoleName =UserRolesArbic.Beneficiarie,
+                RoleId = 5,
+            }, UserRoles.Beneficiarie),// مــــــزارع
 
 
 
@@ -112,6 +123,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminGovernorate,
+                  RoleId = 2,
             }, UserRoles.AdminGovernorate),
             (new ApplicationUser
             {
@@ -126,6 +139,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminGovernorate,
+                  RoleId = 2,
             }, UserRoles.AdminGovernorate),
             (new ApplicationUser
             {
@@ -140,6 +155,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminDirectorate,
+                  RoleId = 3,
             }, UserRoles.AdminDirectorate),
             (new ApplicationUser
             {
@@ -154,6 +171,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminSubDirectorate,
+                  RoleId = 4,
             }, UserRoles.AdminSubDirectorate),
             (new ApplicationUser
             {
@@ -168,6 +187,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminDirectorate,
+                  RoleId = 3,
             }, UserRoles.AdminDirectorate),
 
             //==================================================
@@ -184,6 +205,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminGeneralFederation,
+                  RoleId = 1,
             }, UserRoles.AdminGeneralFederation),
             (new ApplicationUser
             {
@@ -198,6 +221,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminGovernorate,
+                  RoleId = 2,
             }, UserRoles.AdminGovernorate),
             (new ApplicationUser
             {
@@ -212,6 +237,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminDirectorate,
+                  RoleId = 13,
             }, UserRoles.AdminDirectorate),
             (new ApplicationUser
             {
@@ -226,6 +253,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminSubDirectorate,
+                  RoleId = 4,
             }, UserRoles.AdminSubDirectorate),
             (new ApplicationUser
             {
@@ -240,6 +269,8 @@ namespace CompalintsSystem.EF.Configuration
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 CreatedDate = DateTime.Now,
+                 UserRoleName =UserRolesArbic.AdminSubDirectorate,
+                  RoleId = 4,
             }, UserRoles.AdminSubDirectorate),
 
 

@@ -43,10 +43,10 @@ namespace CompalintsSystem.Core.Models
         public DateTime DateOfBirth { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CreatedDate { get; set; }
-
         public int RoleId { get; set; }
         [NotMapped]
         public string RoleName { get; set; }
+        public string UserRoleName { get; set; }
         public virtual ICollection<UsersCommunication> UsersCommunications { get; set; }
         public virtual ICollection<UploadsComplainte> UploadsComplaintes { get; set; }
         public virtual ICollection<IdentityRole> UserRoles { get; set; }

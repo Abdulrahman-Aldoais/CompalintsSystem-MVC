@@ -645,11 +645,9 @@ namespace CompalintsSystem.Controllers
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction("AllUpComplaints");
-
             }
 
             return NotFound();
-
 
         }
 
@@ -664,21 +662,35 @@ namespace CompalintsSystem.Controllers
         }
 
 
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> AddCommunication()
+        //{
+
+        //    var currentUser = await GetCurrentUser();
+        //    var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
+
+        //    ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
+        //    ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
+
+
+
+        //    return View();
+        //}
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AddCommunication()
         {
-
             var currentUser = await GetCurrentUser();
             var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
 
             ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
-            ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
-
-
-
+            ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName", currentUser.Id); // تمت إضافة currentUser.Id لتحديد القيمة المحددة في القائمة
             return View();
         }
+
+
         [HttpPost]
         public async Task<IActionResult> AddCommunication(AddCommunicationVM communication)
         {
@@ -688,8 +700,7 @@ namespace CompalintsSystem.Controllers
                 var currentUser = await GetCurrentUser();
                 var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
                 ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
-                ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "Name");
-
+                ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName", communication.NameUserId); // تمت إضافة communication.NameUserId لتحديد القي
 
                 var currentName = currentUser.FullName;
                 var currentPhone = currentUser.PhoneNumber;

@@ -189,7 +189,7 @@ namespace CompalintsSystem.Application.Controllers
 
             //-------------  أحصائيات عدد المستخدمين حسب الصلاحيات--------------------//
 
-            List<ApplicationUser> UsersRoles = await _context.Users.Include(x => x.UserRoles).ToListAsync();
+            List<ApplicationUser> usersRoles = await _context.Users.Include(x => x.UserRoles).ToListAsync();
 
 
             //Totalcountuser
@@ -200,7 +200,7 @@ namespace CompalintsSystem.Application.Controllers
             // show Name Role Rether Than Id
             var Roles = _context.Roles.ToList();
             var x = from r in Globals.RolesLists
-                    join u in UsersRoles
+                    join u in usersRoles
                     on r.Id equals u.RoleId
                     select new ApplicationUser
                     {
@@ -208,19 +208,18 @@ namespace CompalintsSystem.Application.Controllers
                         UserRoles = u.UserRoles
                     };
 
+            List<UserByRolesStatistic> gtus = new List<UserByRolesStatistic>();
+            gtus = ViewBag.UserByRoles;
+
             //total Users By Role
-            ViewBag.totalUserByRoles = x.GroupBy(j => j.RoleName).Select(g => new UserByRolesStatistic
+            ViewBag.UserByRoles = x.GroupBy(j => j.RoleName).Select(g => new UserByRolesStatistic
             {
                 RoleName = g.First().RoleName,
                 TotalCount = g.Count().ToString(),
                 RolsTot = (g.Count() * 100) / totalCountByRole
-
-
             }).ToList();
 
 
-            List<UserByRolesStatistic> gtus = new List<UserByRolesStatistic>();
-            gtus = ViewBag.totalUserByRoles;
 
 
             //------------------ نهاية أحصائيات عدد المستخدمين حسب الصلاحيات--------------------//

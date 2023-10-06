@@ -193,7 +193,7 @@ namespace CompalintsSystem.Application.Controllers
         {
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            if (userRoles.Contains("AdminGeneralFederation"))
+            if (userRoles.Contains(UserRoles.AdminGeneralFederation))
             {
                 return Redirect(Url.Action("Index", "GeneralFederation"));
             }

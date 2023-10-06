@@ -36,9 +36,9 @@
                     <div>عرض كافة الشكاوي </div>
                 </a>
             </li>
-            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AllRejectedComplaints"?"active":"")
+            <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewAllRejectedComplaints"?"active":"")
                                   @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintRejectedDetails"?" active":"")">
-                <a href="/GovManageComplaints/AllRejectedComplaints" class="menu-link">
+                <a href="/GovManageComplaints/ViewAllRejectedComplaints" class="menu-link">
                     <div>المرفوضة</div>
                 </a>
             </li>

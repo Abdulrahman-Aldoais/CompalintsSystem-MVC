@@ -1157,7 +1157,6 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\DirManageComplaints\ViewCompalintRejectedDetails.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\DirManageComplaints\ViewCompalintSolutionDetails.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\DirManageComplaints\ViewCompalintUpDetails.cshtml.g.cs
-E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\DirManageComplaints\ViewRejectedComplaints.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\DirManageComplaints\ViewUsers.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\exe\mainpage.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\AccountRestriction.cshtml.g.cs
@@ -1202,7 +1201,6 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\Details.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\Edit.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\Index.cshtml.g.cs
-E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\RejectedComplaints.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\ReportManagement.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\SolutionComplaints.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\Statistic.cshtml.g.cs
@@ -1295,3 +1293,5 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\ref\CompalintsSystem.Application.dll
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Beneficiarie\ViewAllRejectedComplaints.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GeneralFederation\Create - Copy.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\DirManageComplaints\ViewAllRejectedComplaints.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\ViewAllRejectedComplaints.cshtml.g.cs

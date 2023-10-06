@@ -7202,7 +7202,6 @@
     <_ContentIncludedByDefault Remove="Views\DirManageComplaints\ViewCompalintRejectedDetails.cshtml" />
     <_ContentIncludedByDefault Remove="Views\DirManageComplaints\ViewCompalintSolutionDetails.cshtml" />
     <_ContentIncludedByDefault Remove="Views\DirManageComplaints\ViewCompalintUpDetails.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\DirManageComplaints\ViewRejectedComplaints.cshtml" />
     <_ContentIncludedByDefault Remove="Views\DirManageComplaints\ViewUsers.cshtml" />
     <_ContentIncludedByDefault Remove="Views\GeneralFederation\AccountRestriction.cshtml" />
     <_ContentIncludedByDefault Remove="Views\GeneralFederation\AddCirculars.cshtml" />
@@ -7463,10 +7462,6 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\DirManageComplaints\ViewCompalintUpDetails.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\DirManageComplaints\ViewRejectedComplaints.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

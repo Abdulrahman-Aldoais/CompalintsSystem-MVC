@@ -208,7 +208,7 @@ namespace CompalintsSystem.Application.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
 
             var AllRejectedComplaints = await _compReop.GetAllAsync(
-                 g => g.Governorate,
+                g => g.Governorate,
                 d => d.Directorate,
                 s => s.SubDirectorate,
                 n => n.StatusCompalint,

@@ -3,6 +3,7 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using CompalintsSystem.Core;
+using CompalintsSystem.Core.Helpers.Constants;
 using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.ViewModels;
@@ -163,8 +164,6 @@ namespace CompalintsSystem.EF.Repositories
                 originatorName = currentName,
                 CreatedDate = DateTime.Now,
 
-
-
             };
 
             var userIdentity1 = await _context.Users.FirstOrDefaultAsync(u => u.IdentityNumber == newUser.IdentityNumber);
@@ -181,27 +180,34 @@ namespace CompalintsSystem.EF.Repositories
             {
                 if (userVM.userRoles == 1)
                 {
+                    newUser.UserRoleName = UserRolesArbic.AdminGeneralFederation;
+                    newUser.RoleId = 1;
                     await _userManager.AddToRoleAsync(newUser, UserRoles.AdminGeneralFederation);
 
                 }
                 else if (userVM.userRoles == 2)
                 {
+                    newUser.UserRoleName = UserRolesArbic.AdminGovernorate;
+                    newUser.RoleId = 2;
                     await _userManager.AddToRoleAsync(newUser, UserRoles.AdminGovernorate);
                 }
                 else if (userVM.userRoles == 3)
                 {
-
+                    newUser.UserRoleName = UserRolesArbic.AdminDirectorate;
+                    newUser.RoleId = 3;
                     await _userManager.AddToRoleAsync(newUser, UserRoles.AdminDirectorate);
                 }
                 else if (userVM.userRoles == 4)
                 {
-
+                    newUser.UserRoleName = UserRolesArbic.AdminSubDirectorate;
+                    newUser.RoleId = 4;
                     await _userManager.AddToRoleAsync(newUser, UserRoles.AdminSubDirectorate);
                 }
 
                 else if (userVM.userRoles == 5)
                 {
-
+                    newUser.UserRoleName = UserRolesArbic.Beneficiarie;
+                    newUser.RoleId = 5;
                     await _userManager.AddToRoleAsync(newUser, UserRoles.Beneficiarie);
                 }
                 await _userManager.AddPasswordAsync(newUser, userVM.Password);
@@ -215,7 +221,6 @@ namespace CompalintsSystem.EF.Repositories
                 Error = "كلمة السر يجب ان تكون ارقام و حروف و رموز";
                 return;
             }
-
 
 
         }
@@ -449,8 +454,6 @@ namespace CompalintsSystem.EF.Repositories
 
             await _context.SaveChangesAsync();
         }
-
-
 
 
         public async Task<IEnumerable<ApplicationUser>> GetAllBenefAsync()

@@ -230,26 +230,43 @@ namespace CompalintsSystem.EF.Repositories
 
         public async Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues(int subDirctoty, int directoryId, int governorateId, string role, string roleId)
         {
+            var userManager = _userManager;// initialize your user manager here
             if (role == "AdminGovernorate")
             {
                 var responseGov = new SelectDataCommuncationDropdownsVM
                 {
                     ApplicationUsers = await _context.Users
-                     .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
-                     .Where(x => x.UserRole.RoleId == roleId || x.UserRole.RoleId == "48e9b2f6-42e7-439f-afa2-03cf13342517"
-                         && x.User.GovernorateId == governorateId
-                         && x.User.DirectorateId == directoryId)
-                     .OrderBy(x => x.User.FullName)
-                     .Select(x => x.User)
-                     .ToListAsync(),
+                        .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                        .Join(_context.Roles, ur => ur.UserRole.RoleId, r => r.Id, (ur, r) => new { User = ur.User, UserRole = ur.UserRole, Role = r })
+                        .Where(x =>
+                            (x.UserRole.RoleId == roleId || x.UserRole.RoleId == "48e9b2f6-42e7-439f-afa2-03cf13342517") &&
+                            x.User.GovernorateId == governorateId &&
+                            x.User.DirectorateId == directoryId
+                        )
+                        .OrderBy(x => x.User.FullName)
+                        .Select(x => new ApplicationUser
+                        {
+                            Id = x.User.Id,
+                            FullName = x.User.FullName + " ( " + x.User.UserRoleName + "  )",
+                        })
+                        .ToListAsync(),
+
 
                     TypeCommunications = await _context.TypeCommunications
-                    .OrderBy(tc => tc.Type)
-                    .ToListAsync()
+                        .OrderBy(tc => tc.Type)
+                        .ToListAsync()
                 };
 
-                return responseGov;
+                foreach (var user in responseGov.ApplicationUsers)
+                {
+                    var identityUser = await userManager.FindByIdAsync(user.Id);
+                    var roles = await userManager.GetRolesAsync(identityUser);
+                    user.UserRoles = roles.Select(role => new IdentityRole { Name = role }).ToList();
+                }
 
+
+
+                return responseGov;
 
 
             }
@@ -263,13 +280,25 @@ namespace CompalintsSystem.EF.Repositories
                          && x.User.GovernorateId == governorateId
                          && x.User.DirectorateId == directoryId)
                      .OrderBy(x => x.User.FullName)
-                     .Select(x => x.User)
-                     .ToListAsync(),
+                        .Select(x => new ApplicationUser
+                        {
+                            Id = x.User.Id,
+                            FullName = x.User.FullName + " ( " + x.User.UserRoleName + "  )",
+                        })
+                        .ToListAsync(),
+
 
                     TypeCommunications = await _context.TypeCommunications
-                    .OrderBy(tc => tc.Type)
-                    .ToListAsync()
+                        .OrderBy(tc => tc.Type)
+                        .ToListAsync()
                 };
+
+                foreach (var user in responseDir.ApplicationUsers)
+                {
+                    var identityUser = await userManager.FindByIdAsync(user.Id);
+                    var roles = await userManager.GetRolesAsync(identityUser);
+                    user.UserRoles = roles.Select(role => new IdentityRole { Name = role }).ToList();
+                }
 
                 return responseDir;
             }
@@ -277,36 +306,61 @@ namespace CompalintsSystem.EF.Repositories
             {
                 var responseSub = new SelectDataCommuncationDropdownsVM
                 {
-
-
                     ApplicationUsers = await _context.Users
                     .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
                     .Where(x => x.UserRole.RoleId == roleId
                         && x.User.GovernorateId == governorateId
                         && x.User.DirectorateId == directoryId)
-                    .OrderBy(x => x.User.FullName)
-                    .Select(x => x.User)
-                    .ToListAsync(),
+                      .OrderBy(x => x.User.FullName)
+                        .Select(x => new ApplicationUser
+                        {
+                            Id = x.User.Id,
+                            FullName = x.User.FullName + " ( " + x.User.UserRoleName + "  )",
+                        })
+                        .ToListAsync(),
+
 
                     TypeCommunications = await _context.TypeCommunications
-                   .OrderBy(tc => tc.Type)
-                   .ToListAsync()
+                        .OrderBy(tc => tc.Type)
+                        .ToListAsync()
                 };
+
+                foreach (var user in responseSub.ApplicationUsers)
+                {
+                    var identityUser = await userManager.FindByIdAsync(user.Id);
+                    var roles = await userManager.GetRolesAsync(identityUser);
+                    user.UserRoles = roles.Select(role => new IdentityRole { Name = role }).ToList();
+                }
 
                 return responseSub;
             }
-            var responseAdmin = new SelectDataCommuncationDropdownsVM
+            else
             {
-                ApplicationUsers = await _context.Users
-                  .OrderBy(u => u.FullName)
-                  .ToListAsync(),
+                var responseAdmin = new SelectDataCommuncationDropdownsVM
+                {
+                    ApplicationUsers = await _context.Users
+                    .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                    .Where(x => x.UserRole.RoleId != roleId)
+                      .OrderBy(x => x.User.FullName)
+                        .Select(x => new ApplicationUser
+                        {
+                            Id = x.User.Id,
+                            FullName = x.User.FullName + "   " + "(" + x.User.UserRoleName + ")",
+                        }).ToListAsync(),
 
-                TypeCommunications = await _context.TypeCommunications
-                  .OrderBy(tc => tc.Type)
-                  .ToListAsync()
-            };
+                    TypeCommunications = await _context.TypeCommunications
+                      .OrderBy(tc => tc.Type)
+                      .ToListAsync()
+                };
+                foreach (var user in responseAdmin.ApplicationUsers)
+                {
+                    var identityUser = await userManager.FindByIdAsync(user.Id);
+                    var roles = await userManager.GetRolesAsync(identityUser);
+                    user.UserRoles = roles.Select(role => new IdentityRole { Name = role }).ToList();
+                }
 
-            return responseAdmin;
+                return responseAdmin;
+            }
         }
 
 
