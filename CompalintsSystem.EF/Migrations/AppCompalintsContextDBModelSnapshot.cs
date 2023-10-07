@@ -510,14 +510,14 @@ namespace CompalintsSystem.EF.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 10, 7, 0, 59, 11, 850, DateTimeKind.Local).AddTicks(7422),
+                            CreatedDate = new DateTime(2023, 10, 7, 3, 10, 53, 265, DateTimeKind.Local).AddTicks(9669),
                             Type = "تماطل",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 10, 7, 0, 59, 11, 850, DateTimeKind.Local).AddTicks(7458),
+                            CreatedDate = new DateTime(2023, 10, 7, 3, 10, 53, 265, DateTimeKind.Local).AddTicks(9688),
                             Type = "تلاعب بالحلول",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         });
@@ -551,14 +551,14 @@ namespace CompalintsSystem.EF.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 10, 7, 0, 59, 11, 852, DateTimeKind.Local).AddTicks(693),
+                            CreatedDate = new DateTime(2023, 10, 7, 3, 10, 53, 266, DateTimeKind.Local).AddTicks(8444),
                             Type = "زراعية",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 10, 7, 0, 59, 11, 852, DateTimeKind.Local).AddTicks(1538),
+                            CreatedDate = new DateTime(2023, 10, 7, 3, 10, 53, 266, DateTimeKind.Local).AddTicks(8862),
                             Type = "فساد",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         });
@@ -775,36 +775,36 @@ namespace CompalintsSystem.EF.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c308e7e8-1cc1-4259-bf8d-c9793649b64d",
-                            ConcurrencyStamp = "c1e68535-6ecc-425f-a0e8-ad5c60eb5685",
+                            Id = "3915ec10-1b35-433c-ae92-6ca46803a4ea",
+                            ConcurrencyStamp = "95ed2dc2-77da-493e-8b43-2233245ed5d3",
                             Name = "AdminGeneralFederation",
                             NormalizedName = "ADMINGENERALFEDERATION"
                         },
                         new
                         {
-                            Id = "15dac985-7a4e-4161-8e29-ec1b83e4c5c1",
-                            ConcurrencyStamp = "f36f8c30-5f08-46ae-a884-fa0fc8cd9e2f",
+                            Id = "76946058-cefd-4e0c-a61d-337d727b0be9",
+                            ConcurrencyStamp = "e848451f-aa65-4ccd-90f6-64a551a659d6",
                             Name = "AdminGovernorate",
                             NormalizedName = "ADMINGOVERNORATE"
                         },
                         new
                         {
-                            Id = "45620b69-0c35-4fda-9679-e38ed6c52f4a",
-                            ConcurrencyStamp = "f8fd99e7-5724-4ca5-b828-f867c5b27514",
+                            Id = "0fdebcbd-35ca-486d-91c9-7eab0ee1b617",
+                            ConcurrencyStamp = "9ed34f01-5768-4103-8126-48beb2eee6c3",
                             Name = "AdminDirectorate",
                             NormalizedName = "ADMINDIRECTORATE"
                         },
                         new
                         {
-                            Id = "4228c258-b5fa-47f9-9c7f-fd90bf3b9a43",
-                            ConcurrencyStamp = "6807c4ad-baa5-451e-95c8-aa6c2736e485",
+                            Id = "d496e687-a87f-4d63-803b-9aa927cf31c2",
+                            ConcurrencyStamp = "d08958d6-9047-4f2b-b278-b3ed6883e7ee",
                             Name = "AdminSubDirectorate",
                             NormalizedName = "ADMINSUBDIRECTORATE"
                         },
                         new
                         {
-                            Id = "4578c7ee-de60-400d-a7ee-1c0048291632",
-                            ConcurrencyStamp = "9209b3df-f9af-44fd-89d8-53fec43919c6",
+                            Id = "5fdc76e6-4033-4a6c-805e-607be8880c2f",
+                            ConcurrencyStamp = "cbc5146c-3199-4fee-a4a5-18a953388455",
                             Name = "Beneficiarie",
                             NormalizedName = "BENEFICIARIE"
                         });

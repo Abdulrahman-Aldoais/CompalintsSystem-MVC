@@ -76,6 +76,7 @@ namespace CompalintsSystem.EF.Configuration
             }, UserRoles.AdminDirectorate),
             (new ApplicationUser
             {
+                Id ="e70aa106-c6d6-4037-bb94-eb241dd1ef60",
                 FullName = "عبدالجليل سرحان",
                 IdentityNumber = "001024312444",
                 Email = "001024312444",
@@ -92,6 +93,7 @@ namespace CompalintsSystem.EF.Configuration
             }, UserRoles.AdminSubDirectorate),
             (new ApplicationUser
             {
+                Id = "e70aa106-c6d6-4037-bb94-eb241dd1ef50",
                 FullName = "سعيد علي احمد",
                 IdentityNumber = "000243124222",
                 Email = "000243124222",

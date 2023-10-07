@@ -160,12 +160,10 @@ namespace CompalintsSystem.Application
                 endpoints.MapHub<NotefcationHub>("/notefy");
             });
 
-
-
             app.UseRouting();
 
             UsersConfiguration.SeedUsersAndRolesAsync(app).Wait();
-
+            DefaultData.SeedCompalintAndSolustionAsync(app).Wait();
 
             RotativaConfiguration.Setup("wwwroot");
 
