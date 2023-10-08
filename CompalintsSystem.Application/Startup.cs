@@ -116,7 +116,7 @@ namespace CompalintsSystem.Application
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseNToastNotify();
             if (env.IsDevelopment())
@@ -163,10 +163,9 @@ namespace CompalintsSystem.Application
             app.UseRouting();
 
             UsersConfiguration.SeedUsersAndRolesAsync(app).Wait();
-            DefaultData.SeedCompalintAndSolustionAsync(app).Wait();
 
+            await DefaultData.SeedCompalintAndSolustionAsync(app);
             RotativaConfiguration.Setup("wwwroot");
-
 
 
         }

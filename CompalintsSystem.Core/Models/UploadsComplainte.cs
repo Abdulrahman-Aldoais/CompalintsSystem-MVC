@@ -10,7 +10,6 @@ namespace CompalintsSystem.Core.Models
     {
         public UploadsComplainte()
         {
-            //Id = Guid.NewGuid().ToString();
             UploadDate = DateTime.Now;
         }
         public int Id { set; get; }

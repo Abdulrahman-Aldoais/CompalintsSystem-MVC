@@ -457,11 +457,16 @@
                         <div class="card-body  col-lg-12 ">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
-                                    @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
 
+                                    @if (Model.compalint.ContentType != null)
                                     {
-                                        <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
+                                        @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
+
+                                        {
+                                            <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
+                                        }
                                     }
+
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
@@ -689,10 +694,10 @@
         <div class="offcanvas offcanvas-end" id="rejectComplaint" aria-hidden="true">
             <div class="offcanvas-header border-bottom">
                 <h6 class="offcanvas-title"> رفض الشكوى</h6>
-                <button type="button" asp-action="RejectedThisComplaint" asp-controller="GeneralFederation"></button>
+                <button type="button" asp-action="RejectedThisComplaint" asp-controller="DirManageComplaints"></button>
             </div>
             <div class="offcanvas-body flex-grow-1">
-                <form asp-action="RejectedThisComplaint" asp-controller="GeneralFederation" method="post">
+                <form asp-action="RejectedThisComplaint" asp-controller="DirManageComplaints" method="post">
 
 
                     <div class="mb-3">

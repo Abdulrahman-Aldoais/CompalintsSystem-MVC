@@ -29,7 +29,6 @@ namespace CompalintsSystem.EF.DataBase
                .Property(u => u.Size)
                .HasColumnType("decimal(18, 4)");
 
-
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
                 entity.ToTable(name: "User");

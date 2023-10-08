@@ -1,5 +1,4 @@
-﻿
-using CompalintsSystem.Core.Interfaces;
+﻿using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.Statistics;
 using CompalintsSystem.Core.ViewModels;
@@ -478,7 +477,7 @@ namespace CompalintsSystem.Application.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("AllComplaints");
+            return RedirectToAction(nameof(AllUpComplaints));
 
         }
 
