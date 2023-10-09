@@ -45,54 +45,6 @@
 
             <div class="card-datatable table-responsive">
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-
-                    <div class="row mx-2 border-bottom ">
-                        <div class="row align-items-start">
-                            <label class="form-label"> عرض حسب</label>
-                            <div class="row align-items-start">
-                                <div class="col-md-4" style="width:150px">
-                                    <select id="FilterType"
-                                            name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
-                                            class="select2 form-select select2-hidden-accessible"
-                                            tabindex="-1" aria-hidden="true" data-select2-id="10">
-                                        <option value="0" data-select2-id="12">عرض</option>
-                                        <option value="جديدة">جديدة</option>
-                                        <option value="محلولة">محلولة</option>
-                                        <option value="غير محلولة">غير محلولة</option>
-                                        <option value="مرفوعة">مرفوعة</option>
-                                    </select>
-                                </div>
-
-
-
-
-
-                                @*<div class="col-12 col-md-6  d-flex mb-4 justify-content-center justify-content-md-start">
-                                        <div class="me-3 table-type search-paddind">
-                                            <span class="table-span">بحث</span>
-                                            <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                                <label><input type="search" id="CustomSearchTextField" class="form-controls" placeholder="البحث" aria-controls="DataTables_Table_0"></label>
-                                            </div>
-                                        </div>
-                                    </div>*@
-
-                                <div class="col-12 col-md-6  d-flex mb-4 justify-content-center justify-content-md-start">
-                                    <div class="me-3 table-type search-paddind">
-
-                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                            <label><input type="search" id="CustomSearchTextField" class="form-control" placeholder="البحث" aria-controls="DataTables_Table_0"></label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
                     <div class="table-responsive text-nowrap">
                         <table id="example" class="datatables-users table border-top ">
                             @*<table id="example" class="datatables-basic">*@
@@ -141,7 +93,7 @@
                                             <td> @Html.DisplayFor(modelItem => item.StatusCompalint.Name)</td>
                                             <td> @Html.DisplayFor(modelItem => item.TypeComplaint.Type)</td>
                                             <td>
-                                                <a href="@Url.Action("ViewCompalintRejectedDetails", "GeneralFederation", new { id = item.Id })">
+                                                <a href="@Url.Action("ViewCompalintRejectedDetails", "GovManageComplaints", new { id = item.Id })">
                                                     <i> عرض</i>
                                                 </a>
                                             </td>

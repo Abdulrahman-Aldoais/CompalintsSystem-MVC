@@ -67,17 +67,19 @@
                                             <tr>
                                                 @if (item.TitileProposal.Length > 20)
                                                 {
-                                                    item.TitileProposal.Substring(0, 20);
+
                                                     <td>
                                                         @item.TitileProposal.Substring(0, 20)
 
                                                     </td>
                                                 }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TitileProposal)
+
+                                            </td>
                                                 <td> @Html.DisplayFor(modelItem => item.DateSubmeted)</td>
 
                                                 <td> @Html.DisplayFor(modelItem => item.DescProposal)</td>
-
-
 
                                                 <td style="">
                                                     <div class="d-inline-block">

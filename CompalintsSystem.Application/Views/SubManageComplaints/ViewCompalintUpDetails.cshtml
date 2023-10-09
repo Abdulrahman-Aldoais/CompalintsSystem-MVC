@@ -443,308 +443,73 @@
 
                         <!--/ Accordion Header Color -->
                         <hr />
-                        <div class="card-body  col-lg-12 ">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    @if (Model.compalint.ContentType != null)
-                                    {
+                        @if (Model.compalint.ContentType != null)
+                        {
+                            <div class="card-body  col-lg-12 ">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+
                                         @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
 
                                         {
                                             <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
                                         }
-                                    }
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h5 class="card-title">
-                                                    @Model.compalint.OriginalFileName
-                                                </h5>
-                                            </div>
-                                            <div class="col-3">
-                                                <strong>Size : </strong>
-                                                @{
-                                                    var size = Model.compalint.Size / 1024; //KB
-                                                    if (size < 1024)  //2048
-                                                    {
-                                                        <span>@Math.Floor(size) Kb</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>@(Math.Floor(size) / 1024) Mb</span>
-                                                    }
-                                                }
-                                            </div>
 
-                                        </div>
-                                        @*<p class="card-text"></p>*@
-                                        <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
-                                        <div class="text-right ">
-                                            <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- الحلول المقدمة للشكوى-->
-
-
-
-                        <hr class="container-m-nx my-2" />
-                        @*<div class="card">
-                            <h5 class="card-header bx-font-color" style="color:red;"> الموضف الرافض لهذه الشكوى</h5>
-                            <div class="card-body">
-                                <div class="table-responsive text-nowrap">
-                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-
-                                        <div class="table-responsive text-nowrap">
-
-                                            <table id="example" class="table table-bordered table table-bordered">
-
-                                                <thead>
-                                                    <tr>
-                                                        <th class="row-cols-md-4">
-                                                            الموضف الذي قام برفضها
-                                                        </th>
-
-                                                        <th class="col-sm-1">
-                                                            سبب الرفض
-                                                        </th>
-                                                        <th class="col-sm-2">
-                                                            الصلاحية
-                                                        </th>
-                                                        <th class="col-sm-1">
-                                                            تاريخ الرفض
-                                                        </th>
-
-
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    @if (Model.Compalints_SolutionList.Count() == 0)
-                                                    {
-                                                        <tr>
-                                                            <td colspan="3" style="color:red">
-                                                                لم يتم رفض هذه الشكوى من قبل اي موضف
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                    else
-                                                    {
-                                                        @foreach (var item in Model.ComplaintsRejectedList)
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h5 class="card-title">
+                                                        @Model.compalint.OriginalFileName
+                                                    </h5>
+                                                </div>
+                                                <div class="col-3">
+                                                    <strong>Size : </strong>
+                                                    @{
+                                                        var size = Model.compalint.Size / 1024; //KB
+                                                        if (size < 1024)  //2048
                                                         {
-                                                            <tr>
-                                                                <td class="width content">
-                                                                    @Html.DisplayFor(modelItem => item.RejectedProvName)
-                                                                </td>
-                                                                <td>
-                                                                    <div class="row demo-vertical-spacing">
-                                                                        <div class="d-inline-block">
-                                                                            <button type="button"
-                                                                                    class="btn btn-secondary text-nowrap"
-                                                                                    data-bs-toggle="popover"
-                                                                                    data-bs-offset="0,14"
-                                                                                    data-bs-placement="top"
-                                                                                    data-bs-html="true"
-                                                                                    data-bs-content="<p> @Html.DisplayFor(modelItem => item.reume)</p> <div class='d-flex justify-content-between'><button type='button' class='btn btn-sm btn-label-secondary'>تخطي</button><button type='button' class='btn btn-sm btn-primary'>إقراء المزيد </button></div>"
-                                                                                    title="الحل المقترح">
-                                                                                انقر هنا لعرض الحل
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                    asp-route-id="@item.Id"
-                                                                                    class="btn btn-primary"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#modalScrollable"
-                                                                                    title="الحل المقترح">
-
-                                                                                انقر هنا لعرض الحل
-                                                                            </button>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-
-
-
-                                                                <td>
-                                                                    @if (@item.Role == "AdminGeneralFederation")
-                                                                    {
-                                                                        <span class="badge bg-label-success">مدير اتحاد</span>
-                                                                    }
-                                                                    else if (@item.Role == "AdminGovernorate")
-                                                                    {
-                                                                        <span class="badge bg-label-warning"> مدير محافظة</span>
-                                                                    }
-                                                                    else if (@item.Role == "AdminDirectorate")
-                                                                    {
-                                                                        <span class="badge bg-label-warning"> مدير مديرة</span>
-                                                                    }
-                                                                    else if (@item.Role == "AdminSubDirectorate")
-                                                                    {
-                                                                        <span class="badge bg-label-warning"> مدير عزلة</span>
-                                                                    }
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.DateSolution)
-                                                                </td>
-
-                                                            </tr>
+                                                            <span>@Math.Floor(size) Kb</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@(Math.Floor(size) / 1024) Mb</span>
                                                         }
                                                     }
+                                                </div>
 
-                                                </tbody>
-                                            </table>
-
+                                            </div>
+                                            @*<p class="card-text"></p>*@
+                                            <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
+                                            <div class="text-right ">
+                                                <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                            </div>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
-                        </div>*@
 
-                        <hr class="container-m-nx my-2" />
-                        <!--/ الحلول المقدمة للشكوى -->
-                    </div>
-
-
-                </div>
-            </div>
+                                                        }
+                            <!-- الحلول المقدمة للشكوى-->
 
 
 
-        </div>
+                            <hr class="container-m-nx my-2" />
+                         
 
-        <!-- /Invoice Edit-->
-        <!-- رفع الشكوى -->
-        <div class="invoice-actions col-12 col-lg-3">
-            <div class="card mb-4">
-                <div class="card-body">
-
-
-                    <button class="btn btn-primary mb-2 mt-2  d-grid w-100"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#complaintResolution">
-                        <span class="d-flex justify-content-center align-items-center text-nowrap"><i class=""></i> حل الشكوى</span>
-                    </button>
-                    <button class="btn btn-danger mb-2 mt-2 d-grid w-100"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#rejectComplaint">
-                        <span class="d-flex justify-content-center align-items-center text-nowrap"><i>🚫</i>  رفض هذه الشكوى</span>
-                        @* <a asp-action="RejectedThisComplaint" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-danger"> رفض هذه الشكوى</a>*@
-                    </button>
-                    <div class="d-flex my-3">
-                        <a asp-action="AllComplaints" asp-controller="GeneralFederation" class="btn btn-label-secondary w-100 me-3">خروج</a>
-                        <button type="button" class="btn btn-label-secondary w-100">إلغاء</button>
-                    </div>
-                </div>
-            </div>
-            <div>
-
-
-
-            </div>
-        </div>
-        <!-- /Invoice Actions -->
-        <!-- حل الشكوى -->
-        <div class="offcanvas offcanvas-end" id="complaintResolution" aria-hidden="true">
-            <div class="offcanvas-header border-bottom">
-                <h6 class="offcanvas-title"> حل الشكوى</h6>
-                <button type="button" asp-action="AddSolutions" asp-controller="GeneralFederation"></button>
-            </div>
-            <div class="offcanvas-body flex-grow-1">
-                <form asp-action="AddSolutions" asp-controller="GeneralFederation" method="post">
-
-
-                    <div class="mb-3">
-                        <label for="invoice-message" class="form-label"> الحل المقدم لهذه الشكوى</label>
-                        <input type="hidden" asp-for="@Model.AddSolution.UploadsComplainteId" />
-                        <textarea asp-for="@Model.AddSolution.ContentSolution" class="form-control" cols="3" rows="4"></textarea>
-                        <span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span>
-                    </div>
-
-                    <div class="d-flex flex-wrap mb-3">
-                        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- /حل الشكوى -->
-        <!-- رفض الشكوى -->
-
-        <div class="offcanvas offcanvas-end" id="rejectComplaint" aria-hidden="true">
-            <div class="offcanvas-header border-bottom">
-                <h6 class="offcanvas-title"> رفض الشكوى</h6>
-                <button type="button" asp-action="RejectedThisComplaint" asp-controller="GeneralFederation"></button>
-            </div>
-            <div class="offcanvas-body flex-grow-1">
-                <form asp-action="RejectedThisComplaint" asp-controller="GeneralFederation" method="post">
-
-
-                    <div class="mb-3">
-                        <label for="invoice-message" class="form-label">سبب رفض هذه الشكوى</label>
-                        <input type="hidden" asp-for="@Model.RejectedComplaintVM.UploadsComplainteId" />
-                        @*@Html.HiddenFor(m => m.RejectedComplaintVM.UploadsComplainteId)*@
-                        <textarea asp-for="@Model.RejectedComplaintVM.reume" class="form-control" cols="3" rows="4"></textarea>
-                        <span class="text-danger" asp-validation-for="@Model.RejectedComplaintVM.reume"></span>
-                    </div>
-
-                    <div class="d-flex flex-wrap mb-3">
-                        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- /رفض الشكوى -->
-        <!-- Form with Image horizontal Modal -->
-        <div class="modal-onboarding modal fade animate__animated" id="onboardHorizontalImageModal" tabindex="-1"
-             aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen-sm-down" role="document">
-                <div class="modal-content text-center">
-                    <div class="modal-header">
-
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body onboarding-horizontal p-0">
-
-
-                        <div class="table-responsive">
-                            <table class="table border-top m-0">
-
-                                <thead>
-                                    <tr>
-                                        <th>  الحل</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-nowrap">
-                                            @Model.AddSolution.ContentSolution
-                                        </td>
-
-                                    </tr>
-
-
-                                </tbody>
-                            </table>
+                            <hr class="container-m-nx my-2" />
+                            <!--/ الحلول المقدمة للشكوى -->
                         </div>
-                    </div>
+
 
                 </div>
-
             </div>
+
+
+
         </div>
 
-        <!--/ Form with Image horizontal Modal -->
     </div>
 
 </div>

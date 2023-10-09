@@ -244,6 +244,7 @@
                                         </li>
 
                                     </ul>
+
                         </div>
 
 
@@ -256,6 +257,10 @@
                                     @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
                                     {
                                         <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="/Images/@(UserManager.GetUserAsync(User).Result.ProfilePicture)">
+                                    }
+                                    else
+                                    {
+                                        <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/assets/img/avatars/1.png">
                                     }
 
                                 </div>

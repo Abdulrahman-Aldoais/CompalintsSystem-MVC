@@ -27,19 +27,19 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label asp-for="FullName" class="form-label">الاسم كاملاً</label>
-                                <input asp-for="FullName" class="form-control" type="text" />
+                                <input asp-for="FullName" class="form-control" type="text" autocomplete="off" />
                                 <span asp-validation-for="FullName" class="text-danger"></span>
 
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label asp-for="IdentityNumber">الرقم الوطني</label>
-                                <input asp-for="IdentityNumber" class="form-control" type="text" />
+                                <input asp-for="IdentityNumber" class="form-control" type="text" autocomplete="off"/>
                                 <span asp-validation-for="IdentityNumber" class="text-danger"></span>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label asp-for="PhoneNumber">رقم التلفون</label>
-                                <input asp-for="PhoneNumber" class="form-control" type="text" />
+                                <input asp-for="PhoneNumber" class="form-control" type="text" autocomplete="new-phone-number" />
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
 
@@ -75,7 +75,6 @@
                                           new SelectListItem { Selected = false, Text = " مدير مديرية", Value = 3.ToString() },
                                           new SelectListItem { Selected = false, Text = " مدير عزلة", Value = 4.ToString() },
                                           new SelectListItem { Selected = false, Text = " مزارع ", Value = 5.ToString() } } , "Value", "Text", 5))"> </select>
-
 
 
                                 }

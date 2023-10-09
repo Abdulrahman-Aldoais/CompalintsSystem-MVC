@@ -624,11 +624,11 @@ namespace CompalintsSystem.EF.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "44792a03-7dff-43f0-9f0e-911cab835f1b", null, "1e4b5540-3c42-43cd-8867-d2186ab7acda", "Beneficiarie", "BENEFICIARIE" },
-                    { "d226f2fd-a905-42a8-b5e5-464570f71761", null, "5ca919d2-e253-4c78-99dd-2a5b0975615f", "AdminDirectorate", "ADMINDIRECTORATE" },
-                    { "f42ae9ce-f3c0-41fd-9db5-42179fd251ad", null, "48782531-60ce-4a7f-b7c8-188a77876d4c", "AdminGovernorate", "ADMINGOVERNORATE" },
-                    { "aa64d794-01e5-4425-9aeb-af2836b54071", null, "4ddb9714-d5b2-4247-9351-bb3220771ab2", "AdminGeneralFederation", "ADMINGENERALFEDERATION" },
-                    { "7c6b2418-2f6f-4201-b66a-fbbe23afe131", null, "2d80b950-7e15-4af9-868f-f6512e291c36", "AdminSubDirectorate", "ADMINSUBDIRECTORATE" }
+                    { "354ad6ce-5526-484b-9270-fdc2d1bbf708", null, "51707907-3f82-45b8-b0ab-66f22fe3e4cb", "Beneficiarie", "BENEFICIARIE" },
+                    { "aea76b45-15f4-4b78-bcad-67ef1eb00d30", null, "ce5b98ae-e742-4f12-874a-d1783ca51e79", "AdminDirectorate", "ADMINDIRECTORATE" },
+                    { "a7d09226-3c0b-477e-9c5a-ed4f503f3ce9", null, "9815efd2-eb76-497f-8257-4cfc50094118", "AdminGovernorate", "ADMINGOVERNORATE" },
+                    { "a9098514-47a1-4cf2-9f61-6a2f2406a608", null, "d2979579-5c49-4ea7-8763-88f285fa7c1d", "AdminGeneralFederation", "ADMINGENERALFEDERATION" },
+                    { "901d057e-c4d6-41e1-8616-fc74da8e16da", null, "66da6e6e-bd97-4453-9839-ad677050726e", "AdminSubDirectorate", "ADMINSUBDIRECTORATE" }
                 });
 
             migrationBuilder.InsertData(
@@ -684,8 +684,8 @@ namespace CompalintsSystem.EF.Migrations
                 columns: new[] { "Id", "CreatedDate", "Type", "UserId", "UsersNameAddType" },
                 values: new object[,]
                 {
-                    { 2, new DateTime(2023, 10, 7, 23, 41, 6, 589, DateTimeKind.Local).AddTicks(3777), "تلاعب بالحلول", null, "قيمة افتراضية من النضام" },
-                    { 1, new DateTime(2023, 10, 7, 23, 41, 6, 589, DateTimeKind.Local).AddTicks(3708), "تماطل", null, "قيمة افتراضية من النضام" }
+                    { 2, new DateTime(2023, 10, 8, 21, 30, 22, 637, DateTimeKind.Local).AddTicks(1899), "تلاعب بالحلول", null, "قيمة افتراضية من النضام" },
+                    { 1, new DateTime(2023, 10, 8, 21, 30, 22, 637, DateTimeKind.Local).AddTicks(1859), "تماطل", null, "قيمة افتراضية من النضام" }
                 });
 
             migrationBuilder.InsertData(
@@ -694,8 +694,8 @@ namespace CompalintsSystem.EF.Migrations
                 columns: new[] { "Id", "CreatedDate", "Type", "UserId", "UsersNameAddType" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 10, 7, 23, 41, 6, 590, DateTimeKind.Local).AddTicks(8077), "زراعية", null, "قيمة افتراضية من النضام" },
-                    { 2, new DateTime(2023, 10, 7, 23, 41, 6, 590, DateTimeKind.Local).AddTicks(8967), "فساد", null, "قيمة افتراضية من النضام" }
+                    { 1, new DateTime(2023, 10, 8, 21, 30, 22, 639, DateTimeKind.Local).AddTicks(462), "زراعية", null, "قيمة افتراضية من النضام" },
+                    { 2, new DateTime(2023, 10, 8, 21, 30, 22, 639, DateTimeKind.Local).AddTicks(1835), "فساد", null, "قيمة افتراضية من النضام" }
                 });
 
             migrationBuilder.InsertData(

@@ -48,6 +48,7 @@ namespace CompalintsSystem.Core.Models
 
         public virtual ICollection<Compalints_Solution> Compalints_Solutions { get; set; }
         public virtual ICollection<ComplaintsRejected> ComplaintsRejecteds { get; set; }
+        public virtual ICollection<UpComplaintCause> ComplaintsUp { get; set; }
 
         public string UserId { get; set; }
         //public virtual ApplicationUser User { get; set; }

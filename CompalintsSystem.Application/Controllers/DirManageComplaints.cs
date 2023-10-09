@@ -29,16 +29,11 @@ namespace CompalintsSystem.Application.Controllers
         private readonly AppCompalintsContextDB _context;
 
         public DirManageComplaintsController(
-
-
-           ICategoryService service,
+            ICategoryService service,
             ICompalintRepository compReop,
             IUserService userService,
-
             UserManager<ApplicationUser> userManager,
-
             IWebHostEnvironment env,
-
             AppCompalintsContextDB context)
         {
 
@@ -61,18 +56,24 @@ namespace CompalintsSystem.Application.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-
             var currentUser = await _userManager.GetUserAsync(User);
 
-            var allCompalintsVewi = await _compReop.GetAllAsync(g => g.Governorate, d => d.Directorate, b => b.SubDirectorate);
-            var compBy = allCompalintsVewi.Where(g => g.SubDirectorateId == currentUser.SubDirectorateId && g.StagesComplaintId == 2);
-            var compalintDropdownsData = await _service.GetNewCompalintsDropdownsValues();
-            ViewBag.StatusCompalints = new SelectList(compalintDropdownsData.StatusCompalints, "Id", "Name");
-            ViewBag.TypeComplaints = new SelectList(compalintDropdownsData.TypeComplaints, "Id", "Type");
-            ViewBag.Status = ViewBag.StatusCompalints;
+            var allCompalintsVewi = await _compReop.GetAllAsync(
+                                    g => g.Governorate,
+                                    d => d.Directorate,
+                                    b => b.SubDirectorate,
+                                    s => s.StagesComplaint
+                                );
+
+            var compBy = allCompalintsVewi
+                .Where(g =>
+                    g.SubDirectorateId == currentUser.SubDirectorateId &&
+                    g.StagesComplaintId == 2 &&
+                    g.StatusCompalintId == 5
+                );
             int totalCompalints = compBy.Count();
-            ViewBag.TotalCompalints = Convert.ToInt32(page == 0 ? "false" : totalCompalints);
-            ViewBag.totalCompalints = totalCompalints;
+            //ViewBag.TotalCompalints = Convert.ToInt32(page != 0 && totalCompalints);
+            ViewBag.TotalNewCompalints = totalCompalints;
 
             return View(compBy.ToList());
         }
@@ -166,11 +167,34 @@ namespace CompalintsSystem.Application.Controllers
         public async Task<IActionResult> AllUpComplaints()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var allComp = _compReop.GetAll().Where(g => g.SubDirectorateId == currentUser.SubDirectorateId
-            && g.StatusCompalintId == 5 && g.StagesComplaintId == 2); ;
-            var totaleComp = allComp.Count(); ;
-            ViewBag.totaleComp = totaleComp;
-            return View(allComp);
+            var userId = currentUser.Id;
+
+            var AllUpComplaints = await _compReop.GetAllAsync(
+                g => g.Governorate,
+                d => d.Directorate,
+                s => s.SubDirectorate,
+                n => n.StatusCompalint,
+                st => st.StagesComplaint,
+                up => up.ComplaintsUp);
+
+            if (AllUpComplaints != null)
+            {
+                var Getrejected = AllUpComplaints.Where(
+                    g => g.ComplaintsUp != null
+                    && g.ComplaintsUp != null && g.ComplaintsUp.Any(rh => rh.UserId == userId)
+                      && g.Directorate != null && g.Directorate.Id == currentUser.DirectorateId
+                    //&& g.StatusCompalint != null && g.StatusCompalint.Id == 5
+                    //&& g.StagesComplaint != null && g.StagesComplaint.Id == 3
+                    );
+
+
+                int totalCompalints = Getrejected.Count();
+                ViewBag.TotalCompalintsUp = totalCompalints;
+
+                return View(Getrejected);
+            }
+            var emptyList = Enumerable.Empty<UploadsComplainte>(); // إنشاء قائمة فارغة من الشكاوى
+            return View(emptyList); // إرجاع قائمة فارغة في حالة عدم وجود شكاوى مرفوضة
         }
 
         public async Task<IActionResult> ViewCompalintUpDetails(int id)
@@ -202,9 +226,11 @@ namespace CompalintsSystem.Application.Controllers
             };
             return View(VM);
         }
+
         public async Task<IActionResult> ViewAllRejectedComplaints(int? page)
         {
             var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser.Id;
 
             var AllRejectedComplaints = await _compReop.GetAllAsync(
                 g => g.Governorate,
@@ -212,24 +238,32 @@ namespace CompalintsSystem.Application.Controllers
                 s => s.SubDirectorate,
                 n => n.StatusCompalint,
                 st => st.StagesComplaint);
-            var Getrejected = AllRejectedComplaints.Where(g => g.Directorate.Id == currentUser.DirectorateId
-            && g.StatusCompalint.Id == 3 && g.StagesComplaint.Id == 2);
-            var compalintDropdownsData = await _service.GetNewCompalintsDropdownsValues();
 
-            ViewBag.StatusCompalints = new SelectList(compalintDropdownsData.StatusCompalints, "Id", "Name");
-            ViewBag.TypeComplaints = new SelectList(compalintDropdownsData.TypeComplaints, "Id", "Type");
+            if (AllRejectedComplaints != null)
+            {
+                var Getrejected = AllRejectedComplaints.Where(
+                    g => g.ComplaintsRejecteds != null && g.ComplaintsRejecteds.Any(rh => rh.UserId == userId)
+                    && g.Directorate != null && g.Directorate.Id == currentUser.DirectorateId
+                    //&& g.StatusCompalint != null && g.StatusCompalint.Id == 3
+                    //&& g.StagesComplaint != null && g.StagesComplaint.Id == 2
+                    );
 
-            ViewBag.status = ViewBag.StatusCompalints;
-            int totalCompalints = Getrejected.Count();
-            ViewBag.totalCompalints = totalCompalints;
 
-            return View(Getrejected);
+                int totalCompalints = Getrejected.Count();
+                ViewBag.TotalCompalints = totalCompalints;
 
+                return View(Getrejected);
+            }
+
+            var emptyList = Enumerable.Empty<UploadsComplainte>(); // إنشاء قائمة فارغة من الشكاوى
+            return View(emptyList); // إرجاع قائمة فارغة في حالة عدم وجود شكاوى مرفوضة
         }
 
         public async Task<IActionResult> SolutionComplaints()
         {
             var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser.Id;
+
             var AllRejectedComplaints = await _compReop.GetAllAsync(
                 g => g.Governorate,
                 d => d.Directorate,
@@ -237,16 +271,30 @@ namespace CompalintsSystem.Application.Controllers
                 n => n.StatusCompalint,
                 st => st.StagesComplaint);
 
-            var Getrejected = AllRejectedComplaints.Where(g => g.Directorate.Id == currentUser.DirectorateId
-            && g.StatusCompalint.Id == 2 && g.StagesComplaint.Id == 2);
-            var compalintDropdownsData = await _service.GetNewCompalintsDropdownsValues();
-            ViewBag.StatusCompalints = new SelectList(compalintDropdownsData.StatusCompalints, "Id", "Name");
-            ViewBag.TypeComplaints = new SelectList(compalintDropdownsData.TypeComplaints, "Id", "Type");
-            ViewBag.status = ViewBag.StatusCompalints;
-            int totalCompalints = Getrejected.Count();
-            ViewBag.totalCompalints = totalCompalints;
+            if (AllRejectedComplaints != null)
+            {
+                var Getrejected = AllRejectedComplaints.Where(
+                    g => g.ComplaintsRejecteds != null && g.ComplaintsRejecteds.Any(rh => rh.UserId == userId)
+                    && g.Directorate != null && g.Directorate.Id == currentUser.DirectorateId
+                    //&& g.StatusCompalint != null && g.StatusCompalint.Id == 2
+                    //&& g.StagesComplaint != null && g.StagesComplaint.Id == 2
+                    );
 
-            return View(Getrejected);
+                var compalintDropdownsData = await _service.GetNewCompalintsDropdownsValues();
+
+                ViewBag.StatusCompalints = new SelectList(compalintDropdownsData.StatusCompalints, "Id", "Name");
+                ViewBag.TypeComplaints = new SelectList(compalintDropdownsData.TypeComplaints, "Id", "Type");
+
+                ViewBag.status = ViewBag.StatusCompalints;
+
+                int totalCompalints = Getrejected.Count();
+                ViewBag.totalCompalints = totalCompalints;
+
+                return View(Getrejected);
+            }
+
+            var emptyList = Enumerable.Empty<UploadsComplainte>(); // إنشاء قائمة فارغة من الشكاوى
+            return View(emptyList); // إرجاع قائمة فارغة في حالة عدم وجود شكاوى مرفوضة
         }
 
         public async Task<IActionResult> ViewUsers()
@@ -261,17 +309,13 @@ namespace CompalintsSystem.Application.Controllers
                 .Include(g => g.SubDirectorate)
                 .ToListAsync();
 
-
             int totalUsers = result.Count();
 
             ViewBag.totalUsers = totalUsers;
-
             //return View(await PaginatedList<ApplicationUser>.CreateAsync(result.AsNoTracking(), pageNumber ?? 1, pageSize));
             return View(result.ToList());
 
         }
-
-
 
         public async Task<IActionResult> BeneficiariesAccount()
         {
@@ -283,12 +327,8 @@ namespace CompalintsSystem.Application.Controllers
                 .ToListAsync();
 
             int totalUsers = result.Count();
-
             ViewBag.totalUsers = totalUsers;
-
-
             return View(result.ToList());
-
         }
 
         public async Task<IActionResult> AccountRestriction()
@@ -299,8 +339,8 @@ namespace CompalintsSystem.Application.Controllers
                 .OrderByDescending(d => d.CreatedDate)
                 .Include(s => s.Governorate)
                 .Include(g => g.Directorate)
-                .Include(d => d.SubDirectorate).ToListAsync();
-
+                .Include(d => d.SubDirectorate)
+                .ToListAsync();
 
             return View(result.ToList());
 
@@ -313,7 +353,6 @@ namespace CompalintsSystem.Application.Controllers
             var currentName = currentUser.FullName;
             var model = new AddUserViewModel()
             {
-
                 GovernoratesList = await _context.Governorates.ToListAsync()
             };
             ViewBag.ViewGover = model.GovernoratesList.ToArray();
@@ -351,7 +390,6 @@ namespace CompalintsSystem.Application.Controllers
                     return View(model);
                 }
 
-
                 await _userService.AddUserAsync(model, currentName, currentId);
 
                 return RedirectToAction("ViewUsers");
@@ -376,9 +414,7 @@ namespace CompalintsSystem.Application.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-
             var user = await _userService.GetByIdAsync(id);
-
             if (user == null)
             {
                 return NotFound();
@@ -397,7 +433,6 @@ namespace CompalintsSystem.Application.Controllers
                 DirectorateId = user.Directorate.Id,
                 SubDirectorateId = user.SubDirectorate.Id,
                 RoleId = user.RoleId,
-
             };
             ViewBag.ViewGover = newUser.GovernoratesList.ToArray();
             return View(newUser);
@@ -442,12 +477,14 @@ namespace CompalintsSystem.Application.Controllers
             AddSolutionVM addsoiationView = new AddSolutionVM()
             {
                 UploadsComplainteId = id,
-
             };
             ComplaintsRejectedVM rejectView = new ComplaintsRejectedVM()
             {
                 UploadsComplainteId = id,
-
+            };
+            UpComplaintVM upView = new UpComplaintVM()
+            {
+                UploadsComplainteId = id,
             };
             ProvideSolutionsVM VM = new ProvideSolutionsVM
             {
@@ -455,56 +492,14 @@ namespace CompalintsSystem.Application.Controllers
                 Compalints_SolutionList = await _context.Compalints_Solutions.Where(a => a.UploadsComplainteId == id).ToListAsync(),
                 ComplaintsRejectedList = await _context.ComplaintsRejecteds.Where(a => a.UploadsComplainteId == id).ToListAsync(),
                 RejectedComplaintVM = rejectView,
+                UpComplaint = upView,
                 AddSolution = addsoiationView
             };
             return View(VM);
         }
 
-        public async Task<IActionResult> UpCompalint(int id, UploadsComplainte complainte)
-        {
-
-            var upComp = await _compReop.FindAsync(id);
-            var dbComp = await _context.UploadsComplaintes.FirstOrDefaultAsync(n => n.Id == upComp.Id);
-            if (dbComp != null)
-            {
-
-                dbComp.Id = complainte.Id;
-                dbComp.StatusCompalintId = 5;
-                dbComp.StagesComplaintId += dbComp.StagesComplaintId;
-
-
-                await _context.SaveChangesAsync();
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(AllUpComplaints));
-
-        }
-
-        public async Task<IActionResult> RejectedThisComplaint(int id, UploadsComplainte complainte)
-        {
-
-            var upComp = await _compReop.FindAsync(id);
-            var dbComp = await _context.UploadsComplaintes.FirstOrDefaultAsync(n => n.Id == upComp.Id);
-            if (dbComp != null)
-            {
-
-                dbComp.Id = complainte.Id;
-                dbComp.StatusCompalintId = 5;
-
-
-                await _context.SaveChangesAsync();
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ViewAllRejectedComplaints));
-
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddSolutions(ProvideSolutionsVM model, int id)
+        // رفع الشكوى مع سبب الرفع للإدارة العلياء 
+        public async Task<IActionResult> UpCompalint(int id, ProvideSolutionsVM model)
         {
             if (ModelState.IsValid)
             {
@@ -515,21 +510,21 @@ namespace CompalintsSystem.Application.Controllers
                 string userRole = role.Value;
                 string UserId = claim.Value;
                 var subuser = await _context.Users.Where(a => a.Id == UserId).FirstOrDefaultAsync();
-                var idComp = model.AddSolution.UploadsComplainteId;
-                var solution = new Compalints_Solution()
+                var idComp = model.UpComplaint.UploadsComplainteId;
+                var upComplaint = new UpComplaintCause()
                 {
                     UserId = subuser.Id,
-                    SolutionProvName = subuser.FullName,
-                    UploadsComplainteId = model.AddSolution.UploadsComplainteId,
-                    SolutionProvIdentity = subuser.IdentityNumber,
-                    ContentSolution = model.AddSolution.ContentSolution,
-                    DateSolution = DateTime.Now,
+                    UpProvName = subuser.FullName,
+                    UploadsComplainteId = model.UpComplaint.UploadsComplainteId,
+                    UpUserProvIdentity = subuser.IdentityNumber,
+                    Cause = model.UpComplaint.Cause,
+                    DateUp = DateTime.Now,
                     Role = userRole,
 
 
                 };
 
-                _context.Compalints_Solutions.Add(solution);
+                _context.UpComplaintCauses.Add(upComplaint);
                 await _context.SaveChangesAsync();
 
 
@@ -537,21 +532,37 @@ namespace CompalintsSystem.Application.Controllers
                 var dbComp = await _context.UploadsComplaintes.FirstOrDefaultAsync(n => n.Id == upComp.Id);
                 if (dbComp != null)
                 {
-                    dbComp.StatusCompalintId = 2;
-                    dbComp.StagesComplaintId = 4;
+                    dbComp.StatusCompalintId = 5;
+                    dbComp.StagesComplaintId = upComp.StagesComplaintId + 1;
                     await _context.SaveChangesAsync();
                 }
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("AllComplaints");
+                return RedirectToAction(nameof(AllUpComplaints));
+
+
 
             }
-
             return NotFound();
-
-
         }
 
+
+        public async Task<IActionResult> RejectedThisComplaint(int id, UploadsComplainte complainte)
+        {
+            var upComp = await _compReop.FindAsync(id);
+            var dbComp = await _context.UploadsComplaintes.FirstOrDefaultAsync(n => n.Id == upComp.Id);
+            if (dbComp != null)
+            {
+                dbComp.Id = complainte.Id;
+                dbComp.StatusCompalintId = 3;
+
+                await _context.SaveChangesAsync();
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ViewAllRejectedComplaints));
+
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -578,12 +589,10 @@ namespace CompalintsSystem.Application.Controllers
                     DateSolution = DateTime.Now,
                     Role = userRole,
 
-
                 };
 
                 _context.ComplaintsRejecteds.Add(complaintsRejected);
                 await _context.SaveChangesAsync();
-
 
                 var upComp = await _compReop.FindAsync(idComp);
                 var dbComp = await _context.UploadsComplaintes.FirstOrDefaultAsync(n => n.Id == upComp.Id);
@@ -601,8 +610,55 @@ namespace CompalintsSystem.Application.Controllers
 
             return NotFound();
 
-
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddSolutions(ProvideSolutionsVM model, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                var role = claimsIdentity.FindFirst(ClaimTypes.Role);
+                string userRole = role.Value;
+                string UserId = claim.Value;
+                var subuser = await _context.Users.Where(a => a.Id == UserId).FirstOrDefaultAsync();
+                var idComp = model.AddSolution.UploadsComplainteId;
+                var solution = new Compalints_Solution()
+                {
+                    UserId = subuser.Id,
+                    SolutionProvName = subuser.FullName,
+                    UploadsComplainteId = model.AddSolution.UploadsComplainteId,
+                    SolutionProvIdentity = subuser.IdentityNumber,
+                    ContentSolution = model.AddSolution.ContentSolution,
+                    DateSolution = DateTime.Now,
+                    Role = userRole,
+                };
+
+                _context.Compalints_Solutions.Add(solution);
+                await _context.SaveChangesAsync();
+
+                var upComp = await _compReop.FindAsync(idComp);
+                var dbComp = await _context.UploadsComplaintes.FirstOrDefaultAsync(n => n.Id == upComp.Id);
+                if (dbComp != null)
+                {
+                    dbComp.StatusCompalintId = 2;
+                    dbComp.StagesComplaintId = 4;
+                    await _context.SaveChangesAsync();
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AllComplaints");
+
+            }
+
+            return NotFound();
+        }
+
+
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AddCommunication()
@@ -612,8 +668,6 @@ namespace CompalintsSystem.Application.Controllers
             var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
             ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
             ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
-
-
 
             return View();
         }
@@ -626,7 +680,6 @@ namespace CompalintsSystem.Application.Controllers
                 var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
                 ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
                 ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "Name");
-
 
                 var currentName = currentUser.FullName;
                 var currentPhone = currentUser.PhoneNumber;
@@ -690,7 +743,6 @@ namespace CompalintsSystem.Application.Controllers
             .Include(d => d.Directorate)
             .Include(su => su.SubDirectorate);
 
-
             //List<ApplicationUser> meeting = _context.Users.Where(m => m.Id == ).ToList<ApplicationUser>();
 
             int totalCompalints = result.Count();
@@ -699,6 +751,7 @@ namespace CompalintsSystem.Application.Controllers
 
             return View(result.ToList());
         }
+
         public IActionResult AllCirculars()
         {
             return View();

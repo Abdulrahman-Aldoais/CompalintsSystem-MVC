@@ -521,12 +521,7 @@
                             data-bs-target="#complaintResolution">
                         <span class="d-flex justify-content-center align-items-center text-nowrap"><i class=""></i> حل الشكوى</span>
                     </button>
-                    <button class="btn btn-danger mb-2 mt-2 d-grid w-100"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#rejectComplaint">
-                        <span class="d-flex justify-content-center align-items-center text-nowrap"><i>🚫</i>  رفض هذه الشكوى</span>
-                        @* <a asp-action="RejectedThisComplaint" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-danger"> رفض هذه الشكوى</a>*@
-                    </button>
+                 
                     <div class="d-flex my-3">
                         <a asp-action="AllComplaints" asp-controller="GeneralFederation" class="btn btn-label-secondary w-100 me-3">خروج</a>
                         <button type="button" class="btn btn-label-secondary w-100">إلغاء</button>
@@ -552,9 +547,9 @@
 
                     <div class="mb-3">
                         <label for="invoice-message" class="form-label">سبب رفع الشكوى</label>
-                        <input type="hidden" asp-for="@Model.AddSolution.UploadsComplainteId" />
-                        <textarea asp-for="@Model.AddSolution.ContentSolution" class="form-control" cols="3" rows="4"></textarea>
-                        <span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span>
+                        <input type="hidden" asp-for="@Model.UpComplaint.UploadsComplainteId" />
+                        <textarea asp-for="@Model.UpComplaint.Cause" class="form-control" cols="3" rows="4"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.UpComplaint.Cause"></span>
                     </div>
 
                     <div class="d-flex flex-wrap mb-3">
@@ -590,34 +585,7 @@
             </div>
         </div>
         <!-- /حل الشكوى -->
-        <!-- رفض الشكوى -->
-
-        <div class="offcanvas offcanvas-end" id="rejectComplaint" aria-hidden="true">
-            <div class="offcanvas-header border-bottom">
-                <h6 class="offcanvas-title"> رفض الشكوى</h6>
-                <button type="button" asp-action="RejectedThisComplaint" asp-controller="GeneralFederation"></button>
-            </div>
-            <div class="offcanvas-body flex-grow-1">
-                <form asp-action="RejectedThisComplaint" asp-controller="ManageComplaints" method="post">
-
-
-                    <div class="mb-3">
-                        <label for="invoice-message" class="form-label">سبب رفض هذه الشكوى</label>
-                        <input type="hidden" asp-for="@Model.RejectedComplaintVM.UploadsComplainteId" />
-                        @*@Html.HiddenFor(m => m.RejectedComplaintVM.UploadsComplainteId)*@
-                        <textarea asp-for="@Model.RejectedComplaintVM.reume" class="form-control" cols="3" rows="4"></textarea>
-                        <span class="text-danger" asp-validation-for="@Model.RejectedComplaintVM.reume"></span>
-                    </div>
-
-                    <div class="d-flex flex-wrap mb-3">
-                        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- /رفض الشكوى -->
+      
         <!-- Form with Image horizontal Modal -->
         <div class="modal-onboarding modal fade animate__animated" id="onboardHorizontalImageModal" tabindex="-1"
              aria-hidden="true">

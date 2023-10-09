@@ -454,18 +454,18 @@
 
                         <!--/ Accordion Header Color -->
                         <hr />
+                                    @if (Model.compalint.ContentType != null)
+                                    {
                         <div class="card-body  col-lg-12 ">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
 
-                                    @if (Model.compalint.ContentType != null)
-                                    {
                                         @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
 
                                         {
                                             <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
                                         }
-                                    }
+                                    
 
                                 </div>
                                 <div class="col-md-8">
@@ -502,7 +502,7 @@
                             </div>
                         </div>
 
-
+                                                    }
                         <!-- الحلول المقدمة للشكوى-->
 
 
@@ -645,6 +645,11 @@
                             data-bs-target="#complaintResolution">
                         <span class="d-flex justify-content-center align-items-center text-nowrap"><i class=""></i> حل الشكوى</span>
                     </button>
+                    <button class="btn btn-primary mb-2 mt-1  d-grid w-100"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#sendInvoiceOffcanvas">
+                        <span class="d-flex justify-content-center align-items-center text-nowrap"><i class=""></i>رفع الشكوى</span>
+                    </button>
                     <button class="btn btn-danger mb-2 mt-2 d-grid w-100"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#rejectComplaint">
@@ -652,7 +657,7 @@
                         @* <a asp-action="RejectedThisComplaint" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-danger"> رفض هذه الشكوى</a>*@
                     </button>
                     <div class="d-flex my-3">
-                        <a asp-action="AllComplaints" asp-controller="GeneralFederation" class="btn btn-label-secondary w-100 me-3">خروج</a>
+                        <a asp-action="AllComplaints" asp-controller="DirManageComplaints" class="btn btn-label-secondary w-100 me-3">خروج</a>
                         <button type="button" class="btn btn-label-secondary w-100">إلغاء</button>
                     </div>
                 </div>
@@ -668,10 +673,10 @@
         <div class="offcanvas offcanvas-end" id="complaintResolution" aria-hidden="true">
             <div class="offcanvas-header border-bottom">
                 <h6 class="offcanvas-title"> حل الشكوى</h6>
-                <button type="button" asp-action="AddSolutions" asp-controller="GeneralFederation"></button>
+                <button type="button" asp-action="AddSolutions" asp-controller="DirManageComplaints"></button>
             </div>
             <div class="offcanvas-body flex-grow-1">
-                <form asp-action="AddSolutions" asp-controller="GeneralFederation" method="post">
+                <form asp-action="AddSolutions" asp-controller="DirManageComplaints" method="post">
 
 
                     <div class="mb-3">
@@ -689,6 +694,31 @@
             </div>
         </div>
         <!-- /حل الشكوى -->
+        <!-- رفع الشكوى -->
+        <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
+            <div class="offcanvas-header border-bottom">
+                <h6 class="offcanvas-title"> رفع الشكوى</h6>
+                <button type="button" asp-action="UpCompalint"></button>
+            </div>
+            <div class="offcanvas-body flex-grow-1">
+                <form asp-action="UpCompalint" asp-controller="DirManageComplaints" method="post">
+
+
+                    <div class="mb-3">
+                        <label for="invoice-message" class="form-label">سبب رفع الشكوى</label>
+                        <input type="hidden" asp-for="@Model.UpComplaint.UploadsComplainteId" />
+                        <textarea asp-for="@Model.UpComplaint.Cause" class="form-control" cols="3" rows="4"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.UpComplaint.Cause"></span>
+                    </div>
+
+                    <div class="d-flex flex-wrap mb-3">
+                        <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">إالغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /رفع الشكوى -->
         <!-- رفض الشكوى -->
 
         <div class="offcanvas offcanvas-end" id="rejectComplaint" aria-hidden="true">

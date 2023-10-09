@@ -41,6 +41,7 @@
                                     <label class="form-label"> الموضف</label>
 
                                     <select asp-for="NameUserId" asp-items="ViewBag.UsersName   " class="form-control form-control-chosen" data-placeholder="Please select...">
+                                        <option value="">حدد الموضف</option>
                                     </select>
                                     <span asp-validation-for="NameUserId" class="text-danger"></span>
                                 </div>

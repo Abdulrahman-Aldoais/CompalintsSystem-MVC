@@ -283,24 +283,40 @@
                                                                 @Html.DisplayFor(modelItem => item.SolutionProvName)
                                                             </td>
                                                             <td>
-                                                                <div class="row demo-vertical-spacing">
-                                                                    <div class="d-inline-block">
-                                                                        <button type="button"
-                                                                                class="btn btn-secondary text-nowrap"
-                                                                                data-bs-toggle="popover"
-                                                                                data-bs-offset="0,14"
-                                                                                data-bs-placement="top"
-                                                                                data-bs-html="true"
-                                                                                data-bs-content="<p> @Html.DisplayFor(modelItem => item.ContentSolution)</p> <div class='d-flex justify-content-between'><button type='button' class='btn btn-sm btn-label-secondary'>تخطي</button><button type='button' class='btn btn-sm btn-primary'>إقراء المزيد </button></div>"
-                                                                                title="الحل المقترح">
-                                                                            انقر هنا لعرض الحل
-                                                                        </button>
+
+
+                                                                <button type="button"
+                                                                        asp-route-id="@item.Id"
+                                                                        class="btn btn-primary"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modalScrollable-@item.Id"
+                                                                        title="الحل المقترح">
+                                                                    انقر هنا لعرض الحل
+                                                                </button>
+                                                            </td>
+                                                            <div class="modal fade" id="modalScrollable-@item.Id" tabindex="-1" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="modalScrollableTitle">الحل المقدم لهذه الشكوى</h5>
+                                                                            <button type="button"
+                                                                                    class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <p>
+                                                                                @Html.Raw(item.ContentSolution.Replace("\n", "<br>"))
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
+                                                                                إغلاق
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </td>
-
-
-
+                                                            </div>
 
                                                             <td>
                                                                 @if (@item.Role == "AdminGeneralFederation")
@@ -450,50 +466,52 @@
 
                         <!--/ Accordion Header Color -->
                         <hr />
-                        <div class="card-body  col-lg-12 ">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
+                        @if (Model.compalint.ContentType != null)
+                        {
+                            <div class="card-body  col-lg-12 ">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
 
-                                    {
-                                        <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
-                                    }
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h5 class="card-title">
-                                                    @Model.compalint.OriginalFileName
-                                                </h5>
-                                            </div>
-                                            <div class="col-3">
-                                                <strong>Size : </strong>
-                                                @{
-                                                    var size = Model.compalint.Size / 1024; //KB
-                                                    if (size < 1024)  //2048
-                                                    {
-                                                        <span>@Math.Floor(size) Kb</span>
+                                        {
+                                            <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
+                                        }
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h5 class="card-title">
+                                                        @Model.compalint.OriginalFileName
+                                                    </h5>
+                                                </div>
+                                                <div class="col-3">
+                                                    <strong>Size : </strong>
+                                                    @{
+                                                        var size = Model.compalint.Size / 1024; //KB
+                                                        if (size < 1024)  //2048
+                                                        {
+                                                            <span>@Math.Floor(size) Kb</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@(Math.Floor(size) / 1024) Mb</span>
+                                                        }
                                                     }
-                                                    else
-                                                    {
-                                                        <span>@(Math.Floor(size) / 1024) Mb</span>
-                                                    }
-                                                }
-                                            </div>
+                                                </div>
 
-                                        </div>
-                                        @*<p class="card-text"></p>*@
-                                        <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
-                                        <div class="text-right ">
-                                            <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                            </div>
+                                            @*<p class="card-text"></p>*@
+                                            <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
+                                            <div class="text-right ">
+                                                <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-
+                        }
                         <!-- الحلول المقدمة للشكوى-->
 
 
@@ -550,33 +568,45 @@
                                                                     <div class="row demo-vertical-spacing">
                                                                         <div class="d-inline-block">
                                                                             <button type="button"
-                                                                                    class="btn btn-secondary text-nowrap"
-                                                                                    data-bs-toggle="popover"
-                                                                                    data-bs-offset="0,14"
-                                                                                    data-bs-placement="top"
-                                                                                    data-bs-html="true"
-                                                                                    data-bs-content="<p> @Html.DisplayFor(modelItem => item.reume)</p> <div class='d-flex justify-content-between'><button type='button' class='btn btn-sm btn-label-secondary'>تخطي</button><button type='button' class='btn btn-sm btn-primary'>إقراء المزيد </button></div>"
-                                                                                    title="الحل المقترح">
-                                                                                انقر هنا لعرض الحل
-                                                                            </button>
-                                                                            <button type="button"
                                                                                     asp-route-id="@item.Id"
                                                                                     class="btn btn-primary"
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#modalScrollable"
-                                                                                    title="الحل المقترح">
-                                                                              
-                                                                                انقر هنا لعرض الحل
+                                                                                    data-bs-target="#modalLong-@item.Id"
+                                                                                    title="  سبب الرفض ">
+
+                                                                               سبب الرفض
                                                                             </button>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </td>
 
 
+                                                                <div class="modal fade" id="modalLong-@item.Id" tabindex="-1" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="modalLongTitle">Modal title</h5>
+                                                                                <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                <div class="modal-body">
+                                                                                    <p>
+                                                                                        @item.reume
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
+                                                                                        إغلاق
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
 
-                                                                <td>
+<td>
                                                                     @if (@item.Role == "AdminGeneralFederation")
                                                                     {
                                                                         <span class="badge bg-label-success">مدير اتحاد</span>
@@ -614,6 +644,136 @@
 
                         <hr class="container-m-nx my-2" />
                         <!--/ الحلول المقدمة للشكوى -->
+                        <!-- اسباب رفع  للشكوى-->
+
+                        <hr class="container-m-nx my-2" />
+                        <div class="card">
+                            <h5 class="card-header bx-font-color" style="color:red; font:600"> الموظفين الذين رفعو هذه الشكوى</h5>
+                            <div class="card-body">
+                                <div class="table-responsive text-nowrap">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                                        <div class="table-responsive text-nowrap">
+
+                                            <table id="example" class="table table-bordered table table-bordered">
+
+                                                <thead>
+                                                    <tr>
+                                                        <th class="row-cols-md-4">
+                                                            الموضف الذي قام الرفعها
+                                                        </th>
+
+                                                        <th class="col-sm-1">
+                                                            سبب الرفع
+                                                        </th>
+                                                        <th class="col-sm-2">
+                                                            الصلاحية
+                                                        </th>
+                                                        <th class="col-sm-1">
+                                                            تاريخ الرفض
+                                                        </th>
+
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    @if (Model.UpComplaintCauseList.Count() == 0)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3" style="color:red">
+                                                                لم يتم رفع هذه الشكوى من قبل اي موضف
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        @foreach (var item in Model.UpComplaintCauseList)
+                                                        {
+                                                            <tr>
+                                                                <td class="width content">
+                                                                    @Html.DisplayFor(modelItem => item.UpProvName)
+                                                                </td>
+                                                                <td>
+                                                                    <div class="row demo-vertical-spacing">
+                                                                        <div class="d-inline-block">
+                                                                           
+                                                                            <button type="button"
+                                                                                    asp-route-id="@item.Id"
+                                                                                    class="btn btn-primary"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#modalScrollable-@item.Id"
+                                                                                    title="  سبب الرفع ">
+                                                                                سبب الرفع
+                                                                            </button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+
+                                                                <div class="modal fade" id="modalScrollable-@item.Id" tabindex="-1" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="modalScrollableTitle">الحل المقدم لهذه الشكوى</h5>
+                                                                                <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p>
+                                                                                   @item.Cause
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
+                                                                                    إغلاق
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <td>
+                                                                    @if (@item.Role == "AdminGeneralFederation")
+                                                                    {
+                                                                        <span class="badge bg-label-success">مدير اتحاد</span>
+                                                                    }
+                                                                    else if (@item.Role == "AdminGovernorate")
+                                                                    {
+                                                                        <span class="badge bg-label-warning"> مدير محافظة</span>
+                                                                    }
+                                                                    else if (@item.Role == "AdminDirectorate")
+                                                                    {
+                                                                        <span class="badge bg-label-warning"> مدير مديرة</span>
+                                                                    }
+                                                                    else if (@item.Role == "AdminSubDirectorate")
+                                                                    {
+                                                                        <span class="badge bg-label-warning"> مدير عزلة</span>
+                                                                    }
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DateUp)
+                                                                </td>
+
+                                                            </tr>
+                                                        }
+                                                    }
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="container-m-nx my-2" />
+                        <!--/  اسباب رفع للشكوى -->
                     </div>
 
 
@@ -783,49 +943,6 @@
 </div>
 
 
-<!-- Modal Scroll long content -->
-<div class="col-md-3 col-lg-4">
-    <small class="text-light fw-semibold">Scrolling long content</small>
-
-    <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalScrollableTitle">الحل المقدم لهذه الشكوى</h5>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        @Html.DisplayFor(modelItem => Model.ComplaintsRejectedList.First().reume)
-
-                    </p>
-                   
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
-                        إغلاق
-                    </button>
-                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--<div class="demo-inline-spacing">-->
-        <!-- Button trigger modal -->
-        <!-- Button ModalScrollable -->
-        <!--<button type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#modalScrollable">
-            Option 2
-        </button>
-    </div>-->
-</div>
-
-<!-- Modal Backdrop -->
 
 
 @section Scripts{

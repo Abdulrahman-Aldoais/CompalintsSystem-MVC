@@ -22,6 +22,10 @@
                                     {
                                         <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/@(Convert.ToString(UserManager.GetUserAsync(User).Result.ProfilePicture))">
                                     }
+                                    else
+                                    {
+                                    <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/assets/img/avatars/1.png">
+                                    }
                                 </div>
                             </div>
                             <div class="flex-grow-1">

@@ -3,7 +3,7 @@
 
 @{ ViewData["Title"] = "إدارة الشكاوى في العزلة";
     ViewData["SubTitle"] = "إدارة الشكاوى ";
-    ViewData["SubTitle2"] = " المرفوعه  ";
+    ViewData["SubTitle2"] = " المرفوضة  ";
 
 }
 
@@ -34,7 +34,7 @@
                                     <div class="btn-group">
                                         <span class="badge bg-label-primary badgess " style="    padding-left: 36px;
                         line-height: 1.99;
-                        width: 152.35px;">العدد الكلي @ViewBag.totalCompalintsUp</span>
+                        width: 152.35px;">العدد الكلي @ViewBag.TotalCompalintsRejected</span>
                     </div>
 
                                 }
@@ -46,6 +46,7 @@
 
                     <div class="card-datatable table-responsive">
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
                             <div class="table-responsive text-nowrap">
                                 <table id="example" class="table table-bordered table table-bordered" style="border-radius: 0.25rem;">
 
@@ -97,7 +98,7 @@
 
 
                                                     <td data-title="الاجراءات :">
-                                                        <a href="@Url.Action("ViewCompalintUpDetails", "SubManageComplaints", new { id = item.Id })"
+                                                        <a href="@Url.Action("ViewCompalintRejectedDetails", "SubManageComplaints", new { id = item.Id })"
                                                            class="btn btn-info"
                                                            style="padding: 0px; margin: 0px 2px 0px 2px">
                                                             <i class="material-icons" style="padding: 4px;">عرض</i>

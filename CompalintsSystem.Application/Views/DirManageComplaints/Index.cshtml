@@ -35,7 +35,7 @@
                                     <div class="btn-group">
                                         <span class="badge bg-label-primary badgess " style="    padding-left: 36px;
                         line-height: 1.99;
-                        width: 152.35px;">العدد الكلي @ViewBag.totaleComp</span>
+                        width: 152.35px;">العدد الكلي @ViewBag.TotalNewCompalints</span>
                     </div>
 
                                 }
@@ -47,52 +47,6 @@
 
                     <div class="card-datatable table-responsive">
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-
-                            <div class="row mx-2 border-bottom ">
-                                <div class="row align-items-start">
-                                    <div class="row align-items-start">
-                                        <div class="col-md-4" style="width:150px">
-                                            <select id="FilterType"
-                                                    name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
-                                                    class="select2 form-select select2-hidden-accessible"
-                                                    tabindex="-1" aria-hidden="true" data-select2-id="10">
-                                                <option value="0" data-select2-id="12">عرض حسب</option>
-                                                <option value="جديدة">جديدة</option>
-                                                <option value="محلولة">محلولة</option>
-                                                <option value="غير محلولة">غير محلولة</option>
-                                                <option value="مرفوعة">مرفوعة</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-4" style="width:150px">
-                                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
-                                                    class="select2 form-select select2-hidden-accessible"
-                                                    tabindex="-1" aria-hidden="true" data-select2-id="10">
-                                                <option value="10" data-select2-id="12">مرفوضة</option>
-                                                <option value="25">محلولة</option>
-                                                <option value="50">غير محلولة</option>
-                                                <option value="100">مرفوعة</option>
-                                            </select>
-                                        </div>
-
-
-
-                                        <div class="col-12 col-md-6  d-flex mb-4 justify-content-center justify-content-md-start">
-                                            <div class="me-3 table-type search-paddind">
-
-                                                <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                                    <label><input type="search" id="CustomSearchTextField" class="form-control" placeholder="البحث" aria-controls="DataTables_Table_0"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
 
                             <div class="table-responsive text-nowrap">
                                 <table id="example" class="table table-bordered table table-bordered" style="border-radius: 0.25rem;">
@@ -139,8 +93,8 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Governorate.Name)
                                                     </td>
+                                                    <td> @Html.DisplayFor(modelItem => item.StagesComplaint.Name)</td>
                                                     <td> @Html.DisplayFor(modelItem => item.StatusCompalint.Name)</td>
-                                                    <td> @Html.DisplayFor(modelItem => item.TypeComplaint.Type)</td>
 
 
 
@@ -149,11 +103,6 @@
                                                            class="btn btn-info"
                                                            style="padding: 0px; margin: 0px 2px 0px 2px">
                                                             <i class="material-icons" style="padding: 4px;">عرض</i>
-                                                        </a>
-                                                        <a href="@Url.Action("ViewCompalintDetails", "DirManageComplaints", new { id = item.Id })"
-                                                           class="btn btn-danger"
-                                                           style="padding: 0px; margin: 0px 2px 0px 2px">
-                                                            <i class="material-icons" style="padding: 4px">حذف</i>
                                                         </a>
                                                     </td>
 

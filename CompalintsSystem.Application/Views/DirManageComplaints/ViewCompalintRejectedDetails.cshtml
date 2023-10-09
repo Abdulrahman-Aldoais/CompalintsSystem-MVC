@@ -450,52 +450,54 @@
 
                         <!--/ Accordion Header Color -->
                         <hr />
-                        <div class="card-body  col-lg-12 ">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    @if (Model.compalint.ContentType != null)
-                                    {
+                        @if (Model.compalint.ContentType != null)
+                        {
+                            <div class="card-body  col-lg-12 ">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+
                                         @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
 
                                         {
                                             <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
                                         }
-                                    }
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h5 class="card-title">
-                                                    @Model.compalint.OriginalFileName
-                                                </h5>
-                                            </div>
-                                            <div class="col-3">
-                                                <strong>Size : </strong>
-                                                @{
-                                                    var size = Model.compalint.Size / 1024; //KB
-                                                    if (size < 1024)  //2048
-                                                    {
-                                                        <span>@Math.Floor(size) Kb</span>
+                                        
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h5 class="card-title">
+                                                        @Model.compalint.OriginalFileName
+                                                    </h5>
+                                                </div>
+                                                <div class="col-3">
+                                                    <strong>Size : </strong>
+                                                    @{
+                                                        var size = Model.compalint.Size / 1024; //KB
+                                                        if (size < 1024)  //2048
+                                                        {
+                                                            <span>@Math.Floor(size) Kb</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@(Math.Floor(size) / 1024) Mb</span>
+                                                        }
                                                     }
-                                                    else
-                                                    {
-                                                        <span>@(Math.Floor(size) / 1024) Mb</span>
-                                                    }
-                                                }
-                                            </div>
+                                                </div>
 
-                                        </div>
-                                        @*<p class="card-text"></p>*@
-                                        <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
-                                        <div class="text-right">
-                                            <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                            </div>
+                                            @*<p class="card-text"></p>*@
+                                            <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
+                                            <div class="text-right">
+                                                <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                                                        }
                         </div>
-                    </div>
                     <hr />
                    
 
@@ -508,7 +510,7 @@
 
         <!-- /Invoice Edit-->
         <!-- رفع الشكوى -->
-        <div class="invoice-actions col-12 col-lg-3">
+        <!--<div class="invoice-actions col-12 col-lg-3">
             <div class="card mb-4">
                 <div class="card-body">
                     <button class="btn btn-primary d-grid w-100"
@@ -532,10 +534,10 @@
 
 
             </div>
-        </div>
+        </div>-->
         <!-- /Invoice Actions -->
         <!-- حل الشكوى -->
-        <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
+        <!--<div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
             <div class="offcanvas-header border-bottom">
                 <h6 class="offcanvas-title"> رفع الشكوى</h6>
                 <button type="button" asp-action="UpCompalint"></button>
@@ -557,10 +559,10 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div>-->
         <!-- /حل الشكوى -->
         <!-- Form with Image horizontal Modal -->
-        <div class="modal-onboarding modal fade animate__animated" id="onboardHorizontalImageModal" tabindex="-1"
+        <!--<div class="modal-onboarding modal fade animate__animated" id="onboardHorizontalImageModal" tabindex="-1"
              aria-hidden="true">
             <div class="modal-dialog modal-fullscreen-sm-down" role="document">
                 <div class="modal-content text-center">
@@ -594,7 +596,7 @@
 
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!--/ Form with Image horizontal Modal -->
     </div>

@@ -32,22 +32,22 @@
         <ul class="menu-sub">
             <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString()=="Index"?"active":"") @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintDetails"?"active":"") ">
                 <a href="/DirManageComplaints/Index" class="menu-link">
-                    <div>عرض كافة الشكاوي </div>
+                    <div> الشكاوي الجديدة </div>
                 </a>
             </li>
             <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewAllRejectedComplaints"?"active":"")  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintRejectedDetails"?" active":"")">
                 <a href="/DirManageComplaints/ViewAllRejectedComplaints" class="menu-link">
-                    <div>المرفوضة</div>
+                    <div> الشكاوى التي رفضتها</div>
                 </a>
             </li>
             <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="AllUpComplaints"?"active":"")  @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintRejectedDetails"?" active":"")">
                 <a href="/DirManageComplaints/AllUpComplaints" class="menu-link">
-                    <div>المرفوعه</div>
+                    <div>الشكاوى التي رفعتها</div>
                 </a>
             </li>
             <li class="menu-item  @(ViewContext.RouteData.Values["Action"].ToString()=="SolutionComplaints"?"active":"")    @(ViewContext.RouteData.Values["Action"].ToString()=="ViewCompalintSolutionDetails"?"active ":"")">
                 <a href="/DirManageComplaints/SolutionComplaints" class="menu-link">
-                    <div>المحلولة</div>
+                    <div>الشكاوى التي حليتها</div>
                 </a>
             </li>
         </ul>

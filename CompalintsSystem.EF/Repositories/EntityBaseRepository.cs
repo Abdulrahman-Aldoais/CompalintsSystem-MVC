@@ -285,7 +285,7 @@ namespace CompalintsSystem.EF.Repositories
 
                 ApplicationUsers = await _context.Users
                    .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
-                   .Where(x => x.UserRole.RoleId == "2031d8ec-c362-4f84-8e3e-97a28b8db091"//  عرض جميع المستخدمين في العزلة التابعة 
+                   .Where(x => x.UserRole.RoleId == "901d057e-c4d6-41e1-8616-fc74da8e16da"//  عرض جميع المستخدمين في العزلة التابعة 
                        && x.User.SubDirectorateId == subDirctoty)
                    .OrderBy(x => x.User.FullName)
                    .Select(x => x.User)
