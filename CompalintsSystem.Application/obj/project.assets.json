@@ -2265,6 +2265,15 @@
           "buildMultiTargeting/NToastNotify.props": {}
         }
       },
+      "NumberToWords/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/NumberToWords.dll": {}
+        },
+        "runtime": {
+          "lib/NumberToWords.dll": {}
+        }
+      },
       "Rotativa.AspNetCore/1.2.0": {
         "type": "package",
         "dependencies": {
@@ -6943,6 +6952,18 @@
         "ntoastnotify.nuspec",
         "staticwebassets/noty.js",
         "staticwebassets/toastr.js"
+      ]
+    },
+    "NumberToWords/1.0.1": {
+      "sha512": "XvrHQaZs9dVpdcAar6KdykKabTW2iaBPuTf3VfJk1BtpF1Z4I9KwjO9LmQn197zoHHZhlyOFvZ3QUQcjvpauoA==",
+      "type": "package",
+      "path": "numbertowords/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/NumberToWords.dll",
+        "numbertowords.1.0.1.nupkg.sha512",
+        "numbertowords.nuspec"
       ]
     },
     "Rotativa.AspNetCore/1.2.0": {
@@ -11659,6 +11680,7 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Utils >= 5.0.2",
       "NToastNotify >= 7.0.0",
+      "NumberToWords >= 1.0.1",
       "Rotativa.AspNetCore >= 1.2.0"
     ]
   },
@@ -11752,6 +11774,10 @@
             "target": "Package",
             "version": "[7.0.0, )"
           },
+          "NumberToWords": {
+            "target": "Package",
+            "version": "[1.0.1, )"
+          },
           "Rotativa.AspNetCore": {
             "target": "Package",
             "version": "[1.2.0, )"
@@ -11817,6 +11843,16 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.Web.Infrastructure",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'NumberToWords 1.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "NumberToWords",
       "targetGraphs": [
         "net5.0"
       ]

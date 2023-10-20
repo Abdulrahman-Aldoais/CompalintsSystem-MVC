@@ -1,0 +1,152 @@
+﻿
+@model ProvideSolutionsVM
+
+
+<div class="table-responsive text-nowrap">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+
+
+        <thead>
+            <tr>
+                <th class="row-cols-md-4">
+                    اسم صاحب الحل
+                </th>
+
+                <th class="col-sm-1">
+                    الحل المقترح
+                </th>
+                <th class="col-sm-2">
+                    الصلاحية
+                </th>
+                <th class="col-sm-1">
+                    الحالة
+                </th>
+                <th class="col-sm-1">
+                    تاريخ الحل
+                </th>
+
+                <th class="col-sm-1">اجراء</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.UpComplaintCauseList.Count() == 0)
+            {
+                <tr>
+                    <td colspan="3" style="color:red">
+                      لم يتم رفع هذه الشكوى من قبل احد
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.UpComplaintCauseList)
+                {
+                    <tr>
+                        <td class="width content">
+                            @Html.DisplayFor(modelItem => item.Cause)
+                        </td>
+                        <td>
+                            <div class="row demo-vertical-spacing">
+                                <div class="d-inline-block">
+
+                                    <button type="button"
+                                            class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="@("#ShowReasonUp-"+item.Id)" data-url="@Url.Action($"ShowReasonUp/{item.Id}")">
+                                        عرض الحل
+                                    </button>
+
+                                    @await Html.PartialAsync("_ShowReasonUp", item)
+                                    @*data-bs-target="#modalScrollable"*@
+                                </div>
+
+
+                            </div>
+                        </td>
+
+
+
+
+                        <td>
+                            @if (@item.Role == "AdminGeneralFederation")
+                            {
+                                <span class="badge bg-label-success">مدير اتحاد</span>
+                            }
+                            else if (@item.Role == "AdminGovernorate")
+                            {
+                                <span class="badge bg-label-warning"> مدير محافظة</span>
+                            }
+                            else if (@item.Role == "AdminDirectorate")
+                            {
+                                <span class="badge bg-label-warning"> مدير مديرة</span>
+                            }
+                            else if (@item.Role == "AdminSubDirectorate")
+                            {
+                                <span class="badge bg-label-warning"> مدير عزلة</span>
+                            }
+
+
+         
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateUp)
+                            </td>
+
+
+
+
+
+                            <td data-title="الاجراءات :">
+
+
+                                <div class="d-inline-block">
+                                    <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+
+                                        <li>
+                                            <a class="btn btn-sm btn-icon item-edit" onclick="showInPopup('@Url.Action("AddOrEditSolutions", "GeneralFederation",
+                                                                                                      new { id = item.Id }, Context.Request.Scheme)','تعديل')"><i class="bx bxs-edit"></i></a>
+                                        </li>
+                                        <li>
+                                            <button type="button"
+                                                    class="btn btn-primary"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="@("#ShowSolution-"+item.Id)" data-url="@Url.Action($"ShowSolution/{item.Id}")">
+                                                عرض الحل
+                                            </button>
+
+                                            @await Html.PartialAsync("_ShowReasonUp", item)
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger delete-record" asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+
+
+                            </td>
+                        </tr>
+                    }
+            }
+
+        </tbody>
+    </table>
+
+</div>
+@section Scripts{
+    <script>
+        $('#example').DataTable({
+            responsive: {
+                details: {
+                    renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                }
+            }
+        });
+    </script>
+
+}

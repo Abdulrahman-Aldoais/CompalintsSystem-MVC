@@ -1,0 +1,24 @@
+﻿@model UpComplaintCause
+
+
+@{ Layout = null; }
+
+
+<div class="modal fade" id="ShowReasonUp-@Model.Id" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalScrollableTitle">الحل المقدم لهذه الشكوى</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p style="white-space:pre-line;"> @Html.Raw(Model.Cause)</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
+                    إغلاق
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

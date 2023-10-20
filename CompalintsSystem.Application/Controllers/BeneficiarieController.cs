@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -146,8 +147,6 @@ namespace CompalintsSystem.Application.Controllers
             return View(AllRejectedComplaints.ToList());
 
         }
-
-
 
 
         [HttpGet]
@@ -360,17 +359,20 @@ namespace CompalintsSystem.Application.Controllers
             }
             else
             {
-                var so = await _context.Compalints_Solutions.Where(a => a.Id == id).FirstOrDefaultAsync();
-                var cc = await _context.UploadsComplaintes.Where(m => m.Id == so.UploadsComplainteId).FirstOrDefaultAsync();
-                so.IsAccept = false;
-                cc.StagesComplaintId = cc.StagesComplaintId + 1;
-                so.SolutionProvIdentity = so.SolutionProvIdentity;
-                _context.Compalints_Solutions.Update(so);
-                await _context.SaveChangesAsync();
-                //_context.UploadsComplaintes.Update(cc);
-                //await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var solution = await _context.Compalints_Solutions
+                    .FirstOrDefaultAsync(a => a.Id == id);
 
+                if (solution == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                solution.IsAccept = false;
+
+                _context.Compalints_Solutions.Update(solution);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
             }
         }
 

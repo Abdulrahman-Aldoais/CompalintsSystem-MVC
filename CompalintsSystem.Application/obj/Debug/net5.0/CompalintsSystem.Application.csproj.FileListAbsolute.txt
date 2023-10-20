@@ -1248,8 +1248,6 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_AdminGeneralFederationMenu.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_AdminGovernorateMenu.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_AdminSubDirectorateMenu.cshtml.g.cs
-E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_AllSolutions.cshtml.g.cs
-E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_AllSolutionsRejected.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_BeneficiarieMenu.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_CommunicationPartial.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_DangerAutoCloseAlert.cshtml.g.cs
@@ -1296,3 +1294,9 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\ref\CompalintsSystem.Application.dll
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\SubManageComplaints\AllRejectedComplaints.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\GovManageComplaints\NewCompalints.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_DisplayingAllReasonUp.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_DisplayingAllRejections.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_DisplayingAllSolutions.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_ShowReasonUp.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_ShowRejections.cshtml.g.cs
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\bin\Debug\net5.0\NumberToWords.dll

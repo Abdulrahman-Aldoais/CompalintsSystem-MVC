@@ -16,16 +16,16 @@
             </div>
             <div class="modal-body">
 
-                <form asp-action="AddOrEditSolutions"asp-route-Id="@Model.AddSolution.Id" asp-controller="GeneralFederation" >
+                <form asp-action="AddOrEditSolutions" asp-route-Id="@Model.AddSolution.Id" asp-controller="GeneralFederation">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                     <input type="hidden" asp-for="@Model.AddSolution.UploadsComplainteId" />
                     <input type="hidden" asp-for="@Model.CompalintsSolution.Id" />
                     <div>
                         <h6>فم بكتابة الحل الذي تريد بالتنسيق الذي تريدة</h6>
-                        <textarea asp-for="@Model.AddSolution.ContentSolution" id="editor" class="form-control" cols="3" rows="4"></textarea>
+                        <textarea class="form-control" id="Content" asp-for="@Model.AddSolution.ContentSolution"></textarea>
+                       <span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span>
                     </div>
                     <input type="hidden" asp-for="@Model.AddSolution.UploadsComplainteId" />
-                    <span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span><span class="text-danger" asp-validation-for="@Model.AddSolution.ContentSolution"></span>
-
 
                     <div class="d-flex flex-wrap mb-3">
                         <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">إرسال</button>

@@ -91,6 +91,10 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "NumberToWords": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "Rotativa.AspNetCore": {
               "target": "Package",
               "version": "[1.2.0, )"

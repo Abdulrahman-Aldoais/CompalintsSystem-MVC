@@ -1,0 +1,166 @@
+﻿
+@model ProvideSolutionsVM
+
+
+<div class="table-responsive text-nowrap">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+
+
+        <thead>
+            <tr>
+                <th class="row-cols-md-4">
+                    اسم صاحب الحل
+                </th>
+
+                <th class="col-sm-1">
+                    الحل المقترح
+                </th>
+                <th class="col-sm-2">
+                    الصلاحية
+                </th>
+                <th class="col-sm-1">
+                    الحالة
+                </th>
+                <th class="col-sm-1">
+                    تاريخ الحل
+                </th>
+
+                <th class="col-sm-1">اجراء</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.Compalints_SolutionList.Count() == 0)
+            {
+                <tr>
+                    <td colspan="3" style="color:red">
+                        لا يوجد بعد حلول لهذه الشكوى
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.Compalints_SolutionList)
+                {
+                    <tr>
+                        <td class="width content">
+                            @Html.DisplayFor(modelItem => item.SolutionProvName)
+                        </td>
+                        <td>
+                            <div class="row demo-vertical-spacing">
+                                <div class="d-inline-block">
+
+                                    <button type="button"
+                                            class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="@("#ShowSolution-"+item.Id)" data-url="@Url.Action($"ShowSolution/{item.Id}")">
+                                        عرض الحل
+                                    </button>
+
+                                    @await Html.PartialAsync("_ShowSolution", item)
+                                    @*data-bs-target="#modalScrollable"*@
+                                </div>
+
+
+                            </div>
+                        </td>
+
+
+
+
+                        <td>
+                            @if (@item.Role == "AdminGeneralFederation")
+                            {
+                                <span class="badge bg-label-success">مدير اتحاد</span>
+                            }
+                            else if (@item.Role == "AdminGovernorate")
+                            {
+                                <span class="badge bg-label-warning"> مدير محافظة</span>
+                            }
+                            else if (@item.Role == "AdminDirectorate")
+                            {
+                                <span class="badge bg-label-warning"> مدير مديرة</span>
+                            }
+                            else if (@item.Role == "AdminSubDirectorate")
+                            {
+                                <span class="badge bg-label-warning"> مدير عزلة</span>
+                            }
+
+
+                            @if (item.IsAccept == true)
+                            {
+
+
+                            <td>
+                                مرفوض
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+
+                                مقبول
+                            </td>
+                        }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateSolution)
+                            </td>
+
+
+
+
+
+                            <td data-title="الاجراءات :">
+
+
+                                <div class="d-inline-block">
+                                    <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                      
+                                        <li>
+                                            <a class="btn btn-sm btn-icon item-edit" onclick="@Url.Action($"ShowSolution/{item.Id}", "GeneralFederation",
+                                                                                                      new { id = item.Id }, Context.Request.Scheme)','تعديل')"><i class="bx bxs-edit"></i></a>
+                                        </li>
+                                        <li>
+                                            <button type="button"
+                                                    class="btn btn-primary"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="@("#ShowSolution-"+item.Id)" data-url="@Url.Action($"ShowSolution/{item.Id}")">
+                                                عرض الحل
+                                            </button>
+
+                                            @await Html.PartialAsync("_ShowSolution", item)
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger delete-record" asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+
+
+                            </td>
+                        </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+</div>
+@section Scripts{
+    <script>
+        $('#example').DataTable({
+            responsive: {
+                details: {
+                    renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                }
+            }
+        });
+    </script>
+   
+}

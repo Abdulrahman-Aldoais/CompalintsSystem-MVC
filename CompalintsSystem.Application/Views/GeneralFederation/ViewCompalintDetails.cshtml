@@ -5,11 +5,8 @@
     ViewData["Title"] = "تفاصيل الشكوى";
 
 }
-@*<script src="~/ckeditorstandard/ckeditor.js"></script>*@
-<script src="~/ckeditorCustom/ckeditor.js"></script>
-@*<script src="~/ckeditor/ckeditor.js"></script>*@
-@*<script src="~/ckeditor5-build-classic/ckeditor.js"></script>*@
-<!-- Invoice Edit-->
+
+
 <div class="container-xxl flex-grow-1 container-p-y">
 
     <div class="row invoice-edit">
@@ -231,31 +228,6 @@
                     </div>
 
 
-
-
-                    <!-- الحلول المقدمة للشكوى-->
-
-
-
-                    <hr class="container-m-nx my-2" />
-                    <div class="card">
-                        <h5 class="card-header bx-font-color">  الحلول المقدمة </h5>
-                        <div class="card-body">
-                            <div class="card-datatable table-responsive">
-                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-
-                                    @await Html.PartialAsync("_AllSolutions",Model)
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="container-m-nx my-2" />
-                    <!--/ الحلول المقدمة للشكوى -->
-
-                    <hr />
                     <!-- Accordion -->
                     <span style="color:darkseagreen ;font-family:Cairo" class="h5 fw-bold mb-0">   المنطقة الصادر منها الشكوى:</span>
                     <div class="row gy-4">
@@ -329,56 +301,77 @@
 
                         <!--/ Accordion Header Color -->
                         <hr />
-                        <div class="card-body  col-lg-12 ">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    @if (Model.compalint.ContentType != null)
-                                    {
+                        @if (Model.compalint.ContentType != null)
+                        {
+                            <div class="card-body  col-lg-12 ">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+
                                         @if (Model.compalint.ContentType.ToLower().StartsWith("image"))
 
                                         {
                                             <img width="100%" height="100%" src="/Uploads/@Model.compalint.FileName" class="card-img lazyload" alt="...">
                                         }
-                                    }
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h5 class="card-title">
-                                                    @Model.compalint.OriginalFileName
-                                                </h5>
-                                            </div>
-                                            <div class="col-3">
-                                                <strong>Size : </strong>
-                                                @{
-                                                    var size = Model.compalint.Size / 1024; //KB
-                                                    if (size < 1024)  //2048
-                                                    {
-                                                        <span>@Math.Floor(size) Kb</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>@(Math.Floor(size) / 1024) Mb</span>
-                                                    }
-                                                }
-                                            </div>
 
-                                        </div>
-                                        @*<p class="card-text"></p>*@
-                                        <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
-                                        <div class="text-right ">
-                                            <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h5 class="card-title">
+                                                        @Model.compalint.OriginalFileName
+                                                    </h5>
+                                                </div>
+                                                <div class="col-3">
+                                                    <strong>Size : </strong>
+                                                    @{
+                                                        var size = Model.compalint.Size / 1024; //KB
+                                                        if (size < 1024)  //2048
+                                                        {
+                                                            <span>@Math.Floor(size) Kb</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@(Math.Floor(size) / 1024) Mb</span>
+                                                        }
+                                                    }
+                                                </div>
+
+                                            </div>
+                                            @*<p class="card-text"></p>*@
+                                            <p class="card-text"><small class="text-muted">@Model.compalint.UploadDate</small></p>
+                                            <div class="text-right ">
+                                                <a asp-action="Download" asp-controller="GeneralFederation" asp-route-id="@Model.compalint.Id" class="btn btn-outline-primary">تنزيل المرفق</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-
+                        }
                         <!-- الحلول المقدمة للشكوى-->
 
+                        <hr class="container-m-nx my-2" />
+                        <div class="card">
+                            <h5 class="card-header bx-font-color">  الحلول المقدمة </h5>
+                            <div class="card-body">
+                                <div class="card-datatable table-responsive">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 
+                                        @await Html.PartialAsync("_DisplayingAllSolutions", Model)
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="container-m-nx my-2" />
+                        <!--/ الحلول المقدمة للشكوى -->
+
+                        <hr />
+
+                        <!--  اسباب الرفض-->
 
                         <hr class="container-m-nx my-2" />
                         <div class="card">
@@ -387,7 +380,7 @@
                                 <div class="card-datatable table-responsive">
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 
-                                      @await Html.PartialAsync("_AllSolutionsRejected", Model)
+                                        @await Html.PartialAsync("_DisplayingAllRejections", Model)
 
                                     </div>
 
@@ -396,18 +389,34 @@
                         </div>
 
 
+                        @*  نهاية اسباب الرفض *@
+
+                        @* اسباب الرفع *@
+                        <hr class="container-m-nx my-2" />
+                        <div class="card">
+                            <h5 class="card-header bx-font-color" style="color:red;">   اسباب الرفع لهذه الشكوى</h5>
+                            <div class="card-body">
+                                <div class="card-datatable table-responsive">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                                        @await Html.PartialAsync("_DisplayingAllReasonUp", Model)
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
 
 
                         <hr class="container-m-nx my-2" />
-                        <!--/ الحلول المقدمة للشكوى -->
+                        <!--/   نهاية اسباب الرفع -->
                     </div>
 
                 </div>
             </div>
 
-
-
         </div>
+
 
         <!-- /Invoice Edit-->
         <!-- رفع الشكوى -->
@@ -441,7 +450,7 @@
             </div>
         </div>
         <!-- /Invoice Actions -->
-    
+
 
 
     </div>
@@ -515,22 +524,85 @@
 
 
 @section Scripts{
-    <script>
 
 
-        'use strict';
+    <script src="~/ckeditor5-build-classic/ckeditor.js"></script>
+    <script type="text/javascript">
+        docReady(function () {
+            var myEditor = null;
+            // DOM is loaded and ready for manipulation here
+            ClassicEditor
+                .create(document.querySelector("#editor-container"), {
+                    height: '100%',
+                    toolbar: {
+                        items: [
+                            'heading',
+                            '|',
+                            'bold',
+                          /*  'italic',*/
+                            'underline',
+                           /* 'link',*/
+                            'bulletedList',
+                            'numberedList',
+                            'imageUpload',
+                            /*'blockQuote',*/
+                            'insertTable',
+                           /* 'mediaEmbed',*/
+                            'undo',
+                            'redo'
+                        ]
+                    },
+                    mobile: {
+                        toolbar: [
+                            'heading',
+                            'bold',
+                            'italic',
+                            'underline',
+                            'link',
+                            'bulletedList',
+                            'numberedList',
+                            'imageUpload',
+                            'blockQuote',
+                            'insertTable',
+                            /*'mediaEmbed',*/
+                            //'undo',
+                            //'redo'
+                        ]
+                    },
+                    extraPlugins: [MyCustomUploadAdapterPlugin]
+                })
+                .then(editor => {
+                    myEditor = editor;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
 
-        (function () {
-            const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-            const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl, { html: true, sanitize: false });
-            });
-        })();
+        function docReady(fn) {
+            // see if DOM is already available
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                // call on next available tick
+                setTimeout(fn, 1);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
 
+        function MyCustomUploadAdapterPlugin(editor) {
+            // ...
+            // المحتوى الخاص بتهيئة رفع الصور
+            // ...
+        }
     </script>
 
     <script>
-        CKEDITOR.replace("editor");
+
+        // Get the content from CKEditor 5
+        var content = editor.getData();
+
+        // Set the innerHTML of the div to the content
+        document.getElementById('editor-content').innerHTML = content;
     </script>
     <script>
 

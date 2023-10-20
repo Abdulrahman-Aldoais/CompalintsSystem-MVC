@@ -2,33 +2,32 @@
 
 
 @{ Layout = null; }
-<script src="~/ckeditorCustom/ckeditor.js"></script>
 
-@* عرض الحل في مودل منبثق *@
-
-<div class="modal fade" id="ShowSolution-@Model.Id" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">تفاصيل الحل المقدم</h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <div id="FullDescription" style="white-space:pre-line;">
-                    <p style="white-space:pre-line;"> @Html.Raw(Model.ContentSolution)</p>
-
+<div class="col-md-3 col-lg-4">
+    <div class="modal fade" id="ShowSolution-@Model.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalScrollableTitle">الحل المقدم لهذه الشكوى</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
+                <!--<div class="modal-body">-->
+                    @*  <p style="white-space:pre-line;"> @Html.Raw(Model.ContentSolution)</p>*@
+                    <!--<div class="content">@Html.Raw(Model.ContentSolution)</div>
+                </div>-->
+            <div class="modal-body">
+                <div class="content" style="font-size: 14px; max-width: 100%; overflow: auto; word-wrap: break-word; white-space: pre-wrap;">
+                    @Html.Raw(Model.ContentSolution)
+                </div>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
+                        إغلاق
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-            
 
-            <script>
-                CKEDITOR.replace("editor");
-            </script>
+

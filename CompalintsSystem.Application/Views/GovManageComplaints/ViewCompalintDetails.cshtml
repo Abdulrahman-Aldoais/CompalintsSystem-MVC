@@ -299,15 +299,13 @@
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title" id="modalScrollableTitle">الحل المقدم لهذه الشكوى</h5>
-                                                                            <button type="button"
-                                                                                    class="btn-close"
-                                                                                    data-bs-dismiss="modal"
-                                                                                    aria-label="Close"></button>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <p>
-                                                                                @Html.Raw(item.ContentSolution.Replace("\n", "<br>"))
-                                                                            </p>
+                                                                            @*<p>
+                                                                                @Html.Raw(item.ContentSolution.Replace("\r\n\r\n", "</p><p>").Replace("\r\n", "<br>"))
+                                                                            </p>*@
+                                                                            <p style="white-space:pre-line;"> @Html.Raw(item.ContentSolution)</p>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
@@ -317,7 +315,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
+                                                           
                                                             <td>
                                                                 @if (@item.Role == "AdminGeneralFederation")
                                                                 {

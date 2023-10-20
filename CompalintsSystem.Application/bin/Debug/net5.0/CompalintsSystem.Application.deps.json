@@ -45,6 +45,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
           "Microsoft.VisualStudio.Web.CodeGeneration.Utils": "5.0.2",
           "NToastNotify": "7.0.0",
+          "NumberToWords": "1.0.1",
           "Rotativa.AspNetCore": "1.2.0",
           "Microsoft.AspNetCore.Antiforgery.Reference": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "5.0.0.0",
@@ -1832,6 +1833,17 @@
         "compile": {
           "lib/netcoreapp3.1/NToastNotify.Views.dll": {},
           "lib/netcoreapp3.1/NToastNotify.dll": {}
+        }
+      },
+      "NumberToWords/1.0.1": {
+        "runtime": {
+          "lib/NumberToWords.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/NumberToWords.dll": {}
         }
       },
       "Rotativa.AspNetCore/1.2.0": {
@@ -5447,6 +5459,13 @@
       "sha512": "sha512-JltQtfJvJ9IS9FaMq3tc10CgtAYeVn/87UnOBCDCAip/WDvr+Nw9XAUQpJXEqryzTQxV6tYPb8K67DqgmdnMXA==",
       "path": "ntoastnotify/7.0.0",
       "hashPath": "ntoastnotify.7.0.0.nupkg.sha512"
+    },
+    "NumberToWords/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XvrHQaZs9dVpdcAar6KdykKabTW2iaBPuTf3VfJk1BtpF1Z4I9KwjO9LmQn197zoHHZhlyOFvZ3QUQcjvpauoA==",
+      "path": "numbertowords/1.0.1",
+      "hashPath": "numbertowords.1.0.1.nupkg.sha512"
     },
     "Rotativa.AspNetCore/1.2.0": {
       "type": "package",

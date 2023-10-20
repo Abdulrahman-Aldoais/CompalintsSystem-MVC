@@ -87,10 +87,13 @@ namespace CompalintsSystem.Application.Controllers
             int totalcompSolv = compSolv.Count();
             int totalUsers = result.Count();
             int totalComp = allComp.Count();
+            var totaleComp = 1231310;
+            //var totaleComp = allComp.Count();
+            var totalWithString = NumberToWords(totaleComp);
 
             ViewBag.totalcompSolv = totalcompSolv;
             ViewBag.totalUsers = totalUsers;
-            ViewBag.totalComp = totalComp;
+            ViewBag.totalComp = totalWithString;
 
             //------------- أحصائيات بالمستخدمين في كل محافظة --------------------//
 
@@ -465,8 +468,19 @@ namespace CompalintsSystem.Application.Controllers
                 g => g.StatusCompalint,
                 g => g.TypeComplaint
                 );
-            var totaleComp = allComp.Count(); ;
-            ViewBag.totaleComp = totaleComp;
+            var totaleComp = 1231231310;
+            //var totaleComp = allComp.Count();
+            var totalWithString = NumberToWords(totaleComp);
+            // إنشاء رقم
+            var number = 120;
+
+            // تحويل الرقم إلى كتابية
+            // var formattedNumber = NumberFormat.getInstance().format(number, NumberStyles.Currency, "ar-SA");
+
+            // عرض الرقم الكتابي
+            // ViewBag.FormattedNumber = formattedNumber;
+
+            ViewBag.totaleComp = totalWithString;
             return View(allComp);
         }
 
@@ -1081,6 +1095,78 @@ namespace CompalintsSystem.Application.Controllers
 
         }
 
+        public string NumberToWords(double doubleNumber)
+        {
+            int beforeFloatingPoint = (int)Math.Floor(doubleNumber);
+            string beforeFloatingPointWord = string.Format("{0} ريال", NumberToWords(beforeFloatingPoint, "ريال"));
+            string afterFloatingPointWord = string.Format("{0} هللة فقط.", SmallNumberToWord((int)((doubleNumber - beforeFloatingPoint) * 100), ""));
+            if ((int)((doubleNumber - beforeFloatingPoint) * 100) > 0)
+            {
+                return string.Format("{0} و {1}", beforeFloatingPointWord, afterFloatingPointWord);
+            }
+            else
+            {
+                return string.Format("{0} فقط", beforeFloatingPointWord);
+            }
+        }
+
+        private string NumberToWords(int number, string unit)
+        {
+            if (number == 0)
+                return "صفر";
+
+            if (number < 0)
+                return "ناقص " + NumberToWords(Math.Abs(number), unit);
+
+            var words = "";
+
+            if (number / 1000000000 > 0)
+            {
+                words += NumberToWords(number / 1000000000, unit) + " مليار ";
+                number %= 1000000000;
+            }
+
+            if (number / 1000000 > 0)
+            {
+                words += NumberToWords(number / 1000000, unit) + " مليون ";
+                number %= 1000000;
+            }
+
+            if (number / 1000 > 0)
+            {
+                words += NumberToWords(number / 1000, unit) + " ألف ";
+                number %= 1000;
+            }
+
+            if (number / 100 > 0)
+            {
+                words += NumberToWords(number / 100, unit) + " مئة ";
+                number %= 100;
+            }
+
+            words = SmallNumberToWord(number, words);
+
+            return words;
+        }
+
+        private string SmallNumberToWord(int number, string words)
+        {
+            if (number <= 0) return words;
+            if (words != "")
+                words += " ";
+
+            var unitsMap = new[] { "صفر", "واحد", "اثنان", "ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة", "عشرة", "أحد عشر", "اثني عشر", "ثلاثة عشر", "أربعة عشر", "خمسة عشر", "ستة عشر", "سبعة عشر", "ثمانية عشر", "تسعة عشر" };
+            var tensMap = new[] { "صفر", "عشرة", "عشرون", "ثلاثون", "أربعون", "خمسون", "ستون", "سبعون", "ثمانون", "تسعون" };
+            if (number < 20)
+                words += unitsMap[number];
+            else
+            {
+                words += tensMap[number / 10];
+                if ((number % 10) > 0)
+                    words += " " + unitsMap[number % 10];
+            }
+            return words;
+        }
 
 
 
@@ -1130,6 +1216,7 @@ namespace CompalintsSystem.Application.Controllers
                 compalint = ComplantList,
                 Compalints_SolutionList = await _context.Compalints_Solutions.Where(a => a.UploadsComplainteId == id).OrderByDescending(t => t.DateSolution).ToListAsync(),
                 ComplaintsRejectedList = await _context.ComplaintsRejecteds.Where(a => a.UploadsComplainteId == id).ToListAsync(),
+                UpComplaintCauseList = await _context.UpComplaintCauses.Where(a => a.UploadsComplainteId == id).ToListAsync(),
                 RejectedComplaintVM = rejectView,
                 AddSolution = addsoiationView
             };
@@ -1229,8 +1316,6 @@ namespace CompalintsSystem.Application.Controllers
 
             return View(result.ToList());
         }
-
-
 
 
 
