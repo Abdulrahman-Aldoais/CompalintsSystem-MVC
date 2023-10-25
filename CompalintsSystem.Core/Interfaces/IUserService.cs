@@ -1,5 +1,5 @@
-﻿using CompalintsSystem.Core.ViewModels;
-using CompalintsSystem.Core.Models;
+﻿using CompalintsSystem.Core.Models;
+using CompalintsSystem.Core.ViewModels;
 using CompalintsSystem.Core.ViewModels.Data;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace CompalintsSystem.Core.Interfaces
         Task<int> UserRegistrationCountAsync();
         Task<OperationResult> TogelBlockUserAsync(string Id);
         Task<int> UserRegistrationCountAsync(int month);
-        Task DeleteAsync(string Id);
+        Task<string> DeleteAsync(string Id);
 
         Task<List<ApplicationUser>> GetPaginatedResult(int currentPage, int pageSize = 10);
         Task<int> GetCount();

@@ -251,34 +251,37 @@ namespace CompalintsSystem.Application.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _userService.GetByIdAsync((string)id, u => u.Governorate, d => d.Directorate, n => n.SubDirectorate);
+            var user = await _userService.GetUserByIdAsync(id);
             if (user != null)
             {
-                await _userService.DeleteAsync(id);
-                return RedirectToAction("ViewUsers");
+                var result = await _userService.DeleteAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                else if (result.StartsWith("حدث خطأ"))
+                {
+                    // قم بتعديل رسالة الخطأ حسب احتياجاتك
+                    return View("Error", result);
+                }
+                else if (result.StartsWith("لا يمكن حذف هذا المستخدم"))
+                {
+                    // قم بتعديل رسالة الخطأ حسب احتياجاتك
+                    return View("Error", result);
+                }
+                else
+                {
+                    return RedirectToAction("ViewUsers");
+                }
             }
 
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            await _userService.DeleteAsync(id);
             return RedirectToAction("ViewUsers");
         }
-
-
-
-
 
         public async Task<IActionResult> Block(string id)
         {

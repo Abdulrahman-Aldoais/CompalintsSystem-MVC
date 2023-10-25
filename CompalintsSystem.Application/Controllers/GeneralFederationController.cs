@@ -1381,9 +1381,6 @@ namespace CompalintsSystem.Application.Controllers
         }
 
 
-
-
-
         public async Task<IActionResult> AllCirculars()
         {
             var adminUsers = await _userManager.GetUsersInRoleAsync(UserRoles.AdminSubDirectorate);

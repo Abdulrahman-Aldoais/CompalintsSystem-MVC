@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -483,17 +484,36 @@ namespace CompalintsSystem.EF.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<string> DeleteAsync(string id)
         {
-            var DeletedUser = await _userManager.FindByIdAsync(id);
-            var roleId = await _userManager.GetRolesAsync(DeletedUser);
-            if (DeletedUser == null)
+            try
             {
-                return;
+                var userToDelete = await _context.Users.FindAsync(id);
+                if (userToDelete == null)
+                {
+                    return null;
+                }
+
+                var roleId = await _userManager.GetRolesAsync(userToDelete);
+                if (await _context.UserRoles.AnyAsync(x => x.UserId == id && x.RoleId == UserRoles.AdminGeneralFederation))
+                {
+                    return "لا يمكن حذف هذا المستخدم";
+                }
+
+                await _userManager.RemoveFromRolesAsync(userToDelete, roleId);
+                await _userManager.DeleteAsync(userToDelete);
+                await _context.SaveChangesAsync();
+
+                var userRolesToDelete = _context.UserRoles.Where(x => x.UserId == id);
+                _context.UserRoles.RemoveRange(userRolesToDelete);
+                await _context.SaveChangesAsync();
+
+                return userToDelete.UserName;
             }
-            await _userManager.RemoveFromRolesAsync(DeletedUser, roleId);
-            await _userManager.DeleteAsync(DeletedUser);
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
 

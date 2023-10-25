@@ -50,39 +50,7 @@
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 
                         <div class="row mx-2 border-bottom ">
-                            <!--<div class="row align-items-start">
-                                <label class="form-label"> عرض حسب</label>
-                                <div class="row align-items-start">
-                                    <div class="category-filter" style="width:150px">
-                                        <select id="FilterUsers"
-                                                class="select2 form-select select2-hidden-accessible"
-                                                tabindex="-1" aria-hidden="true" data-select2-id="10">
-                                            <option value="0" data-select2-id="12">عرض</option>
-                                            <option value="نشط">نشط</option>
-                                            <option value="موقف">مقد</option>
-                                            <option value="مدير محافظة">مدير محافظة</option>
-                                            <option value="مدير اتحاد">مدير اتحاد</option>
-                                            <option value="مدير مديرية">مدير مديرية</option>
-                                            <option value="مدير عزلة">مدير عزلة</option>
-                                        </select>
-                                    </div>-->
-
-
-                                    @*<div class="col-12 col-md-6  d-flex mb-4 justify-content-center justify-content-md-start">
-                                        <div class="me-3 table-type search-paddind">
-
-                                            <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                                <label><input type="search" id="CustomSearchTextField" class="form-control" placeholder="البحث" aria-controls="DataTables_Table_0"></label>
-                                            </div>
-                                        </div>
-                                    </div>*@
-
-
-                                <!--</div>
-
-                            </div>-->
-
-
+                          
                             <div class=" col-12 justify-content-between">
                                 <button style="float:left; border:1px solid green;" class="btn btn-primary me-1" onclick="location.href='@Url.Action("Create", "GeneralFederation")'">
                                     اضــــافة مستخدم  +
@@ -172,18 +140,6 @@
                                             </td>
                                         }
 
-
-                                        @*<td>
-                        <form asp-action="ChaingeStatus" id="Status-Form-@user.Id">
-                            <input type="hidden" name="Id" value="@user.Id" />
-                            <select class="form-select " onchange="document.getElementById('Status-Form-@user.Id').submit()" name="IsBlocked">
-                                <option value="">اختر</option>
-                                <option value="false">تنشيط</option>
-                                <option value="true">توقيف</option>
-                            </select>
-                        </form>
-                    </td>*@
-
                                         <td style="">
                                             <div class="d-inline-block">
                                                 <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -197,10 +153,9 @@
 
                                                     <li>
 
-                                                        @*<form class="dropdown-item text-danger delete-record" type="submit" asp-for="@user.Id" asp-action="Delete" onclick="return functionConfirm(this)">حذف</form>*@
+                                                        <a class="dropdown-item" data-model-id="@user.Id" onclick="Delete(this)">حذف</a>
 
-
-
+                                                      
                                                     </li>
                                                     <li>
                                                         @if (user.EmailConfirmed)
@@ -247,6 +202,42 @@
 @section Scripts{
 
     <script>
+
+        function Delete(obj) {
+            var ele = $(obj);
+            var Id = ele.data("model-id");
+
+            Swal.fire({
+                title: 'Are sure wants to delete?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/ManageUsers/Delete',
+                        type: "user",
+                        async: true,
+                        data: { id: Id },
+                        success: function (result) {
+                            if (result.data.success) {
+                                toastr["success"](result.data.message, "تم الحذف بنجاح");
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 2000); // تم تأخير إعادة التحميل لمدة ثانية واحدة
+                            } else {
+                                toastr["error"](result.data.errors, "BLOGI BLOG");
+                            }
+
+                            console.log(result); // Log the result object so that you can check for errors
+                        }
+                    });
+                }
+            });
+        }
+
             function functionConfirm(event) {
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {

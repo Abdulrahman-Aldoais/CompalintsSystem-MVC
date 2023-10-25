@@ -67,7 +67,9 @@ namespace CompalintsSystem.Application
             //  ›⁄Ì· ﬁ«⁄œ… «·»Ì«‰«  ›Ì «· ÿ»Ìﬁ Ê ÕœÌœ «·”·”·… «·„ ’·… «·«› —«÷Ì…
             services.AddDbContext<AppCompalintsContextDB>(b => b.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                   .AddEntityFrameworkStores<AppCompalintsContextDB>()
+                   .AddDefaultTokenProviders();
             // Add services to the container.
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICompalintRepository, CompalintRepository>();
@@ -75,11 +77,6 @@ namespace CompalintsSystem.Application
             services.AddScoped<IManagementUsers, ManagementUsers>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddIdentity<ApplicationUser, IdentityRole>(
-             options => options.SignIn.RequireConfirmedAccount = true)
-             .AddEntityFrameworkStores<AppCompalintsContextDB>()
-            .AddDefaultTokenProviders();
 
 
             //services.AddAdminServices();
