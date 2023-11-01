@@ -690,7 +690,7 @@ namespace CompalintsSystem.Application.Controllers
                 await _compReop.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    NameUserId = communication.NameUserId,
+                    //UserName = communication.UserName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,

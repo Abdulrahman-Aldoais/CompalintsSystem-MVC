@@ -2,6 +2,7 @@
 using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.ViewModels;
+using CompalintsSystem.Core.ViewModels.Data;
 using CompalintsSystem.EF.DataBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -218,14 +219,21 @@ namespace CompalintsSystem.Application.Controllers
             var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
             ViewBag.TypeCommunication = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Name");
 
-            var result = _service.GetCommunicationBy(UserId);
+            CommunicationVM communication = new CommunicationVM
+            {
+                CommunicationList = await _context.UsersCommunications.Where(u => u.UserId == UserId).OrderByDescending(t => t.CreateDate).ToListAsync(),
 
-            int totalCompalints = result.Count();
+            };
 
+
+            int totalCompalints = communication.CommunicationList.Count();
             ViewBag.totalCompalints = totalCompalints;
 
-            return View(result.ToList());
+
+            return View(communication);
         }
+
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AddCommunication()
@@ -251,9 +259,10 @@ namespace CompalintsSystem.Application.Controllers
                 ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
                 ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
 
-
+                string selectedUserName = Request.Form["FullName"].ToString();
 
                 var currentName = currentUser.FullName;
+
                 var currentPhone = currentUser.PhoneNumber;
                 var currentGov = currentUser.GovernorateId;
                 var currentDir = currentUser.DirectorateId;
@@ -262,7 +271,7 @@ namespace CompalintsSystem.Application.Controllers
                 await _service.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    NameUserId = communication.NameUserId,
+                    //UserName = communication.UserName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,
@@ -272,6 +281,7 @@ namespace CompalintsSystem.Application.Controllers
                     GovernorateId = currentGov,
                     DirectorateId = currentDir,
                     SubDirectorateId = currentSub,
+                    UserName = selectedUserName
 
                 });
 
@@ -302,6 +312,22 @@ namespace CompalintsSystem.Application.Controllers
             return await _service.GetAndAddCommunicationDropdownsValuesForBeneficaie(subDirectoryId, directoryId, governorateId, rolesString, roleId);
         }
 
+        public async Task<IActionResult> ShowCommunication(int id)
+        {
+            if (id == 0)
+                return View(new CommunicationVM());
+            else
+            {
+                var usersCommunicationsModel = await _context.UsersCommunications.Where(i => i.Id == id).FirstOrDefaultAsync();
+                if (usersCommunicationsModel == null)
+                {
+                    return NotFound();
+                }
+
+                return PartialView("_ShowCommunication", usersCommunicationsModel);
+            }
+
+        }
 
         public async Task<IActionResult> ViewCompalintDetails(int id)
         {

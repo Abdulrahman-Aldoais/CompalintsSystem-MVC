@@ -266,21 +266,23 @@ namespace CompalintsSystem.Application.Controllers
                 }
                 else if (result.StartsWith("حدث خطأ"))
                 {
-                    // قم بتعديل رسالة الخطأ حسب احتياجاتك
+
                     return View("Error", result);
                 }
                 else if (result.StartsWith("لا يمكن حذف هذا المستخدم"))
                 {
-                    // قم بتعديل رسالة الخطأ حسب احتياجاتك
+
                     return View("Error", result);
                 }
                 else
                 {
-                    return RedirectToAction("ViewUsers");
+
+                    return RedirectToAction(null);
                 }
             }
 
-            return RedirectToAction("ViewUsers");
+
+            return RedirectToAction(null);
         }
 
         public async Task<IActionResult> Block(string id)

@@ -1300,3 +1300,4 @@ E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_ShowReasonUp.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_ShowRejections.cshtml.g.cs
 E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\bin\Debug\net5.0\NumberToWords.dll
+E:\My_GitHub\CompalintsSystem-MVC\CompalintsSystem.Application\obj\Debug\net5.0\Razor\Views\Shared\_ShowCommunication.cshtml.g.cs

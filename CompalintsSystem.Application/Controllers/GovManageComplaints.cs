@@ -715,7 +715,7 @@ namespace CompalintsSystem.Controllers
                 var currentUser = await GetCurrentUser();
                 var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
                 ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
-                ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName", communication.NameUserId); // تمت إضافة communication.NameUserId لتحديد القي
+                ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName", communication.UserName); // تمت إضافة communication.UserName لتحديد القي
 
                 var currentName = currentUser.FullName;
                 var currentPhone = currentUser.PhoneNumber;
@@ -726,7 +726,7 @@ namespace CompalintsSystem.Controllers
                 await _compReop.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    NameUserId = communication.NameUserId,
+                    //UserName = communication.UserName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,

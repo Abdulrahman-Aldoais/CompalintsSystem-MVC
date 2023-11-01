@@ -513,7 +513,7 @@ namespace CompalintsSystem.Application.Controllers
             return View(allComp);
         }
 
-        public async Task<IActionResult> ViewCompalintUpDetails(int id)
+        public async Task<IActionResult> ViewCompalintUpDetailsDetails(int id)
         {
             // استرداد بيانات الشكوى المرتبطة بالمعرف المحدد
             var ComplantList = await _unitOfWork.Compalinte.FaindAsync(
@@ -591,23 +591,6 @@ namespace CompalintsSystem.Application.Controllers
 
         }
 
-        public async Task<IActionResult> ViewUsers2()
-        {
-            var result = await _context.Users.Where(r => r.RoleId != 5)
-                .OrderByDescending(d => d.CreatedDate)
-                .Include(s => s.Governorate)
-                .Include(g => g.Directorate)
-                .Include(d => d.SubDirectorate)
-                .ToListAsync();
-            int totalUsers = result.Count();
-
-            ViewBag.totalUsers = totalUsers;
-
-
-            //return View(await PaginatedList<ApplicationUser>.CreateAsync(result.AsNoTracking(), pageNumber ?? 1, pageSize));
-            return View(result.ToList());
-
-        }
 
 
         // GET: Users/Create

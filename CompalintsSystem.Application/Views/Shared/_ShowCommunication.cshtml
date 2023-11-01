@@ -1,0 +1,52 @@
+﻿@model UsersCommunication
+
+
+@{ Layout = null; }
+
+<div class="col-md-3 col-lg-4">
+    <div class="modal fade" id="ShowCommunication-@Model.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalScrollableTitle">عنوان البلاغ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content" style="font-size: 14px; max-width: 100%; overflow: auto; word-wrap: break-word; ">
+                        <div>
+                            <h5 class="modal-title" id="modalScrollableTitle">عنوان البلاغ</h5>
+                            <p>@Model.Titile</p>
+                        </div>
+                        <div>
+                            <h5 class="modal-title" id="modalScrollableTitle">نوع البلاغ</h5>
+                            <p>@Model.TypeCommunication.Type</p>
+                        </div>
+                        <div>
+                            <h5 class="modal-title" id="modalScrollableTitle">السبب</h5>
+                            <p>@Model.reason</p>
+                        </div>
+                        <div>
+                            <h5 class="modal-title" id="modalScrollableTitle">تاريخ البلاغ</h5>
+                            <p>@Model.CreateDate</p>
+                        </div>
+                        <div>
+                            <h5 class="modal-title" id="modalScrollableTitle">اسم صاحب البلاغ</h5>
+                            <p>@Model.BenfName</p>
+                        </div>
+
+                        <div>
+                            <h5 class="modal-title" id="modalScrollableTitle">اسم المبلغ علية</h5>
+                            <p>@Model.User.FullName</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary fa-angle-right" data-bs-dismiss="modal">
+                        إغلاق
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
