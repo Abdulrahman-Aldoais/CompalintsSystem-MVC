@@ -726,7 +726,7 @@ namespace CompalintsSystem.Controllers
                 await _compReop.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    //UserName = communication.UserName,
+                    UserName = communication.UserName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,

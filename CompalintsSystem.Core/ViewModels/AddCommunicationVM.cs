@@ -17,9 +17,6 @@ namespace CompalintsSystem.Core.ViewModels
         public int SubDirectorateId { get; set; }
 
         public string UserId { get; set; }
-        //[Required(ErrorMessage = "يجب ان تقوم بإختيار الموظف ")]
-        //public string NameUserId { get; set; }
-
         public string UserName { get; set; }
         [Required(ErrorMessage = "يجب ان تقوم بإختيار نوع البلاغ ")]
         public string TypeCommuncationId { get; set; }

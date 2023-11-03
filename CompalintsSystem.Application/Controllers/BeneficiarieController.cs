@@ -243,7 +243,7 @@ namespace CompalintsSystem.Application.Controllers
             var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
 
             ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
-            ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
+            ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName", currentUser.UserName);
 
 
 
@@ -256,10 +256,6 @@ namespace CompalintsSystem.Application.Controllers
             {
                 var currentUser = await GetCurrentUser();
                 var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
-                ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
-                ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
-
-                string selectedUserName = Request.Form["FullName"].ToString();
 
                 var currentName = currentUser.FullName;
 
@@ -271,7 +267,7 @@ namespace CompalintsSystem.Application.Controllers
                 await _service.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    //UserName = communication.UserName,
+                    UserName = communication.UserName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,
@@ -281,35 +277,13 @@ namespace CompalintsSystem.Application.Controllers
                     GovernorateId = currentGov,
                     DirectorateId = currentDir,
                     SubDirectorateId = currentSub,
-                    UserName = selectedUserName
 
                 });
+
 
                 return RedirectToAction(nameof(AllCommunication));
             }
             return View(communication);
-        }
-
-        private async Task<ApplicationUser> GetCurrentUser()
-        {
-            var currentUser = await userManager.GetUserAsync(User);
-            var userId = currentUser.Id.ToString();
-            var user = await userManager.FindByIdAsync(userId);
-            return user;
-        }
-
-        private async Task<SelectDataCommuncationDropdownsVM> GetCommunicationDropdownsData(ApplicationUser currentUser)
-        {
-            var governorateId = currentUser.GovernorateId;
-            var directoryId = currentUser.DirectorateId;
-            var subDirectoryId = currentUser.SubDirectorateId;
-            //var roles = await _userManager.GetRolesAsync(currentUser);
-
-            var roles = await userManager.GetRolesAsync(currentUser);
-            var rolesString = string.Join(",", roles);
-            var roleId = _context.Roles.FirstOrDefault(role => role.Name == roles.FirstOrDefault())?.Id;
-
-            return await _service.GetAndAddCommunicationDropdownsValuesForBeneficaie(subDirectoryId, directoryId, governorateId, rolesString, roleId);
         }
 
         public async Task<IActionResult> ShowCommunication(int id)
@@ -328,6 +302,29 @@ namespace CompalintsSystem.Application.Controllers
             }
 
         }
+
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            var currentUser = await userManager.GetUserAsync(User);
+            var userId = currentUser.Id.ToString();
+            var user = await userManager.FindByIdAsync(userId);
+            return user;
+        }
+
+        private async Task<SelectDataCommuncationDropdownsVM> GetCommunicationDropdownsData(ApplicationUser currentUser)
+        {
+            var governorateId = currentUser.GovernorateId;
+            var directoryId = currentUser.DirectorateId;
+            var subDirectoryId = currentUser.SubDirectorateId;
+
+            var roles = await userManager.GetRolesAsync(currentUser);
+            var rolesString = string.Join(",", roles);
+            var roleId = _context.Roles.FirstOrDefault(role => role.Name == roles.FirstOrDefault())?.Id;
+
+            return await _service.GetAddCommunicationDropdownsValues(subDirectoryId, directoryId, governorateId, rolesString, roleId);
+        }
+
+
 
         public async Task<IActionResult> ViewCompalintDetails(int id)
         {
