@@ -19,6 +19,7 @@ namespace CompalintsSystem.Core.Interfaces
         Task<IEnumerable<ApplicationUser>> GetAllBenefAsync(params Expression<Func<ApplicationUser, object>>[] includeProperties);
         Task AddBenefAsync(AddUserViewModel entity, string originatorName, string CurrentUserLoginId);
         Task AddUserAsync(AddUserViewModel entity, string originatorName, string UserId);
+        Task RegisterAsync(AddUserViewModel entity);
         Task<ApplicationUser> GetByIdAsync(string id);
         Task<ApplicationUser> GetByIdAsync(string id, params Expression<Func<ApplicationUser, object>>[] includeProperties);
         Task UpdateAsync(string id, EditUserViewModel entity);

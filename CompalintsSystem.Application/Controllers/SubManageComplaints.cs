@@ -528,12 +528,11 @@ namespace CompalintsSystem.Application.Controllers
                 await _compReop.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    //UserName = communication.UserName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,
-                    UserId = currentUser.Id,
-                    BenfName = currentName,
+                    reportSubmitterId = currentUser.Id,
+                    reportSubmitterName = currentName,
                     BenfPhoneNumber = currentPhone,
                     GovernorateId = currentGov,
                     DirectorateId = currentDir,

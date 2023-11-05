@@ -167,10 +167,13 @@ namespace CompalintsSystem.Application.Controllers
         public async Task<IActionResult> Create(InputCompmallintVM model)
         {
 
+            var currentUser = await userManager.GetUserAsync(User);
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var role = claimsIdentity.FindFirst(ClaimTypes.Role); // استخدام الكائن claimsIdentity بدلاً من ClaimsIdentity
+            string userRole = role.Value;
 
             if (!ModelState.IsValid)
             {
-                var currentUser = await userManager.GetUserAsync(User);
                 var Identity = currentUser.IdentityNumber;
 
                 var compalintDropdownsData = await categoryService.GetNewCompalintsDropdownsValues();
@@ -199,13 +202,14 @@ namespace CompalintsSystem.Application.Controllers
                     GovernorateId = currentUser.GovernorateId,
                     DirectorateId = currentUser.DirectorateId,
                     SubDirectorateId = currentUser.SubDirectorateId,
-
                     UserId = Identity,
-                    StagesComplaintId = model.StagesComplaintId = 1,
+                    UserRoleName = userRole,
+                    StagesComplaintId = model.StagesComplaintId = 1,// هذه المرحلة الخاصة بالشكوى كل رقم يبين مرحلة معينة اتحاد ووو
                     OriginalFileName = model.File.FileName,
                     FileName = fileName,
                     ContentType = model.File.ContentType,
                     Size = model.File.Length,
+
                 });
 
                 return RedirectToAction(nameof(Index));
@@ -221,7 +225,7 @@ namespace CompalintsSystem.Application.Controllers
 
             CommunicationVM communication = new CommunicationVM
             {
-                CommunicationList = await _context.UsersCommunications.Where(u => u.UserId == UserId).OrderByDescending(t => t.CreateDate).ToListAsync(),
+                CommunicationList = await _context.UsersCommunications.Where(u => u.reportSubmitterId == UserId).OrderByDescending(t => t.CreateDate).ToListAsync(),
 
             };
 
@@ -234,6 +238,64 @@ namespace CompalintsSystem.Application.Controllers
         }
 
 
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> AddCommunication()
+        //{
+
+        //    var currentUser = await GetCurrentUser();
+        //    var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
+
+        //    ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
+        //    ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName", currentUser.UserName);
+
+
+
+        //    return View();
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> AddCommunication(AddCommunicationVM communication)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var currentUser = await GetCurrentUser();
+        //        var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
+
+        //        var currentName = currentUser.FullName;
+
+        //        var currentPhone = currentUser.PhoneNumber;
+        //        var currentGov = currentUser.GovernorateId;
+        //        var currentDir = currentUser.DirectorateId;
+        //        var currentSub = currentUser.SubDirectorateId;
+
+        //        await _service.CreateCommuncationAsync(new AddCommunicationVM
+        //        {
+        //            Titile = communication.Titile,
+        //            UserName = communication.UserName,
+        //            reason = communication.reason,
+        //            CreateDate = communication.CreateDate,
+        //            TypeCommuncationId = communication.TypeCommuncationId,
+        //            UserId = currentUser.Id,
+        //            BenfName = currentName,
+        //            BenfPhoneNumber = currentPhone,
+        //            GovernorateId = currentGov,
+        //            DirectorateId = currentDir,
+        //            SubDirectorateId = currentSub,
+
+        //        });
+
+
+        //        return RedirectToAction(nameof(AllCommunication));
+        //    }
+        //    return View(communication);
+        //}
+
+
+        private async Task<SelectDataCommuncationDropdownsVM> GetCommunicationDropdownsData2()
+        {
+            return await _service.GetAddCommunicationDropdownsValues2();
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AddCommunication()
@@ -243,9 +305,7 @@ namespace CompalintsSystem.Application.Controllers
             var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
 
             ViewBag.typeCommun = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Type");
-            ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName", currentUser.UserName);
-
-
+            ViewBag.UsersName = new SelectList(communicationDropdownsData.ApplicationUsers, "Id", "FullName");
 
             return View();
         }
@@ -255,24 +315,26 @@ namespace CompalintsSystem.Application.Controllers
             if (ModelState.IsValid)
             {
                 var currentUser = await GetCurrentUser();
-                var communicationDropdownsData = await GetCommunicationDropdownsData(currentUser);
+                var communicationDropdownsData = await GetCommunicationDropdownsData2();
 
                 var currentName = currentUser.FullName;
+                var reporteeId = communication.reporteeName;
 
                 var currentPhone = currentUser.PhoneNumber;
                 var currentGov = currentUser.GovernorateId;
                 var currentDir = currentUser.DirectorateId;
                 var currentSub = currentUser.SubDirectorateId;
-
+                var getReporteeName = await _context.Users.Where(x => x.Id == reporteeId).FirstOrDefaultAsync();
+                var reporteeName = getReporteeName.FullName;
                 await _service.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    UserName = communication.UserName,
+                    reporteeName = reporteeName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,
-                    UserId = currentUser.Id,
-                    BenfName = currentName,
+                    reportSubmitterId = currentUser.Id,
+                    reportSubmitterName = currentName,
                     BenfPhoneNumber = currentPhone,
                     GovernorateId = currentGov,
                     DirectorateId = currentDir,
@@ -285,6 +347,8 @@ namespace CompalintsSystem.Application.Controllers
             }
             return View(communication);
         }
+
+
 
         public async Task<IActionResult> ShowCommunication(int id)
         {
@@ -323,6 +387,8 @@ namespace CompalintsSystem.Application.Controllers
 
             return await _service.GetAddCommunicationDropdownsValues(subDirectoryId, directoryId, governorateId, rolesString, roleId);
         }
+
+
 
 
 

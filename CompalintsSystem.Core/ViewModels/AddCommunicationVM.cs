@@ -7,8 +7,9 @@ namespace CompalintsSystem.Core.ViewModels
     {
 
         public int Id { get; set; }
-        public int BenfId { get; set; }
-        public string BenfName { get; set; }
+        public string reportSubmitterId { get; set; }
+        public string reportSubmitterName { get; set; }
+        public string reporteeName { get; set; }
         public string BenfPhoneNumber { get; set; }
         public int GovernorateId { get; set; }
 
@@ -16,8 +17,7 @@ namespace CompalintsSystem.Core.ViewModels
 
         public int SubDirectorateId { get; set; }
 
-        public string UserId { get; set; }
-        public string UserName { get; set; }
+
         [Required(ErrorMessage = "يجب ان تقوم بإختيار نوع البلاغ ")]
         public string TypeCommuncationId { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now;

@@ -116,10 +116,10 @@ namespace CompalintsSystem.EF.Repositories
 
         public IQueryable<UsersCommunication> GetCommunicationBy(string UserId)
         {
-            var result = _context.UsersCommunications.Where(u => u.UserId == UserId)
-            //.OrderByDescending(u => u.UploadDate)
+            var result = _context.UsersCommunications.Where(u => u.reportSubmitterId == UserId)
+            .OrderByDescending(u => u.CreateDate)
             .Include(s => s.TypeCommunication)
-            //.Include(f => f.NameUserId)
+            .Include(f => f.reportSubmitter)
             .Include(g => g.Governorate)
             .Include(d => d.Directorate)
             .Include(su => su.SubDirectorate);
@@ -362,6 +362,40 @@ namespace CompalintsSystem.EF.Repositories
                 return responseAdmin;
             }
         }
+
+
+        public async Task<SelectDataCommuncationDropdownsVM> GetAddCommunicationDropdownsValues2()
+        {
+
+            var response = new SelectDataCommuncationDropdownsVM
+            {
+                ApplicationUsers = await _context.Users
+                    .Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                    .Join(_context.Roles, ur => ur.UserRole.RoleId, r => r.Id, (ur, r) => new { User = ur.User, UserRole = ur.UserRole, Role = r })
+                    .Where(x =>
+                        (x.UserRole.RoleId == "48e9b2f6-42e7-439f-afa2-03cf13342517")
+
+                    )
+                    .OrderBy(x => x.User.FullName)
+                    .Select(x => new ApplicationUser
+                    {
+                        FullName = x.User.FullName + " ( " + x.User.UserRoleName + "  )",
+                    })
+                    .ToListAsync(),
+
+
+                TypeCommunications = await _context.TypeCommunications
+                    .OrderBy(tc => tc.Type)
+                    .ToListAsync()
+            };
+
+            return response;
+
+        }
+
+
+
+
 
         //public void InsertDefaultData()
         //{

@@ -3,8 +3,11 @@ using CompalintsSystem.Core;
 using CompalintsSystem.Core.Interfaces;
 using CompalintsSystem.Core.Models;
 using CompalintsSystem.Core.ViewModels;
+using CompalintsSystem.EF.DataBase;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CompalintsSystem.Application.Controllers
@@ -17,6 +20,7 @@ namespace CompalintsSystem.Application.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly AppCompalintsContextDB _context;
 
 
         public AccountController(
@@ -24,14 +28,14 @@ namespace CompalintsSystem.Application.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            ICompalintRepository compalintService,
-
+            AppCompalintsContextDB contex,
             IMapper mapper)
         {
             _userService = userService;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = contex;
 
         }
 
@@ -39,47 +43,51 @@ namespace CompalintsSystem.Application.Controllers
 
 
         [HttpGet]
-        public IActionResult AddUser()
+        public async Task<IActionResult> Register()
         {
-            return View();
+            var model = new AddUserViewModel()
+            {
+
+                GovernoratesList = await _context.Governorates.ToListAsync()
+            };
+            ViewBag.ViewGover = model.GovernoratesList.ToArray();
+            return View(model);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(AddUserViewModel userVM)
+
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(AddUserViewModel model)
         {
+            //model.GovernoratesList = await _context.Governorates.ToListAsync();
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
+
+                if (_userService.returntype == 1)
                 {
-                    FullName = userVM.FullName,
-                    UserName = userVM.IdentityNumber,
-                    Email = userVM.IdentityNumber,
-                    PhoneNumber = userVM.PhoneNumber,
-                    GovernorateId = userVM.GovernorateId,
-                    IsBlocked = userVM.IsBlocked,
-                    SocietyId = userVM.SocietyId,
-                    ProfilePicture = userVM.ProfilePicture,
-
-
-                };
-                var result = await _userManager.CreateAsync(user, userVM.Password);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    await _userManager.AddToRoleAsync(user, UserRoles.AdminGeneralFederation);
-                    return RedirectToAction("Index", "AllUsers");
-
+                    TempData["Error"] = _userService.Error;
+                    return View(model);
                 }
-                foreach (var error in result.Errors)
+                else if (_userService.returntype == 2)
                 {
-                    ModelState.AddModelError("تعذر انشاء الحساب ", error.Description);
+                    TempData["Error"] = _userService.Error;
+                    return View(model);
                 }
+
+                await _userService.RegisterAsync(model);
+
+                return RedirectToAction("Login", "Account");
+
 
             }
-            return View(userVM);
+            ViewBag.ViewGover = await _context.Governorates.ToListAsync();
+
+            return View(model);
 
         }
+
 
 
 
@@ -214,7 +222,7 @@ namespace CompalintsSystem.Application.Controllers
                 return Redirect(Url.Action("Index", "SubManageComplaints"));
             }
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Account", "Login");
         }
 
 
@@ -227,78 +235,34 @@ namespace CompalintsSystem.Application.Controllers
 
         }
 
-
-
-
-
-        public async Task<IActionResult> Edit()
+        [HttpGet]
+        public async Task<IActionResult> GetGovernorates()
         {
+            var governorates = await _context.Governorates.ToListAsync();
 
+            var result = governorates.Select(d => new { id = d.Id, name = d.Name }).ToList();
 
-
-            // استرداد المستخدم الحالي
-            var currentUser = await _userManager.GetUserAsync(User);
-
-            // التحقق من أن المستخدم الحالي غير مسجل بصفته مستخدم غير معروف
-            if (currentUser != null)
-            {
-                // إنشاء عنصر عرض لتعديل بيانات المستخدم
-                var model = new EditUserViewModel
-                {
-                    FullName = currentUser.FullName,
-                    DateOfBirth = currentUser.DateOfBirth,
-                    PhoneNumber = currentUser.PhoneNumber,
-                    CreatedDate = System.DateTime.Now,
-                };
-                // عرض العنصر النموذجي في الواجهة الأمامية للمستخدم
-                return View(model);
-            }
-            return View("Empty");
-
+            return Json(result);
         }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        [HttpGet]
+        public async Task<IActionResult> GetDirectoratesByGovernorateId(int governorateId)
         {
-            // التحقق من أن النموذج صالح
-            if (!ModelState.IsValid)
-            {
-                // استرداد المستخدم الحالي
-                var currentUser = await _userManager.GetUserAsync(User);
+            var directorates = await _context.Directorates.Where(d => d.GovernorateId == governorateId).ToListAsync();
 
-                // التحقق من أن المستخدم الحالي غير مسجل بصفته مستخدم غير معروف
-                if (currentUser != null)
-                {
-                    // تحديث البيانات الجديدة للمستخدم
-                    currentUser.FullName = model.FullName;
+            var result = directorates.Select(d => new { id = d.Id, name = d.Name }).ToList();
 
-                    // تحديث معلومات المستخدم في قاعدة البيانات
-                    var result = await _userManager.UpdateAsync(currentUser);
+            return Json(result);
+        }
 
-                    // التحقق من نجاح عملية التحديث
-                    if (result.Succeeded)
-                    {
-                        // إعادة توجيه المستخدم إلى الصفحة الشخصية بعد تحديث البيانات بنجاح
-                        return RedirectToAction("Profile");
-                    }
+        [HttpGet]
+        public async Task<IActionResult> GetSubDirectoratesByDirectorateId(int directorateId)
+        {
+            var subDirectorates = await _context.SubDirectorates.Where(s => s.DirectorateId == directorateId).ToListAsync();
 
-                    // التحقق من وجود أخطاء في عملية التحديث
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-                }
-                else
-                {
-                    // إعادة توجيه المستخدم إلى صفحة فارغة عندما يحاول المستخدم الوصول إلى هذه الصفحة بدون تسجيل الدخول
-                    return View("Empty");
-                }
-            }
+            var result = subDirectorates.Select(s => new { id = s.Id, name = s.Name }).ToList();
 
-            // إعادة عرض النموذج عندما يكون غير صالح
-            return View(model);
+            return Json(result);
         }
 
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ahZWqMA55K+J577n2c6r8idOPmA7CXK1QmrC7kjypBicr1407KM0wVNR6ty35XMO+d9BnvDeLozF9sl64jJLZQ==",
+  "dgSpecHash": "2f1lNwjOXoGvs1jspBYtxIDnTbxi5ucWtLhxmd+miYuhvqSJ1udDbMOdwMbUJzf8HUxbGsnyqfD8AdVp2MN5XA==",
   "success": true,
   "projectFilePath": "E:\\My_GitHub\\CompalintsSystem-MVC\\CompalintsSystem.Application\\CompalintsSystem.Application.csproj",
   "expectedPackageFiles": [
@@ -209,6 +209,7 @@
     "C:\\Users\\APS\\.nuget\\packages\\system.runtime.serialization.json\\4.3.0\\system.runtime.serialization.json.4.3.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.runtime.serialization.primitives\\4.3.0\\system.runtime.serialization.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\APS\\.nuget\\packages\\system.security.claims\\4.3.0\\system.security.claims.4.3.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.cryptography.algorithms\\4.3.0\\system.security.cryptography.algorithms.4.3.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.cryptography.csp\\4.3.0\\system.security.cryptography.csp.4.3.0.nupkg.sha512",
@@ -220,6 +221,7 @@
     "C:\\Users\\APS\\.nuget\\packages\\system.security.cryptography.x509certificates\\4.3.0\\system.security.cryptography.x509certificates.4.3.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.cryptography.xml\\4.5.0\\system.security.cryptography.xml.4.5.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
+    "C:\\Users\\APS\\.nuget\\packages\\system.security.principal\\4.3.0\\system.security.principal.4.3.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.security.securestring\\4.3.0\\system.security.securestring.4.3.0.nupkg.sha512",
     "C:\\Users\\APS\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",

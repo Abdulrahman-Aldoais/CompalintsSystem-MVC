@@ -1,7 +1,7 @@
 ﻿@model AddUserViewModel
 
 @{
-    ViewData["Title"] = "Regster";
+    ViewData["Title"] = "إنــشاء مستخدم";
 
 }
 
@@ -147,7 +147,7 @@
                         <div class="form-group form-password-toggle ">
                             <label class="form-label" for="password"> تاكيد كلمة المرور </label>
                             <div class="input-group input-group-merge">
-                                <input asp-for="PasswordConfirm" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                <input asp-for="PasswordConfirm" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" autocomplete="off" />
                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                             <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
@@ -175,7 +175,7 @@
 
 @section Scripts {
 
-    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+
     <partial name="_ValidationScriptsPartial" />
 
 

@@ -29,20 +29,20 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label asp-for="TitleComplaint" class="form-label">عنوان الشكوى</label>
-                                <input asp-for="TitleComplaint" class="form-control" type="text" id="TitleComplaint" placeholder="عنوان الشكوى" autofocus />
+                                <input asp-for="TitleComplaint" class="form-control" type="text" id="TitleComplaint" placeholder="عنوان الشكوى" autofocus autocomplete="off" />
                                 <span asp-validation-for="TitleComplaint" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label asp-for="DescComplaint" class="form-label">محتوى الشكوى</label>
-                                <textarea asp-for="DescComplaint" class="form-control" type="text" id="DescComplaint" placeholder="وصف الشكوى"></textarea>
+                                <textarea asp-for="DescComplaint" class="form-control" type="text" id="DescComplaint" placeholder="وصف الشكوى" autocomplete="off"></textarea>
                                 <span asp-validation-for="DescComplaint" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="PropBeneficiarie" class="form-label"> الحل المقترح</label>
-                            <input asp-for="PropBeneficiarie" class="form-control" type="text" id="PropBeneficiarie" placeholder="اكتب حلا تراه مناسبا لما تريد ان وجد " />
+                            <input asp-for="PropBeneficiarie" class="form-control" type="text" id="PropBeneficiarie" placeholder="اكتب حلا تراه مناسبا لما تريد ان وجد " autocomplete="off"/>
                             <span asp-validation-for="PropBeneficiarie" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -53,31 +53,13 @@
                             <span asp-validation-for="TypeComplaintId" class="text-danger"></span>
                         </div>
 
-
-                        @*<div class="col-md-6">
-                        <label class="col-form-label">المحافظة</label>
-                        <select class="form-control governorate" asp-for="GovernorateId" asp-items="@(new SelectList(Model.Governorates,"Id","Name"))"></select>
-                        <label class="col-form-label">المديرية</label>
-                        <select class="form-control directorate"></select>
-                        <label class="col-form-label">العزل</label>
-                        <select class="form-control subdirectorate"></select>
-                    </div>*@
-
                         <div class="col-md-6 mb-3">
                             <div class="custom-file">
 
                                 <input asp-for="File" onchange="fileChange()" type="file" class="custom-file-input" id="customFile">
                                 <label asp-for="File" id="custom-file-label" class="custom-file-label btn-outline-primary" for="customFile">اختر ملف ان وجد </label>
                                 <span asp-validation-for="File" class="text-danger"></span>
-                                @*<div class="form-group">
-                            </div>
-                                    <div class="custom-file">
-                                        <input asp-for="File" onchange="fileChange()" type="file" class="custom-file-input" id="customFile">
-                                        <label asp-for="File" id="custom-file-label" class="custom-file-label btn-outline-primary" for="customFile">إرفاق ملف ان وجد</label>
-                                        <span asp-validation-for="File" class="text-danger"></span>
-                                    </div>
-                                </div>*@
-
+                               
                             </div>
 
                         </div>

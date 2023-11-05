@@ -690,12 +690,11 @@ namespace CompalintsSystem.Application.Controllers
                 await _compReop.CreateCommuncationAsync(new AddCommunicationVM
                 {
                     Titile = communication.Titile,
-                    //UserName = communication.UserName,
                     reason = communication.reason,
                     CreateDate = communication.CreateDate,
                     TypeCommuncationId = communication.TypeCommuncationId,
-                    UserId = currentUser.Id,
-                    BenfName = currentName,
+                    reportSubmitterId = currentUser.Id,
+                    reportSubmitterName = currentName,
                     BenfPhoneNumber = currentPhone,
                     GovernorateId = currentGov,
                     DirectorateId = currentDir,
@@ -735,9 +734,9 @@ namespace CompalintsSystem.Application.Controllers
 
             ViewBag.TypeCommunication = new SelectList(communicationDropdownsData.TypeCommunications, "Id", "Name");
 
-            var result = _context.UsersCommunications.Where(u => u.UserId == currentUser.Id)
+            var result = _context.UsersCommunications.Where(u => u.reportSubmitterId == currentUser.Id)
             .OrderByDescending(d => d.CreateDate)
-            .Include(s => s.User)
+            .Include(s => s.reportSubmitter)
             .Include(s => s.TypeCommunication)
             .Include(g => g.Governorate)
             .Include(d => d.Directorate)

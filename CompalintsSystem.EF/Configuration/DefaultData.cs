@@ -33,7 +33,8 @@ namespace CompalintsSystem.EF.Configuration
                         TypeComplaintId = 1,
                         SocietyId = 1,
                         StatusCompalintId = 2,
-                        StagesComplaintId = 1
+                        StagesComplaintId = 1,
+                        UserRoleName = "Beneficiarie"
                     };
                     var compalintsSolution = new Compalints_Solution
                     {

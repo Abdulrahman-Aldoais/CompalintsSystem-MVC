@@ -51,6 +51,7 @@ namespace CompalintsSystem.Core.Models
         public virtual ICollection<UpComplaintCause> ComplaintsUp { get; set; }
 
         public string UserId { get; set; }
+        public string UserRoleName { get; set; }
         //public virtual ApplicationUser User { get; set; }
         public string OriginalFileName { get; set; }
         public string FileName { get; set; }

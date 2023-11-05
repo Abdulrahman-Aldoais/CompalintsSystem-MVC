@@ -499,6 +499,21 @@ namespace CompalintsSystem.Application.Controllers
 
         }
 
+        public async Task<IActionResult> AllUsersUpComplaints()
+        {
+            var allComp = await _unitOfWork.Compalinte.GetByCondationAndOrderAsync(
+                 s => s.UserRoleName == "Beneficiarie",
+                 //s => s.StatusCompalintId == 3 && s.UserRoleName == "Beneficiarie",
+                 d => d.UploadDate,
+                 OrderBy.Descending,
+                 g => g.Governorate // تضمين جدول المحافظات
+
+                );
+            var totaleComp = allComp.Count(s => s.StatusCompalintId.Equals(3));
+            ViewBag.totaleComp = totaleComp;
+            return View(allComp);
+        }
+
         public async Task<IActionResult> AllUpComplaints()
         {
             var allComp = await _unitOfWork.Compalinte.GetByCondationAndOrderAsync(
@@ -1283,7 +1298,7 @@ namespace CompalintsSystem.Application.Controllers
 
             var result = _context.UsersCommunications
             .OrderByDescending(d => d.CreateDate)
-            .Include(s => s.User)
+            .Include(s => s.reportSubmitter)
             .Include(s => s.TypeCommunication)
             .Include(g => g.Governorate)
             .Include(d => d.Directorate)

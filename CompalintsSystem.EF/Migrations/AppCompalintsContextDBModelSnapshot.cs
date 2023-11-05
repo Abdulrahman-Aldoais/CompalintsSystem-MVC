@@ -510,14 +510,14 @@ namespace CompalintsSystem.EF.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 10, 8, 21, 30, 22, 637, DateTimeKind.Local).AddTicks(1859),
+                            CreatedDate = new DateTime(2023, 11, 5, 0, 9, 1, 862, DateTimeKind.Local).AddTicks(8229),
                             Type = "تماطل",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 10, 8, 21, 30, 22, 637, DateTimeKind.Local).AddTicks(1899),
+                            CreatedDate = new DateTime(2023, 11, 5, 0, 9, 1, 862, DateTimeKind.Local).AddTicks(8261),
                             Type = "تلاعب بالحلول",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         });
@@ -551,14 +551,14 @@ namespace CompalintsSystem.EF.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 10, 8, 21, 30, 22, 639, DateTimeKind.Local).AddTicks(462),
+                            CreatedDate = new DateTime(2023, 11, 5, 0, 9, 1, 863, DateTimeKind.Local).AddTicks(8841),
                             Type = "زراعية",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 10, 8, 21, 30, 22, 639, DateTimeKind.Local).AddTicks(1835),
+                            CreatedDate = new DateTime(2023, 11, 5, 0, 9, 1, 863, DateTimeKind.Local).AddTicks(9568),
                             Type = "فساد",
                             UsersNameAddType = "قيمة افتراضية من النضام"
                         });
@@ -662,6 +662,9 @@ namespace CompalintsSystem.EF.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserRoleName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
@@ -690,12 +693,6 @@ namespace CompalintsSystem.EF.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BenfId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BenfName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("BenfPhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -717,13 +714,16 @@ namespace CompalintsSystem.EF.Migrations
                     b.Property<int>("TypeCommuncationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserName")
+                    b.Property<string>("reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("reason")
+                    b.Property<string>("reportSubmitterId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("reportSubmitterName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reporteeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -736,7 +736,7 @@ namespace CompalintsSystem.EF.Migrations
 
                     b.HasIndex("TypeCommuncationId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("reportSubmitterId");
 
                     b.ToTable("UsersCommunications");
                 });
@@ -775,36 +775,36 @@ namespace CompalintsSystem.EF.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a9098514-47a1-4cf2-9f61-6a2f2406a608",
-                            ConcurrencyStamp = "d2979579-5c49-4ea7-8763-88f285fa7c1d",
+                            Id = "21d02983-458d-476b-b605-dfe74d5deace",
+                            ConcurrencyStamp = "42915cbe-6e2c-46b3-9f0b-d35b558acecc",
                             Name = "AdminGeneralFederation",
                             NormalizedName = "ADMINGENERALFEDERATION"
                         },
                         new
                         {
-                            Id = "a7d09226-3c0b-477e-9c5a-ed4f503f3ce9",
-                            ConcurrencyStamp = "9815efd2-eb76-497f-8257-4cfc50094118",
+                            Id = "2ac99673-1f3c-405d-8a41-33c37a6718d7",
+                            ConcurrencyStamp = "3c819767-e17c-43ab-8da9-5e41df673c11",
                             Name = "AdminGovernorate",
                             NormalizedName = "ADMINGOVERNORATE"
                         },
                         new
                         {
-                            Id = "aea76b45-15f4-4b78-bcad-67ef1eb00d30",
-                            ConcurrencyStamp = "ce5b98ae-e742-4f12-874a-d1783ca51e79",
+                            Id = "e7ca9b9e-8a34-4577-908a-45d4aee701d7",
+                            ConcurrencyStamp = "7c85c292-c802-4292-8be9-fd8178f1c197",
                             Name = "AdminDirectorate",
                             NormalizedName = "ADMINDIRECTORATE"
                         },
                         new
                         {
-                            Id = "901d057e-c4d6-41e1-8616-fc74da8e16da",
-                            ConcurrencyStamp = "66da6e6e-bd97-4453-9839-ad677050726e",
+                            Id = "00faaa58-6b68-4510-be19-cb69af6e4291",
+                            ConcurrencyStamp = "1c886262-8844-4eda-957d-45b43dd34027",
                             Name = "AdminSubDirectorate",
                             NormalizedName = "ADMINSUBDIRECTORATE"
                         },
                         new
                         {
-                            Id = "354ad6ce-5526-484b-9270-fdc2d1bbf708",
-                            ConcurrencyStamp = "51707907-3f82-45b8-b0ab-66f22fe3e4cb",
+                            Id = "64eadfed-a6fb-41fb-9948-cfefce90392f",
+                            ConcurrencyStamp = "3c25ef9a-cdd8-4637-932c-596169b874aa",
                             Name = "Beneficiarie",
                             NormalizedName = "BENEFICIARIE"
                         });
@@ -1006,7 +1006,7 @@ namespace CompalintsSystem.EF.Migrations
             modelBuilder.Entity("CompalintsSystem.Core.Models.UpComplaintCause", b =>
                 {
                     b.HasOne("CompalintsSystem.Core.Models.UploadsComplainte", "CompalintUp")
-                        .WithMany()
+                        .WithMany("ComplaintsUp")
                         .HasForeignKey("UploadsComplainteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1107,19 +1107,19 @@ namespace CompalintsSystem.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CompalintsSystem.Core.Models.ApplicationUser", "User")
+                    b.HasOne("CompalintsSystem.Core.Models.ApplicationUser", "reportSubmitter")
                         .WithMany("UsersCommunications")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("reportSubmitterId");
 
                     b.Navigation("Directorate");
 
                     b.Navigation("Governorate");
 
+                    b.Navigation("reportSubmitter");
+
                     b.Navigation("SubDirectorate");
 
                     b.Navigation("TypeCommunication");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1254,6 +1254,8 @@ namespace CompalintsSystem.EF.Migrations
                     b.Navigation("Compalints_Solutions");
 
                     b.Navigation("ComplaintsRejecteds");
+
+                    b.Navigation("ComplaintsUp");
                 });
 #pragma warning restore 612, 618
         }

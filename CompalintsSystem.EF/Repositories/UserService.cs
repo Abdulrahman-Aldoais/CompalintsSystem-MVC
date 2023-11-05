@@ -141,6 +141,9 @@ namespace CompalintsSystem.EF.Repositories
 
         }
 
+
+
+
         // انشاء مستخدم جديد
         public async Task AddUserAsync(AddUserViewModel userVM, string currentName, string currentId)
         {
@@ -225,6 +228,64 @@ namespace CompalintsSystem.EF.Repositories
 
 
         }
+
+
+        // انشاء مستخدم جديد
+        public async Task RegisterAsync(AddUserViewModel userVM)
+        {
+
+            var newUser = new ApplicationUser()
+            {
+                FullName = userVM.FullName,
+                UserName = userVM.IdentityNumber.ToString(),
+                Email = userVM.IdentityNumber.ToString(),
+                IdentityNumber = userVM.IdentityNumber,
+                PhoneNumber = userVM.PhoneNumber,
+                ProfilePicture = null,
+                GovernorateId = userVM.GovernorateId,
+                DirectorateId = userVM.DirectorateId,
+                SubDirectorateId = userVM.SubDirectorateId,
+                IsBlocked = false,
+                SocietyId = userVM.SocietyId,
+                RoleId = 5,// مستخدم عادي
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                CreatedDate = DateTime.Now,
+
+            };
+
+            var userIdentity1 = await _context.Users.FirstOrDefaultAsync(u => u.IdentityNumber == newUser.IdentityNumber);
+            if (userIdentity1 != null)
+            {
+                returntype = 1;
+                Error = "رقم الهوية  موجود مسبقًا";
+                return;
+            }
+
+            var newUserResponse = await _userManager.CreateAsync(newUser, userVM.Password);
+
+            if (newUserResponse.Succeeded)
+            {
+
+
+                newUser.UserRoleName = UserRolesArbic.Beneficiarie;
+                newUser.RoleId = 5;
+                await _userManager.AddToRoleAsync(newUser, UserRoles.Beneficiarie);
+
+                await _userManager.AddPasswordAsync(newUser, userVM.Password);
+            }
+
+            else
+            {
+                returntype = 2;
+
+                Error = "كلمة السر يجب ان تكون ارقام و حروف و رموز";
+                return;
+            }
+
+
+        }
+
 
         //public async Task<OperationResult> TogelBlockUserAsync(int UserId)
         //{

@@ -32,6 +32,7 @@
     <PackageReference Include="NToastNotify" Version="7.0.0" />
     <PackageReference Include="NumberToWords" Version="1.0.1" />
     <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace CompalintsSystem.Core.ViewModels
         public int Id { get; set; }
         public IFormFile? File { get; set; }
         public string UserId { get; set; }
-
+        public string UserRoleName { get; set; }
 
         [Required(ErrorMessage = "يجب ان تقوم بكتابة هذه الحقل ")]
         public string TitleComplaint { get; set; }
@@ -57,10 +57,6 @@ namespace CompalintsSystem.Core.ViewModels
         public DateTime CompDateUp { get; set; }
 
         public DateTime UploadDate { get; set; }
-
-
-
-
         public string OriginalFileName { get; set; }
         public string FileName { get; set; }
         public decimal Size { get; set; }
